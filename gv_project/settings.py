@@ -146,8 +146,11 @@ STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/' # new
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # new
 
+<<<<<<< HEAD
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+=======
+>>>>>>> 95aa222d820e27c3fbd3370b81475e2d41999bdc
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
