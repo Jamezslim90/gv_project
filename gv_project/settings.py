@@ -39,12 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    
+    
+    
+    #Local Apps
+    "pages.apps.PagesConfig",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -57,7 +64,9 @@ ROOT_URLCONF = 'gv_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates')
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,7 +135,51 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
+
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+MEDIA_URL = '/media/' # new
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # new
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = "587"
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config("EHU")
+EMAIL_HOST_PASSWORD = config("EHP")
+DEFAULT_FROM_EMAIL = config("DFE")
+
+
+
+JAZZMIN_SETTINGS = {
+
+        "site_title": "GetVet Platform",
+        "site_header": "GetVet",
+        "site_brand": "GetVet Admin",
+        #"site_logo": "assets/img/brand/dark.svg",
+        #"login_logo": "assets/img/brand/dark.svg",
+        #"site_icon": "assets/img/brand/dark.svg",
+         # Welcome text on the login screen
+        "welcome_sign": "Welcome to GetVet ",
+        # Copyright on the footer
+        "copyright": "GetVet Ltd",
+
+        # The model admin to search from the search bar, search bar omitted if excluded
+        "search_model": "auth.User",
+
+
+}
