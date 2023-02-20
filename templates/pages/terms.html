@@ -3,7 +3,14 @@
 
 {% block title %}Terms{% endblock title %}
 
+ <!-- LOAD HEADER HERE -->
 
+ {% block header %}
+
+ {% include '../includes/header.html' %}
+
+ {% endblock header %}
+ 
 {% block content %}
 
 <main>
@@ -119,3 +126,9 @@
 
 
 {% endblock content %}
+
+
+{%block footer%}
+
+{% include '../includes/footer.html' %}
+{% endblock footer%}

@@ -9,6 +9,8 @@ python-decouple = "*"
 psycopg2 = "*"
 gunicorn = "*"
 whitenoise = "*"
+pillow = "*"
+django-jazzmin = "*"
 
 [dev-packages]
 
