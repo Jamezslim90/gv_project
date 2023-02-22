@@ -43,11 +43,13 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     
-    
+    # Third Party Apps
+    'multiselectfield',
     
     #Local Apps
     "pages.apps.PagesConfig",
     "accounts.apps.AccountsConfig",
+    "doctors.apps.DoctorsConfig",
 ]
 
 MIDDLEWARE = [

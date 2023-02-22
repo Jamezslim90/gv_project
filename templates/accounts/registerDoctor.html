@@ -8,13 +8,13 @@
 
 <main>
     
-    <section class="vh-90 d-flex align-items-center section-image overlay-soft-dark" data-background="{% static './assets/img/blog/image-4.jpg' %}"> 
+    <section class="vh-200 d-flex align-items-center section-image overlay-soft-dark" data-background="{% static './assets/img/blog/image-4.jpg' %}"> 
         <div class="container"> 
             <div class="row justify-content-center">
                 <div class="col-12 d-flex align-items-center justify-content-center">
                     <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border border-light rounded p-4 p-lg-5 w-100 fmxw-500">
-                        <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="font-weight-bold h4 mb-3">Customer Account</h1></div>
-                        <form method="post" action="{% url 'registerUser'%}">
+                        <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="font-weight-bold h4 mb-3">Doctor Account</h1></div>
+                        <form method="post" action="{% url 'registerDoctor'%}">
                             {% csrf_token %}
                              <!-- Load message -->
                             {% include '../includes/alerts.html' %}
@@ -66,6 +66,32 @@
                                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                                     </div>
                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-award"></i></span>
+                                    </div>
+                                   {{ d_form.vcn_number }}
+                                </div>
+                            </div>
+                            {% comment %} <div class="form-group">
+                                <div> <label>Select Specialty</label></div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"></i></span>  
+                                    </div>
+                                  
+                                   {{ d_form.specialty}}
+                                </div>
+                            </div> {% endcomment %}
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                    </div>
+                                   {{ d_form.state_of_practice}}
                                 </div>
                             </div>
                             <div class="form-group">

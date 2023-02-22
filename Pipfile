@@ -11,6 +11,7 @@ gunicorn = "*"
 whitenoise = "*"
 pillow = "*"
 django-jazzmin = "*"
+django-multiselectfield = "*"
 
 [dev-packages]
 

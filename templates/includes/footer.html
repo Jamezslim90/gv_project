@@ -16,9 +16,9 @@
             <div class="col-6 col-sm-3 col-lg-2 mb-4 mb-lg-0">
                 <h5>GetVet</h5>
                 <ul class="links-vertical">
-                    <li><a target="_blank" href="{% url 'about' %}">About</a></li>
-                    <li><a target="_blank" href="{% url 'faq' %}">FAQ</a></li>
-                    <li><a target="_blank" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li><a  href="{% url 'about' %}">About</a></li>
+                    <li><a  href="{% url 'faq' %}">FAQ</a></li>
+                    <li><a  href="{% url 'contact' %}">Contact Us</a></li>
                 </ul>
             </div>
             <div class="col-6 col-sm-3 col-lg-2 mb-4 mb-lg-0">
@@ -32,7 +32,7 @@
             <div class="col-12 col-sm-6 col-lg-4">
                 <h5>Subscribe</h5>
                 <p class="font-small">Experience the convenience and flexibility of attending to your clients from anywhere,any time!</p>
-                <a href="#" target="_blank" class="btn btn-secondary btn-pricing-plan animate-up-2 mr-3">Register as Doctor</a>
+                <a href="{% url 'registerDoctor' %}"  class="btn btn-secondary btn-pricing-plan animate-up-2 mr-3">Register as Doctor</a>
                 <small class="mt-2 form-text">We’ll never share your details. See our <a href="{% url 'terms' %}" class="font-weight-bold text-underline">Privacy Policy</a></small>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <div class="col pb-4 mb-md-0">
                 
                 <div class="d-flex text-center justify-content-center align-items-center">
-                    <p class="font-weight-normal font-small mb-0">Copyright © <a href="https://GetVet.com" target="_blank">GetVet</a> <span class="current-year"></span>. All rights reserved.</p>
+                    <p class="font-weight-normal font-small mb-0">Copyright © <a href="https://GetVet.com">GetVet</a> <span class="current-year"></span>. All rights reserved.</p>
                 </div>
             </div>
         </div>
