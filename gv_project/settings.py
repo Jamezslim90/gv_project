@@ -44,8 +44,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     
     # Third Party Apps
-    'multiselectfield',
-    
+    # 'multiselectfield',
+    'crispy_forms',
+    "crispy_bootstrap5",
     #Local Apps
     "pages.apps.PagesConfig",
     "accounts.apps.AccountsConfig",
@@ -78,6 +79,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.context_processors.get_doctor',
+                'accounts.context_processors.get_user_profile',
+                'accounts.context_processors.get_google_api',
             ],
         },
     },
@@ -97,7 +101,7 @@ DATABASES = {
   'USER': config("USER"),
   'PASSWORD': config("PASSWORD"),
   'HOST': config("HOST"),
-  'PORT': '7776'
+  'PORT': '7491'
   }
  
  }
@@ -164,7 +168,8 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+# CRISPY_TEMPLATE_PACK = 'uni_form'
 
 #Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -175,8 +180,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config("EHU")
 EMAIL_HOST_PASSWORD = config("EHP")
 DEFAULT_FROM_EMAIL = config("DFE")
+#DEFAULT_FROM_EMAIL = 'foodOnline Marketplace <django.foodonline@gmail.com>'
 
-
+GOOGLE_API_KEY="AIzaSyCOugkkY9aMPcSlNONQfWQ7mLa1KVH58E4"
 
 JAZZMIN_SETTINGS = {
 

@@ -12,6 +12,8 @@ whitenoise = "*"
 pillow = "*"
 django-jazzmin = "*"
 django-multiselectfield = "*"
+django-crispy-forms = "*"
+crispy-bootstrap5 = "*"
 
 [dev-packages]
 

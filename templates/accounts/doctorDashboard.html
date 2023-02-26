@@ -1,0 +1,51 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Doctor Dashboard{% endblock title %}
+
+
+{% block content %}
+
+<div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+<nav class="navbar navbar-dark navbar-theme-primary col-12 d-md-none">
+    <a class="navbar-brand mr-lg-5" href="{% url 'home' %}">
+        <img class="navbar-brand-dark" src="{% static './assets/img/gv-logo.png' %}" alt="Pixel logo" /> <img class="navbar-brand-light" src="{% static './assets/img/gv-logo2.png' %}" alt="Pixel Logo Dark" />
+    </a>
+    <div class="d-flex align-items-center">
+        <button class="navbar-toggler d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+ <!-- Load message -->
+ {% include '../includes/alerts.html' %}
+<div class="container-fluid bg-soft">
+    <div class="row">
+        <div class="col-12">
+
+             <!-- Load the navbar here -->
+             {% include '../includes/doctor_nav.html' %}
+            
+            <main class="content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                    <div class="btn-toolbar">
+                        <button class="btn btn-primary btn-sm mr-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-plus mr-2"></span>Add Your Services</button>
+                        {% comment %} <div class="dropdown-menu dashboard-dropdown dropdown-menu-left mt-2">
+                            <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-tasks mr-2"></span>New Task</a>
+                            <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-cloud-upload-alt mr-2"></span>Upload Files</a>
+                            <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-user-shield mr-2"></span>Preview Security</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-rocket text-danger mr-2"></span>Upgrade to Pro</a>
+                        </div> {% endcomment %}
+                    </div>
+                    <div class="btn-group mr-2"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'dprofile' %}">User profile</a></button> <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'edit_doctor_info_page' doctor.pk %}">Doctor info</a></button></div>
+                </div>
+               
+                {% comment %} Content Card Here!! {% endcomment %}
+               
+            </main>
+
+        </div>
+    </div>
+
+{% endblock content %}

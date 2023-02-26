@@ -1,6 +1,6 @@
 from django import forms
 from .models import User, UserProfile
-#from .validators import allow_only_images_validator
+from .validators import allow_only_images_validator
 
 
 class UserForm(forms.ModelForm):
@@ -77,4 +77,83 @@ class UserForm(forms.ModelForm):
 
 
 
+class UserProfileForm(forms.ModelForm):
+    address = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Start typing...', 'required': 'required'}))
+    profile_picture = forms.FileField(widget=forms.FileInput(attrs={'class': 'custom-file custom-file-input'}), validators=[allow_only_images_validator])
+    
+    # latitude = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    # longitude = forms.CharField(widget=forms.TextInput(attrs={'readonly': 'readonly'}))
+    class Meta:
+        model = UserProfile
+        fields = ['profile_picture', 'phone_number', 'address', 'country', 'state', 'city', 'pin_code', 'latitude', 'longitude']
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            if field == 'latitude' or field == 'longitude':
+                self.fields[field].widget.attrs['readonly'] = 'readonly'
+                
+        self.fields["profile_picture"].widget.attrs.update(
+            {
+             'type': 'file',
+             'class' : 'form-control',
+             
+            }
+        )
+        self.fields["phone_number"].widget.attrs.update(
+            {
+             'type': 'text',
+             'class' : 'form-control',
+             'placeholder' : 'phone number' 
+            }
+        )
+        self.fields["address"].widget.attrs.update(
+            {
+             'type': 'text',
+             'class' : 'form-control',
+             'placeholder' : 'address' 
+            }
+        )
+        self.fields["country"].widget.attrs.update(
+            {
+             'type': 'text',
+             'class' : 'form-control',
+             'placeholder' : 'country' 
+            }
+        )
+        self.fields["state"].widget.attrs.update(
+            {
+             'type': 'password',
+             'class' : 'form-control',
+             'placeholder' : 'state' 
+            }
+        )
+        self.fields["city"].widget.attrs.update(
+             {
+              'type': 'password',
+              'class' : 'form-control',
+              'placeholder' : 'city' 
+             }
+         )
+        self.fields["pin_code"].widget.attrs.update(
+             {
+              'type': 'password',
+              'class' : 'form-control',
+              'placeholder' : 'pin code' 
+             }
+         )
+        self.fields["latitude"].widget.attrs.update(
+             {
+              'type': 'password',
+              'class' : 'form-control',
+              'placeholder' : 'latitude' 
+             }
+         )
+        self.fields["longitude"].widget.attrs.update(
+             {
+              'type': 'password',
+              'class' : 'form-control',
+              'placeholder' : 'longitude' 
+             }
+         )
     

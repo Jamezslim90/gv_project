@@ -7,7 +7,7 @@
 {% block content %}
 
 <main>
-    
+    <div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
     <section class="vh-200 d-flex align-items-center section-image overlay-soft-dark" data-background="{% static './assets/img/blog/image-4.jpg' %}"> 
         <div class="container"> 
             <div class="row justify-content-center">
@@ -26,7 +26,7 @@
                                         {% endfor %}
                                     {% endfor %}
                                 </div>
-                                <li class="alert alert-danger" role="alert">{{form.non_field_errors}}</li>
+                               
                             {% endif %}
                             
                             <div class="form-group">
@@ -76,7 +76,8 @@
                                    {{ d_form.vcn_number }}
                                 </div>
                             </div>
-                            {% comment %} <div class="form-group">
+                            
+                          {% comment %} <div class="form-group">
                                 <div> <label>Select Specialty</label></div>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -86,6 +87,8 @@
                                    {{ d_form.specialty}}
                                 </div>
                             </div> {% endcomment %}
+
+                            
                             <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -116,7 +119,7 @@
                         {% comment %} <div class="mt-3 mb-4 text-center"><span class="font-weight-normal">or</span></div> {% endcomment %}
                         
                         <div class="d-block d-sm-flex justify-content-center align-items-center mt-4">
-                            <span class="font-weight-normal">Already have an account? <a href="#" class="font-weight-bold">Login here</a></span>
+                            <span class="font-weight-normal">Already have an account? <a href="{% url 'login' %}" class="font-weight-bold">Login here</a></span>
                         </div>
                     </div>
                 </div>
