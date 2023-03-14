@@ -25,7 +25,7 @@ class Doctor(models.Model):
     specialty = models.ManyToManyField(AnimalSpecialty, help_text='You can select multiple specialties')
     # specialty = MultiSelectField(max_length=50, choices=SPECIALTY_CHOICE, blank=True, null=True)
     induction_date = models.DateField(blank=True, null=True)
-    #vendor_slug = models.SlugField(max_length=100, unique=True)
+    doctor_slug = models.SlugField(max_length=100, unique=True)
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)

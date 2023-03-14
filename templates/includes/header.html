@@ -57,10 +57,10 @@
                         <div class="dropdown-menu dropdown-menu-lg" aria-labelledby="supportDropdown">
                             <div class="col-auto px-0">
                                 <div class="list-group list-group-flush">
-                                    <a href="#"  class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
+                                    <a href="{% url 'marketplace' %}"  class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
                                         <span class="icon icon-sm icon-secondary"><span class="bi bi-person-hearts"></span></span>
                                         <div class="ml-4">
-                                            <span class="text-dark d-block">Find Doctors</span> <span class="small">click to search for doctors</span>
+                                            <span class="text-dark d-block">Find Doctors</span> <span class="small">Click to search for Doctors</span>
                                         </div>
                                     </a>
                                     <a href="#"  class="list-group-item list-group-item-action d-flex align-items-center p-0 py-3 px-lg-4">
@@ -71,10 +71,9 @@
                             </div>
                         </div>
                     </li>
+                    <li class="nav-item dropdown"><a href="{% url 'post_list'%}" class="nav-link">Blog</a></li>
                     {% if user.is_authenticated %}
                     <li class="nav-item dropdown"><a href="{% url 'myAccount' %}" class="nav-link">Dashboard</a></li>
-                    {%else %}
-                    <li class="nav-item dropdown"><a href="#" class="nav-link">Blog</a></li>
                     {% endif %}
                     
                 </ul>
