@@ -1,6 +1,6 @@
 {% extends '../base.html' %}
 {% load static %}
-
+{% load humanize %}
 {% block title %}About{% endblock title %}
 
  <!-- LOAD HEADER HERE -->
@@ -15,185 +15,146 @@
 
 <main>
     <div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
-    <div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="../assets/img/brand/dark.svg" height="50" alt="Rocket logo" /></div>
-    <section class="section-header pb-10 pb-lg-11 mb-4 mb-lg-6 bg-primary text-white">
+    <section class="section-header pb-5 pb-lg-6 mb-4 mb-lg-6 bg-primary text-white">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center mb-4 mb-lg-5">
-                    <h1 class="display-2 font-weight-extreme mb-4">Frontend Engineer</h1>
+                    
+                     <h1 class="display-3 font-weight-extreme mb-4">Dr. {{doctor.user_profile }}</h1>
+                     {% if doctor.user_profile.profile_picture %}
+                    <div class="avatar-lg mx-auto"><img class="rounded-circle" src="{{ doctor.user_profile.profile_picture.url }}" alt="avatar" /></div>
+                    {% else %}   
+                    <div class="avatar-lg mx-auto mb-3 mb-lg-0"><img class="rounded-circle" src="{% static './assets/img/team/profile-picture-1.jpg' %}" alt="avatar" /></div>
+                    {% endif %}
                     <div class="d-flex flex-column flex-lg-row justify-content-center">
-                        <span class="h5 mb-3 mb-lg-0"><i class="fas fa-map-marker-alt"></i><span class="ml-3">Sillicon Valley, CA</span></span>
-                        <span class="ml-lg-5 mb-3 mb-lg-0 h5"><i class="fas fa-user-tie"></i><span class="ml-3">Full Time</span></span>
-                        <span class="ml-lg-5 mb-3 mb-lg-0 h5"><i class="fas fa-file-invoice-dollar"></i><span class="ml-3">$115-150k / year</span></span>
+                        <span class="h5 mb-3 mb-lg-0"><i class="fas fa-map-marker-alt"></i><span class="ml-3"> {{doctor.state_of_practice }}</span></span>
+                        <span class="ml-lg-5 mb-3 mb-lg-0 h5"><i class="fas fa-user-tie"></i><span class="ml-3">7 yrs Experience</span></span>
+                       <span class="ml-lg-5 mb-3 mb-lg-0 h5"><i class="fas fa-file-invoice-dollar"></i><span class="ml-3">$115-150k / year</span></span> 
+                    </div>
+                    <div>
+                    {% for specialty in doctor.specialty.all%}
+                    <span class="badge badge-pill badge-secondary mt-3 p-2">{{specialty}}</span>
+                    {% endfor %}
                     </div>
                 </div>
+                  {% comment %}
                 <div class="col col-12 text-center">
-                    <a href="./careers.html" class="btn btn-secondary text-white animate-up-2 mr-3"><i class="fas fa-arrow-left mr-2"></i>See All Jobs</a>
-                    <a href="#apply" class="btn btn-white text-primary animate-up-2"><i class="fas fa-clipboard-list mr-2"></i>Apply Now</a>
+                    <a href="#consultationItem" class="btn btn-secondary text-white animate-up-2 mr-3"><i class="fas fa-arrow-right mr-2"></i>Book Doctor</a>
+                   <a href="#apply" class="btn btn-white text-primary animate-up-2"><i class="fas fa-clipboard-list mr-2"></i>Apply Now</a> 
                 </div>
+                {% endcomment %}
             </div>
         </div>
-        <div class="pattern bottom"></div>
+       
     </section>
-    <section class="section section-lg pt-0">
-        <div class="container mt-n8 mt-lg-n11 z-2">
-            <div class="row justify-content-center">
-                <div class="col">
-                    <div class="card shadow-soft border-light p-4 p-md-5">
-                        <p class="lead mb-5">
-                            <strong class="font-weight-extreme">Rocket</strong> is currently seeking a Frontend Engineer to join our Digital Team focusing on wines & spirits, beauty and lifestyle brands. In this position you will be
-                            responsible for effectively managing multiple accounts and team members, including serving as key client contact. The successful candidate is an established leader viewed as a seasoned professional in the
-                            digital + social space; respected by senior clients, with a proven track record that demonstrates team growth by leading, maintaining and winning new business.
-                        </p>
-                        <p class="lead mb-5">
-                            Ideal candidates will have 3+ years of full time experience building social media channels for brands, as well creating digital identity, leading content creation, developing an audience, working on event
-                            activations and strategic partnerships.
-                        </p>
-                        <h2>Responsibilities:</h2>
-                        <ul class="list-unstyled mb-5">
-                            <li class="py-3 lead">
-                                <div class="media">
-                                    <span class="icon icon-sm mr-3 mt-2"><i class="fas fa-arrow-alt-circle-right"></i></span>
-                                    <div>Work with our leadership team to drive strategic planning and prioritization</div>
-                                </div>
-                            </li>
-                            <li class="py-3 lead">
-                                <div class="media">
-                                    <span class="icon icon-sm mr-3 mt-2"><i class="fas fa-arrow-alt-circle-right"></i></span>
-                                    <div>Partner with cross-functional teams to drive flawless execution of global initiatives, including the definition and rollout of our international plan</div>
-                                </div>
-                            </li>
-                            <li class="py-3 lead">
-                                <div class="media">
-                                    <span class="icon icon-sm mr-3 mt-2"><i class="fas fa-arrow-alt-circle-right"></i></span>
-                                    <div>Own the end-to-end process: build work plans, synthesize relevant data, lead analyses and develop recommendations</div>
-                                </div>
-                            </li>
-                        </ul>
-                        <h2>Requirements:</h2>
-                        <ul class="list-unstyled mb-5">
-                            <li class="py-3 lead">
-                                <div class="media">
-                                    <span class="icon icon-sm mr-3 mt-2"><i class="fas fa-plus-circle"></i></span>
-                                    <div>3+ years of related work experience at a high-performing technology company or management consulting; enterprise experience strongly preferred</div>
-                                </div>
-                            </li>
-                            <li class="py-3 lead">
-                                <div class="media">
-                                    <span class="icon icon-sm mr-3 mt-2"><i class="fas fa-plus-circle"></i></span>
-                                    <div>Advanced analytical skills (including data modeling) and business insight</div>
-                                </div>
-                            </li>
-                            <li class="py-3 lead">
-                                <div class="media">
-                                    <span class="icon icon-sm mr-3 mt-2"><i class="fas fa-plus-circle"></i></span>
-                                    <div>Experience dealing with unstructured business issues and successfully leading teams to resolve these issues</div>
-                                </div>
-                            </li>
-                        </ul>
-                        <h2>We offer great benefits too!</h2>
-                        <ul class="list-unstyled mb-5">
-                            <li class="py-3 lead">
-                                <div class="media">
-                                    <span class="icon icon-sm text-success mr-3 mt-2"><i class="fas fa-check-circle"></i></span>
-                                    <div>Generous vacation package that increases with tenure in addition to sick days, personal days and your birthday off too!</div>
-                                </div>
-                            </li>
-                            <li class="py-3 lead">
-                                <div class="media">
-                                    <span class="icon icon-sm text-success mr-3 mt-2"><i class="fas fa-check-circle"></i></span>
-                                    <div>Strong company culture and happy work environment!</div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div id="apply" class="row">
-                            <div class="col">
-                                <div class="card bg-soft shadow-soft border-0 text-black py-4 p-lg-5">
-                                    <div class="card-body p-4">
-                                        <div class="mb-5 mb-lg-6 text-center"><h2 class="h1">Apply for this Job</h2></div>
-                                        <form action="#">
-                                            <div class="row">
-                                                <div class="col-12 col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label text-muted" for="firstNameLabel">First Name <span class="text-danger">*</span></label>
-                                                        <div class="input-group mb-4">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
-                                                            </div>
-                                                            <input class="form-control" id="firstNameLabel" placeholder="First Name" type="text" required />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label text-muted" for="lastNameLabel">Last Name <span class="text-danger">*</span></label>
-                                                        <div class="input-group mb-4">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
-                                                            </div>
-                                                            <input class="form-control" id="lastNameLabel" placeholder="Last Name" type="text" required />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label text-muted" for="EmailLabel">Email <span class="text-danger">*</span></label>
-                                                        <div class="input-group mb-4">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                                            </div>
-                                                            <input class="form-control" id="EmailLabel" placeholder="Can we get your email?" type="email" required />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label text-muted" for="portfolioLabel">Portfolio <span class="text-danger">*</span></label>
-                                                        <div class="input-group mb-4">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-link"></i></span>
-                                                            </div>
-                                                            <input class="form-control" id="portfolioLabel" placeholder="Linkedin" type="text" required />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <div class="form-group">
-                                                        <label class="form-label text-muted" for="phonenumberLabel">Phone Number<span class="text-danger">*</span></label>
-                                                        <div class="input-group mb-4">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text"><i class="fas fa-phone-square-alt"></i></span>
-                                                            </div>
-                                                            <input class="form-control" id="phonenumberLabel" placeholder="Phone number" type="number" required />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-6">
-                                                    <label class="form-label text-muted" for="customFile">Resume/Cv<span class="text-danger">*</span></label>
-                                                    <div class="custom-file"><input type="file" class="custom-file-input" id="customFile" /> <label class="custom-file-label" for="customFile">Choose file</label></div>
-                                                </div>
-                                                <div class="col col-12 mt-4">
-                                                    <div class="form-group">
-                                                        <label class="form-label text-muted" for="phonenumberLabel">Few words... <span class="text-danger">*</span></label>
-                                                        <textarea class="form-control" placeholder="How'd you hear about Rocket?" id="message-2" rows="8" required></textarea>
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <button type="submit" class="btn btn-secondary mt-4">
-                                                            <span class="mr-2"><i class="fas fa-paper-plane"></i></span> Submit Application
-                                                        </button>
-                                                    </div>
+    
+    <section class="section section-lg pt-5">
+    <div class="container">
+    <div class="row">
+        <div class="col-12 col-xl-7 mb-4 ">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
+                            <div class="d-block">
+                                <div class="h6 font-weight-normal text-gray mb-2">Consultation Services</div>
+                                {% comment %}
+                                 <h2 class="h3">10,567</h2>
+                                 <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">$10.57%</span></div>
+                                 {% endcomment %}
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                        
+                            {% for item in consultationItems %} 
+                            <div class="col-12 mb-4">
+                                <div class="card bg-white">
+                                    <div class="card-body p-3 p-lg-4">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 mb-3 mb-lg-0">
+                                                <h6 class="mb-2">{{item.type}}</h6>
+                                                <p class="text-gray mb-2">{{item.description}}</p>
+                                                <div class="d-flex">
+                                                    <a href="./career-single.html" class="stretched-link"><i class="fas fa-file-invoice-dollar"></i><span class="h6 text-sm ml-2">&#8358; {{item.fee|intcomma}}/ 30mins</span></a>
                                                 </div>
                                             </div>
-                                        </form>
+                                        
+                                            <div class="col-12 col-md-6 d-flex align-items-center justify-content-md-end" id="consultationItem">
+                                                <a href="#" class="mr-3 animate-up-2 m-0 btn btn-secondary mr-3 btn-sm decrease_cart" data-id="{{ item.consultationitem.id }}" data-url="{% url 'decrease_cart' item.id %}"><i class="fa fa-minus mr-1 "></i>Remove</a>
+            
+            
+                                                 <a href="#" class=" animate-up-2 m-0 btn btn-primary mr-3 btn-sm add_to_cart" data-id="{{ item.consultationitem.id }}" data-url="{% url 'add_to_cart' item.id %}"><i class="fa fa-plus mr-1"></i>Add To cart</a>
+
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            {% empty%}
+                            <div class="text-center p-5">
+                                <h6>Sorry no services!</h6>
+                            </div>
+                            {% endfor %}
                         </div>
+
+                       
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% if opening_hours %}
+        <div class="col-12 col-xl-4 mb-4">
+            <div class="col-12 px-0 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body">
+                        <div class="d-block">
+                            <div class="h6 font-weight-normal text-gray mb-2 border-bottom">Available Hours</div>
+                            {% comment %}
+                             <h2 class="h3">10,567</h2>
+                             <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">$10.57%</span></div>
+                             {% endcomment %}
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-3">
+                            <div>
+                                <h6 class="mb-0">
+                                    <span class="icon icon-xs mr-3"></span>TODAY:
+                                </h6>
+                            </div>
+                            <div>
+                                {% for i in current_opening_hours %}
+                                <a href="#" class="text-primary font-weight-bold">
+                                <span>{% if i.is_closed %}Closed{% else %}{{ i.from_hour }} - {{ i.to_hour }}{% endif %}</span>
+                                {% endfor %}</a>
+
+                            </div>
+
+                        </div>
+                        {% for hour in opening_hours %}
+                        <div class="d-flex align-items-center justify-content-between border-bottom border-light py-3">
+                            <div>
+                                <h6 class="mb-0">
+                                    <span class="icon icon-xs mr-3"></span> <span class="opend-day">{{ hour }}</span>
+                                </h6>
+                                
+                            </div>
+                            <div>
+                                <a href="#" class="text-primary font-weight-bold"> <span class="opend-time"><small></small>{% if hour.is_closed %}Closed{% else %}{{ hour.from_hour }} - {{ hour.to_hour }}{% endif %}</span>
+                                </a>
+                               
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        {% endif %}
+    </div>
+  </div>
+</section>
 </main>
 
 

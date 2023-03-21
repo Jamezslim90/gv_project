@@ -51,7 +51,7 @@
                 {% for post in posts %} 
                 <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-5">
                     <div class="card bg-white border-light shadow-soft p-4 rounded">
-                        <a href="./blog-post.html"><img src="{{post.image.url}}" class="card-img-top fmxh-300" alt="" /></a>
+                        <a href="{{ post.get_absolute_url }}"><img src="{{post.image.url}}" class="card-img-top fmxh-300" alt="" /></a>
                         <div class="card-body p-0 pt-4">
                             <a href="{{ post.get_absolute_url }}" class="h3"> {{ post.title }} </a>
                             <div class="d-flex align-items-center my-4">
@@ -59,7 +59,7 @@
                                 <h6 class="text-muted small ml-2 mb-0">{{post.author.first_name}} {{post.author.last_name}}</h6>
                             </div>
                             <p class="mb-0">
-                                {{ post.body|safe|truncatewords:25|linebreaks }}
+                                {{ post.body|safe|truncatewords:15|linebreaks }}
                             </p>
                         </div>
                     </div>

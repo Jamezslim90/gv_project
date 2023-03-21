@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static 
 from django.contrib import admin
 from django.urls import path, include
+from marketplace import views as MarketplaceViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,6 +15,16 @@ urlpatterns = [
     #path('doctors/', include('doctors.urls'))
     path('blog/', include('blog.urls')),
     path('marketplace/', include('marketplace.urls')),
+     # CART
+    path('cart/', MarketplaceViews.cart, name='cart'),
+    # SEARCH
+    #path('search/', MarketplaceViews.search, name='search'),
+
+    # CHECKOUT
+    #path('checkout/', MarketplaceViews.checkout, name='checkout'),
+
+    # ORDERS
+    #path('orders/', include('orders.urls')),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

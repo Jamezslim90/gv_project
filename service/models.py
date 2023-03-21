@@ -3,6 +3,7 @@ from doctors.models import Doctor
 
 
 class Service(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, default=1)
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -23,10 +24,10 @@ class Consultation(models.Model):
  
  
 class Fee (models.Model):
-    fee = models.IntegerField()
-    
+    fee = models.DecimalField(max_digits=10, decimal_places=2)
     def __str__(self):
          return str(self.fee)
+
 
 
 class ConsultationItem(models.Model):

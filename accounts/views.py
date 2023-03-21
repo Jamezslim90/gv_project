@@ -91,7 +91,7 @@ def registerDoctor(request):
        print("precheck")
        form = UserForm(request.POST)
        d_form = DoctorForm(request.POST)
-       if form.is_valid() and d_form.is_valid():
+       if d_form.is_valid() and form.is_valid():
         print("checkform") 
             # Create the user using the form
             # password = form.cleaned_data['password']
@@ -124,16 +124,17 @@ def registerDoctor(request):
         print(doctor)
         doctor.save()
         
-        # # Send verification email
-        # mail_subject = 'Please activate your account'
-        # email_template = 'accounts/emails/account_verification_email.html'
-        # send_verification_email(request, user, mail_subject, email_template)
+         # Send verification email
+        mail_subject = 'Please activate your account'
+        email_template = 'accounts/emails/account_verification_email.html'
+        send_verification_email(request, user, mail_subject, email_template)
 
-        # messages.success(request, "Successfully, we've sent a verification email!")
+        messages.success(request, "Successfully, we've sent a verification email!")
         return redirect('registerDoctor')
         
        else:
-           print(form.errors)
+           print('invalid form')
+           print(d_form.errors)
     else:
         form = UserForm() 
         d_form = DoctorForm()

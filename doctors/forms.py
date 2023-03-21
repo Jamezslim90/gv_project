@@ -1,5 +1,5 @@
 from django import forms
-from .models import Doctor, AnimalSpecialty #OpeningHour
+from .models import Doctor, AnimalSpecialty, OpeningHour, BankAccount
 #from accounts.validators import allow_only_images_validator
 
 class DateInput(forms.DateInput):
@@ -11,30 +11,32 @@ class DoctorForm(forms.ModelForm):
     vcn_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     state_of_practice = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     specialty = forms.SelectMultiple(choices=AnimalSpecialty.objects.all())
-    induction_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control',"type": "date", 'readonly': 'readonly'}))
+    induction_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control',"type": "date", 'readonly': 'readonly'}), required=False)
    
     def __init__(self, *args, **kwargs):
         super(DoctorForm, self). __init__(*args, **kwargs)
+        self.fields["specialty"].required = False
         self.fields["vcn_number"].widget.attrs.update(
             {
              'type': 'text',
              'class' : 'form-control',
-             'placeholder' : 'VCN number' 
+             'placeholder' : 'vcn number' 
             }
         )
         self.fields["state_of_practice"].widget.attrs.update(
             {
              'type': 'multiple',
              'class' : 'form-control',
-             'placeholder' : 'state of practice e.g Niger' 
+             'placeholder' : 'state of practice e.g Niger'
+            
             }
         )
         self.fields["specialty"].widget.attrs.update(
             {
              'type': 'multiple',
              'class' : 'form-control',
-            'placeholder' : 'specialty e.g cat'
-             
+            'placeholder' : 'specialty e.g cat',
+              'required': 'false'
             }
         )
         self.fields["induction_date"].widget.attrs.update(
@@ -63,11 +65,47 @@ class DoctorForm(forms.ModelForm):
 
 
 
-# class OpeningHourForm(forms.ModelForm):
-#     class Meta:
-#         model = OpeningHour
-#         fields = ['day', 'from_hour', 'to_hour', 'is_closed']
+class BankAccountForm(forms.ModelForm):
+    
+    def __init__(self, *args, **kwargs):
+        super(BankAccountForm, self). __init__(*args, **kwargs)
+        self.fields["bank_name"].widget.attrs.update(
+            {
+             'type': 'text',
+             'class' : 'form-control',
+             'placeholder' : '1239860905' 
+            }
+        )
+        self.fields["account_number"].widget.attrs.update(
+            {
+             'type': 'text',
+             'class' : 'form-control',
+             'placeholder' : '' 
+            }
+        )
+        self.fields["account_name"].widget.attrs.update(
+            {
+             'type': 'text',
+             'class' : 'form-control',
+            'placeholder' : 'John Doe'
+             
+            }
+        )
+     
+    class Meta:
+        model = BankAccount
+        fields = ['bank_name', 'account_number', 'account_name']
 
+class OpeningHourForm(forms.ModelForm):
+    class Meta:
+        model = OpeningHour
+        fields = ['day', 'from_hour', 'to_hour', 'is_offline']
+        widgets = {
+            'day': forms.Select(attrs={'class': 'form-control'}),
+            'from_hour': forms.Select(attrs={'class': 'form-control'}),
+            'to_hour': forms.Select(attrs={'class': 'form-control'}),
+           
+        }
 
 
 

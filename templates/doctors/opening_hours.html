@@ -1,8 +1,7 @@
 {% extends '../base.html' %}
 {% load static %}
-{% load humanize %}
-{% load crispy_forms_tags %}
-{% block title %} My Profile {% endblock title %}
+
+{% block title %}Doctor Dashboard{% endblock title %}
 
 
 {% block content %}
@@ -26,8 +25,8 @@
 
              <!-- Load the navbar here -->
              {% include '../includes/doctor_nav.html' %}
-
-             <main class="content">
+            
+            <main class="content">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
                     <div class="d-block mb-4 mb-md-0">
                         <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
@@ -35,13 +34,11 @@
                                 <li class="breadcrumb-item">
                                     <a href="#"><span class="fas fa-home"></span></a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="#">Getvet</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Doctor services</li>
+                                <li class="breadcrumb-item"><a href="#">GetVet</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Opening Hours</li>
                             </ol>
                         </nav>
-                         {% comment %}
-                        <h2 class="h4">Doctor Dashboard</h2>
-                        <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
+                        {% comment %} <p class="mb-0">This is the Doctor Dashboard</p> {% endcomment %}
                     </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <a href="#" class="btn btn-sm btn-primary mr-2"><span class="fas fa-plus"></span> <span>New Meeting</span></a>
@@ -49,62 +46,64 @@
                         <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'dprofile' %}">My profile</a></button> <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'edit_doctor_info_page' doctor.pk %}">Doctor info</a></button></div>
                     </div>
                 </div>
-                
-                {% comment %} Content Card Here!! {% endcomment %}
-
-                {% if consultation_item %}
-
-                
-
-                <div class="col-10 mx-auto card card-body border-light shadow-sm table-wrapper table-responsive pt-0"> 
-                   <div>
+            
+                <div class="col-9 mx-auto card card-body border-light shadow-sm table-wrapper table-responsive pt-0"> 
+                   {% comment %} <div>
                     <a href="{% url 'add_item' %}" class="btn btn-success btn-sm float-right m-1"><i class="fa fa-plus" aria-hidden="true"></i>Add Service</a>
-                   </div>
-
-                    <table class="table table-hover">
+                   </div> {% endcomment %}
+                  
+                    <table class="table opening_hours table-hover">
                         <thead>
                             <tr>
-                                <th class="border-0">#</th>
-                                <th class="border-0">Type</th>
-                                <th class="border-0">Category</th>
-                                <th class="border-0">fee</th>
-                                <th class="border-0">Status</th>
+                              
+                                <th class="border-0">Day</th>
+                                <th class="border-0">Duration</th>
                                 <th class="border-0">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             
-                            {% for item in consultation_item %} 
-                            <tr>
-                                <td><a href="#" class="font-weight-bold">{{ forloop.counter }}</a></td>
-                                <td><span class="font-weight-normal">{{ item.type}}</span></td>
-                                <td><span class="font-weight-normal">{{ item.category}}</span></td>
-                                <td><span class="font-weight-normal">&#8358; {{ item.fee|intcomma}}</span></td>
+                            {% for hour in opening_hours %}
+                            <tr id="hour-{{hour.id}}">
+                                
+                                <td><span class="font-weight-normal"><b>{{ hour }}</span></td>
+                                <td><span class="font-weight-normal">{% if hour.is_offline %}Offline{% else %}{{ hour.from_hour }} - {{ hour.to_hour }}{% endif %}</span></td>
                                 <td>
-                                    {% if item.is_available %}
-                                    <span class="badge badge-success">Available</span>
-                                    {% else %}
-                                    <span class="badge badge-danger">Not Available</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <a href="{% url 'edit_item' item.id %}" style="color:unset;"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp; <a href="{% url 'delete_item' item.id %}" onclick="return confirm('Are you sure you want to delete this service?')"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                    <a href="#" class="remove_hour" data-url="{% url 'remove_opening_hours' hour.id %}"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
                                 </td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
-                    {% else %}
-                    <h5 class="text-center h6">No services found.</h5>
-                    <div class="text-center h6">
-                        <a href="{% url 'add_item' %}" class="btn btn-sm btn-success mx-auto"><span class="fas fa-plus mr-2"></span> <span>Add Services</span></a>
-                    </div>
-                {% endif %}
-                </div>
-                
-            </main>
 
+                    <br>
+
+                    <form id="opening_hours">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-3">
+                                {{ form.day }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form.from_hour }}
+                            </div>
+                            <div class="col-md-2">
+                                {{ form.to_hour }}
+                            </div>
+                            <div class="col-md-3">
+                                {{ form.is_offline }} Set as Offline
+                            </div>
+                            <div class="col-md-2">
+                                <input type="hidden" value="{% url 'add_opening_hours' %}" id="add_hour_url">
+                                <button class="btn btn-success add_hour btn-sm">Add Hours</button>
+                            </div>
+                        </div>
+                    </form>
+                
+                </div>
+
+            </main>
         </div>
     </div>
-</div>
+
 {% endblock content %}

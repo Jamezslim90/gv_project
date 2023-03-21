@@ -2,7 +2,7 @@
 from django.db import models
 from accounts.models import User, UserProfile
 from accounts.utils import send_notification
-#from datetime import time, date, datetime
+from datetime import time, date, datetime
 #from multiselectfield import MultiSelectField
 
 
@@ -36,6 +36,27 @@ class Doctor(models.Model):
     def get_specialties(self):
         return "\n".join([p.specialty for p in self.specialty.all()])
     
+    def is_online(self):
+        # Check current day's opening hours.
+        today_date = date.today()
+        today = today_date.isoweekday()
+        
+        current_opening_hours = OpeningHour.objects.filter(doctor=self, day=today)
+        now = datetime.now()
+        current_time = now.strftime("%H:%M:%S")
+
+        is_online = None
+        for i in current_opening_hours:
+            if not i.is_offline:
+                start = str(datetime.strptime(i.from_hour, "%I:%M %p").time())
+                end = str(datetime.strptime(i.to_hour, "%I:%M %p").time())
+                if current_time > start and current_time < end:
+                    is_online = True
+                    break
+                else:
+                    is_online = False
+        return is_online
+    
     def save(self, *args, **kwargs):
         if self.pk is not None:
             # Update
@@ -56,3 +77,67 @@ class Doctor(models.Model):
                     mail_subject = "We're sorry! You are not eligible for publishing your services on our platform."
                     send_notification(mail_subject, mail_template, context)
         return super(Doctor, self).save(*args, **kwargs)
+    
+    
+    
+DAYS = [
+    (1, ("Mon")),
+    (2, ("Tue")),
+    (3, ("Wed")),
+    (4, ("Thu")),
+    (5, ("Fri")),
+    (6, ("Sat")),
+    (7, ("Sun")),
+]
+
+HOUR_OF_DAY_24 = [(time(h, m).strftime('%I:%M %p'), time(h, m).strftime('%I:%M %p')) for h in range(0, 24) for m in (0, 30)]
+class OpeningHour(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    day = models.IntegerField(choices=DAYS)
+    from_hour = models.CharField(choices=HOUR_OF_DAY_24, max_length=10, blank=True)
+    to_hour = models.CharField(choices=HOUR_OF_DAY_24, max_length=10, blank=True)
+    is_offline = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('day', '-from_hour')
+        unique_together = ('doctor', 'day', 'from_hour', 'to_hour')
+
+    def __str__(self):
+        return self.get_day_display()
+    
+    
+
+
+class BankAccount(models.Model):
+    BANK_CHOICES = (
+        ('Access', 'Access'),
+        ('GTBank', 'GTBank'),
+        ('9PSB', '9PSB'),
+        ('OPAY', 'OPAY'),
+        ('Kuda', 'Kuda'),
+        ('First', 'First'),
+        ('FCMB', 'FCMB'),
+        ('UBA', 'UBA'),
+        ('Moniepoint', 'Moniepoint'),
+        ('Palmpay', 'Palmpay'),
+        ('Wema', 'Wema'),
+        ('Fidelity', 'Fidelity'),
+        ('Jaiz', 'Jaiz'),
+        ('Keystone', 'Keystone'),
+        ('Polaris', 'Polaris'),
+        ('Stanbic-ibtc', 'Stanbic-ibtc'),
+        ('Sterling', 'Sterling'),
+        ('Taj', 'Taj'),
+        ('Union', 'Union'),
+        ('Unity', 'Unity'),
+        ('Zenith', 'Zenith'),
+        
+    )
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    bank_name = models.CharField(max_length=100, choices=BANK_CHOICES)
+    account_number = models.CharField(max_length=10)
+    account_name = models.CharField(max_length=50)
+  
+
+    def __str__(self):
+        return f"{self.bank_name} - {self.account_number}"
