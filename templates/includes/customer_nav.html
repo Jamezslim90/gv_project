@@ -4,7 +4,7 @@
     <div class="sidebar-sticky pt-4 mx-auto">
         <div class="user-card d-flex align-items-center justify-content-between justify-content-md-center pb-4">
             <div class="d-flex align-items-center">
-                <div class="user-avatar lg-avatar mr-4"><img src="{% static './assets/img/profile-pic.png' %}" class="card-img-top rounded-circle border-white" alt="Bonnie Green" /></div>
+                <div class="user-avatar lg-avatar mr-4"><img src="{% static './assets/img/default_profile_pic.png' %}" class="card-img-top rounded-circle border-white" alt="Bonnie Green" /></div>
                 <div class="d-block">
                     {%if user.is_authenticated%}
                     <h2 class="h6">Hi, {{ user.first_name }}</h2>
@@ -27,9 +27,9 @@
             <li class="nav-item">
                 <a href="../dashboard/messages.html" class="nav-link d-flex align-items-center justify-content-between">
                     <span>
-                        <span class="sidebar-icon"><span class="fas fa-inbox"></span></span> Profile
+                        <span class="sidebar-icon"><span class="fas fa-inbox"></span></span> Join meeting
                     </span>
-                    <span class="badge badge-md badge-danger badge-pill">4</span>
+                    {% comment %} <span class="badge badge-md badge-danger badge-pill">4</span> {% endcomment %}
                 </a>
             </li>
             <li class="nav-item">

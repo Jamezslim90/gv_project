@@ -1,0 +1,95 @@
+{% extends '../base.html' %}
+{% load static %}
+
+{% block title %}Blog{% endblock title %}
+
+ <!-- LOAD HEADER HERE -->
+ {% block header %}
+
+ {% include '../includes/header.html' %}
+
+ {% endblock header %}
+
+{% block content %}
+
+<main>
+    <div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="../assets/img/brand/dark.svg" height="50" alt="Rocket logo" /></div>
+    <section class="section-header bg-primary text-white pb-7 pb-lg-11">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 text-center">
+                    <h1 class="display-2 mb-4">The Getvet Blog</h1>
+                    <p class="lead">We help you get better at pet and livestock: detailed guides, case studies and opinion pieces from veterinary practitioners and industry experts alike</p>
+                </div>
+            </div>
+        </div>
+        <div class="pattern bottom"></div>
+    </section>
+    <section class="section section-lg line-bottom-light">
+        <div class="container mt-n7 mt-sm-n9 mt-lg-n12 z-2">
+            <div class="row">
+
+                <div class="col-lg-12 mb-5">
+                    <div class="card bg-white border-light shadow-soft flex-lg-row no-gutters p-4">
+                        <a href="#" class="col-12 col-lg-12">
+                            <img src="{% static './assets/img/blog/image-1.jpg' %}" alt="" height = "400px" class="card-img-top" /></a>
+                        <div class="card-body py-4 p-lg-5">
+                            {% comment %} <a href="./blog-post.html" class="mb-3 d-block"><h2>Designing a dashboard that increases business value</h2></a>
+                            <p class="mb-3">
+                                Today we are overwhelmed by content, and inspiration can strike anywhere. The point is to collect it and share it in a structured way to inspire your team, client, and users. In this article, I will
+                                show you how to design a dashboard.
+                            </p> {% endcomment %}
+                            <div class="d-flex align-items-center">
+                                {% comment %} <img class="avatar avatar-sm rounded-circle" src="../assets/img/team/profile-picture-1.jpg" alt="" />
+                                <h6 class="text-muted small ml-2 mb-0">Richard Thomas</h6>
+                                <h6 class="text-muted small font-weight-normal mb-0 ml-auto"><time datetime="2019-04-25">21 February, 2019</time></h6> {% endcomment %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% for post in posts %} 
+                <div class="col-12 col-md-6 col-lg-4 mb-4 mb-lg-5">
+                    <div class="card bg-white border-light shadow-soft p-4 rounded">
+                        <a href="{{ post.get_absolute_url }}"><img src="{{post.image.url}}" class="card-img-top fmxh-300" alt="" /></a>
+                        <div class="card-body p-0 pt-4">
+                            <a href="{{ post.get_absolute_url }}" class="h3"> {{ post.title }} </a>
+                            <div class="d-flex align-items-center my-4">
+                                {% comment %} <img class="avatar avatar-sm rounded-circle" src="../assets/img/team/profile-picture-2.jpg" alt="" /> {% endcomment %}
+                                <h6 class="text-muted small ml-2 mb-0">{{post.author.first_name}} {{post.author.last_name}}</h6>
+                            </div>
+                            <p class="mb-0">
+                                {{ post.body|safe|truncatewords:15|linebreaks }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                {% empty %}
+
+                <p>There are currently no blog posts</p>
+                {% endfor %} 
+                
+                {% comment %} <div class="d-flex justify-content-center w-100">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div> {% endcomment %}
+            </div>
+        </div>
+    </section>
+    
+   
+</main>
+
+{% include "pagination.html" with page=posts %} 
+
+{% endblock content %}

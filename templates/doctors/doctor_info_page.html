@@ -25,23 +25,30 @@
 
              <!-- Load the navbar here -->
              {% include '../includes/doctor_nav.html' %}
-            
-            <main class="content">
+
+             <main class="content">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
-                    <div class="btn-toolbar">
-                        <button class="btn btn-primary btn-sm mr-2 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-plus mr-2"></span>Add Your Services</button>
-                        {% comment %} <div class="dropdown-menu dashboard-dropdown dropdown-menu-left mt-2">
-                            <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-tasks mr-2"></span>New Task</a>
-                            <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-cloud-upload-alt mr-2"></span>Upload Files</a>
-                            <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-user-shield mr-2"></span>Preview Security</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <a class="dropdown-item font-weight-bold" href="#"><span class="fas fa-rocket text-danger mr-2"></span>Upgrade to Pro</a>
-                        </div> {% endcomment %}
+                    <div class="d-block mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                                <li class="breadcrumb-item">
+                                    <a href="#"><span class="fas fa-home"></span></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">Getvet</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Doctor Info</li>
+                            </ol>
+                        </nav>
+                         {% comment %}
+                        <h2 class="h4">Doctor Dashboard</h2>
+                        <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
                     </div>
-                    <div class="btn-group mr-2"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'dprofile' %}">User profile</a></button> <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'edit_doctor_info_page' doctor.pk %}">Doctor info</a></button></div>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="#" class="btn btn-sm btn-primary mr-2"><span class="fas fa-plus"></span> <span>New Meeting</span></a>
+                        <a href="{% url 'consultation_item' %}" class="btn btn-sm btn-primary"><span class="fas fa-user-md"></span> <span>My Services</span></a>
+                        <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'dprofile' %}">My profile</a></button> <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'edit_doctor_info_page' doctor.pk %}">Doctor info</a></button></div>
+                    </div>
                 </div>
-               
-               
+                
                 {% comment %} Content Card Here!! {% endcomment %}
 
                 <div class="container">
@@ -91,11 +98,10 @@
                         </div>
                     </div>
                 </div>
-               
+                
             </main>
 
         </div>
     </div>
-
+</div>
 {% endblock content %}
- 

@@ -8,6 +8,7 @@ from django.utils.http import urlsafe_base64_decode
 from .forms import UserForm
 from .models import User, UserProfile
 from doctors.models import Doctor
+from django.template.defaultfilters import slugify
 from doctors.forms import DoctorForm
 from .utils import detectUser, send_verification_email
 from django.core.exceptions import PermissionDenied
@@ -46,16 +47,15 @@ def registerUser(request):
     
     elif request.method == "POST":
        form = UserForm(request.POST)
-       if form.is_valid():
-           
-            # Create the user using the form
-            # password = form.cleaned_data['password']
-            # user = form.save(commit=False)
-            # user.set_password(password)
-            # user.role = User.CUSTOMER
-            # user.save()
+       if form.is_valid(): 
+        # Create the user using the form
+        # password = form.cleaned_data['password']
+        # user = form.save(commit=False)
+        # user.set_password(password)
+        # user.role = User.CUSTOMER
+        # user.save()
 
-            # Create the user using create_user method
+        # Create the user using create_user method
         first_name = form.cleaned_data['first_name']
         last_name = form.cleaned_data['last_name']
         username = form.cleaned_data['username']
@@ -69,7 +69,6 @@ def registerUser(request):
         mail_subject = 'Please activate your account'
         email_template = 'accounts/emails/account_verification_email.html'
         send_verification_email(request, user, mail_subject, email_template)
-        
         messages.success(request, "Successfully, we've sent a verification email!")
         return redirect('registerUser')
         
@@ -84,16 +83,16 @@ def registerUser(request):
     return render(request, 'accounts/registerUser.html', context)
 
 
-
 def registerDoctor(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
-        return redirect('dashboard')
+        return redirect('myAccount')
     elif request.method == "POST":
+       print("precheck")
        form = UserForm(request.POST)
        d_form = DoctorForm(request.POST)
-       if form.is_valid() and d_form.is_valid():
-           
+       if d_form.is_valid() and form.is_valid():
+        print("checkform") 
             # Create the user using the form
             # password = form.cleaned_data['password']
             # user = form.save(commit=False)
@@ -107,11 +106,14 @@ def registerDoctor(request):
         username = form.cleaned_data['username']
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
+        print(first_name)
         user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
         user.role = User.DOCTOR
+        print(user)
         user.save()
         doctor = d_form.save(commit=False)
         doctor.user = user
+        doctor.doctor_slug = slugify(username)+'-'+str(user.id)
         user_profile = UserProfile.objects.get(user=user)
         doctor.user_profile = user_profile
         doctor.vcn_number = d_form.cleaned_data['vcn_number']
@@ -119,9 +121,10 @@ def registerDoctor(request):
         #doctor.induction_date = d_form.cleaned_data['induction_date']
         #specialty= d_form.cleaned_data['specialty']
         #doctor.specialty.set(specialty) 
+        print(doctor)
         doctor.save()
         
-        # Send verification email
+         # Send verification email
         mail_subject = 'Please activate your account'
         email_template = 'accounts/emails/account_verification_email.html'
         send_verification_email(request, user, mail_subject, email_template)
@@ -130,7 +133,8 @@ def registerDoctor(request):
         return redirect('registerDoctor')
         
        else:
-           print(form.errors)
+           print('invalid form')
+           print(d_form.errors)
     else:
         form = UserForm() 
         d_form = DoctorForm()

@@ -77,7 +77,7 @@ $(document).ready(function(){
     $('.add_to_cart').on('click', function(e){
         e.preventDefault();
         
-        food_id = $(this).attr('data-id');
+        item_id = $(this).attr('data-id');
         url = $(this).attr('data-url');
         
        
@@ -88,13 +88,13 @@ $(document).ready(function(){
                 console.log(response)
                 if(response.status == 'login_required'){
                     swal(response.message, '', 'info').then(function(){
-                        window.location = '/login';
+                        window.location = '/accounts';
                     })
                 }else if(response.status == 'Failed'){
                     swal(response.message, '', 'error')
                 }else{
                     $('#cart_counter').html(response.cart_counter['cart_count']);
-                    $('#qty-'+food_id).html(response.qty);
+                    $('#ses-'+item_id).html(response.ses);
 
                     // subtotal, tax and grand total
                     applyCartAmounts(
@@ -109,10 +109,10 @@ $(document).ready(function(){
 
 
     // place the cart item quantity on load
-    $('.item_qty').each(function(){
+    $('.item_ses').each(function(){
         var the_id = $(this).attr('id')
-        var qty = $(this).attr('data-qty')
-        $('#'+the_id).html(qty)
+        var ses = $(this).attr('data-ses')
+        $('#'+the_id).html(ses)
     })
 
     // decrease cart
@@ -131,13 +131,14 @@ $(document).ready(function(){
                 console.log(response)
                 if(response.status == 'login_required'){
                     swal(response.message, '', 'info').then(function(){
-                        window.location = '/login';
+                        window.location = '/accounts';
                     })
                 }else if(response.status == 'Failed'){
                     swal(response.message, '', 'error')
                 }else{
+                    
                     $('#cart_counter').html(response.cart_counter['cart_count']);
-                    $('#qty-'+food_id).html(response.qty);
+                    $('#ses-'+item_id).html(response.ses);
 
                     applyCartAmounts(
                         response.cart_amount['subtotal'],
@@ -146,7 +147,7 @@ $(document).ready(function(){
                     )
 
                     if(window.location.pathname == '/cart/'){
-                        removeCartItem(response.qty, cart_id);
+                        removeCartItem(response.ses, cart_id);
                         checkEmptyCart();
                     }
                     
@@ -189,7 +190,7 @@ $(document).ready(function(){
     })
 
 
-    // delete the cart element if the qty is 0
+    // delete the cart element if the ses is 0
     function removeCartItem(cartItemQty, cart_id){
             if(cartItemQty <= 0){
                 // remove the cart item element
@@ -230,17 +231,17 @@ $(document).ready(function(){
         var day = document.getElementById('id_day').value
         var from_hour = document.getElementById('id_from_hour').value
         var to_hour = document.getElementById('id_to_hour').value
-        var is_closed = document.getElementById('id_is_closed').checked
+        var is_offline = document.getElementById('id_is_offline').checked
         var csrf_token = $('input[name=csrfmiddlewaretoken]').val()
         var url = document.getElementById('add_hour_url').value
 
-        console.log(day, from_hour, to_hour, is_closed, csrf_token)
+        console.log(day, from_hour, to_hour, is_offline, csrf_token)
 
-        if(is_closed){
-            is_closed = 'True'
+        if(is_offline){
+            is_offline = 'True'
             condition = "day != ''"
         }else{
-            is_closed = 'False'
+            is_offline = 'False'
             condition = "day != '' && from_hour != '' && to_hour != ''"
         }
 
@@ -252,15 +253,15 @@ $(document).ready(function(){
                     'day': day,
                     'from_hour': from_hour,
                     'to_hour': to_hour,
-                    'is_closed': is_closed,
+                    'is_offline': is_offline,
                     'csrfmiddlewaretoken': csrf_token,
                 },
                 success: function(response){
                     if(response.status == 'success'){
-                        if(response.is_closed == 'Closed'){
-                            html = '<tr id="hour-'+response.id+'"><td><b>'+response.day+'</b></td><td>Closed</td><td><a href="#" class="remove_hour" data-url="/vendor/opening-hours/remove/'+response.id+'/">Remove</a></td></tr>';
+                        if(response.is_offline == 'Offline'){
+                            html ='<tr id="hour-'+response.id+'"><td><a href="#" class="font-weight-bold">{{ forloop.counter }}</a></td><td><span class="font-weight-normal">'+response.day+'</span></td><td><span class="font-weight-normal">Offline</span></td><td><a href="#" class="remove_hour" data-url="/doctor/opening-hours/remove/'+response.id+'/"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td></tr>';
                         }else{
-                            html = '<tr id="hour-'+response.id+'"><td><b>'+response.day+'</b></td><td>'+response.from_hour+' - '+response.to_hour+'</td><td><a href="#" class="remove_hour" data-url="/vendor/opening-hours/remove/'+response.id+'/">Remove</a></td></tr>';
+                            html ='<tr id="hour-'+response.id+'"><td><span class="font-weight-normal">'+response.day+'</span></td><td><span class="font-weight-normal">'+response.from_hour+' - '+response.to_hour+'</span></td><td><a href="#" class="remove_hour" data-url="/doctor/opening-hours/remove/'+response.id+'/"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a></td></tr>';
                         }
                         
                         $(".opening_hours").append(html)

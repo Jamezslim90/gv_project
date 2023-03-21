@@ -24,7 +24,7 @@
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-10 text-center">
                             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#pricing-modal">
-                                <span class="mr-2"><i class="fas fa-hand-pointer"></i></span> Get <span class="d-none d-md-inline"></span> started
+                                <span class="mr-2"><i class="fas fa-hand-pointer"></i></span>  <span class="d-none d-md-inline">Get  started</span>
                             </button>
                             {% comment %} 
                             <a class="btn btn-white text-primary animate-up-2 ml-3" href="./dashboard/dashboard.html">Find Doctors</a>
@@ -32,7 +32,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="pattern bottom"></div>
+                {% comment %} <div class="pattern bottom"></div> {% endcomment %}
                  <!-- Load message -->
                  {% include '../includes/alerts.html' %}
             </section>
@@ -68,7 +68,7 @@
                                     title="Stats"
                                     data-content="We track your desktop and mobile keyword rankings from any location and plot your full ranking history on a handy graph."
                                 ></button>
-                                <img class="shadow-box rounded" src="{% static './assets/img/petman.png' %}" alt="SaaS preview" />
+                                <img class="shadow-box rounded" src="{% static './assets/img/petman.png' %}" alt="SaaS preview"/>
                             </div>
                         </div>
                     </div>

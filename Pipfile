@@ -14,6 +14,11 @@ django-jazzmin = "*"
 django-multiselectfield = "*"
 django-crispy-forms = "*"
 crispy-bootstrap5 = "*"
+django-taggit = "*"
+django-comments-xtd = "*"
+django-ckeditor-5 = "*"
+easy-thumbnails = "*"
+django-social-share = "*"
 
 [dev-packages]
 
