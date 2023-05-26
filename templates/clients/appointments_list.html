@@ -1,0 +1,98 @@
+
+{% extends '../base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}My Profile{% endblock title %}
+
+
+{% block content %}
+
+<div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+<nav class="navbar navbar-dark navbar-theme-primary col-12 d-md-none">
+    <a class="navbar-brand mr-lg-5" href="{% url 'home' %}">
+        <img class="navbar-brand-dark" src="{% static './assets/img/gv-logo.png' %}" alt="Pixel logo" /> <img class="navbar-brand-light" src="{% static './assets/img/gv-logo2.png' %}" alt="Pixel Logo Dark" />
+    </a>
+    <div class="d-flex align-items-center">
+        <button class="navbar-toggler d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+ <!-- Load message -->
+ {% include '../includes/alerts.html' %}
+<div class="container-fluid bg-soft">
+    <div class="row">
+        <div class="col-12">
+
+             <!-- Load the navbar here -->
+             {% include '../includes/customer_nav.html' %}
+
+             <main class="content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                    <div class="d-block mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                                <li class="breadcrumb-item">
+                                    <a href="#"><span class="fas fa-home"></span></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">GetVet</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Add Animal</li>
+                            </ol>
+                        </nav>{% comment %}
+                        <h2 class="h4">Doctor Dashboard</h2>
+                        <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
+                    </div>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="{% url 'add_animal' %}" class="btn btn-sm btn-primary"><span class="fas fa-plus mr-2"></span> <span>Vaccine Tracker</span></a>
+                        <a href="{% url 'marketplace' %}" class="btn btn-sm btn-secondary ml-3"><span class="fas fa-search mr-2"></span> <span>Find Doctors</span></a>
+                        {% comment %} <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'cprofile' %}">Update profile</a></button></div> {% endcomment %}
+                        
+                    </div>
+                </div>
+
+                
+                {% comment %} Content Card Here!! {% endcomment %}
+
+                {% if appointments %}
+                <div class="col-12 mx-auto card card-body border-light shadow-sm table-wrapper table-responsive pt-0"> 
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="border-0">#</th>
+                                <th class="border-0">Type</th>
+                                <th class="border-0">Doctor</th>
+                                <th class="border-0">Animal</th>
+                                <th class="border-0">Date</th>
+                                <th class="border-0">Time</th>
+                               
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            {% for appointment in appointments %} 
+                            <tr>
+                                <td><a href="#" class="font-weight-bold">{{ forloop.counter }}</a></td>
+                                <td><span class="font-weight-normal">{{ appointment.appointment_type}}</span></td>
+                                <td><span class="font-weight-normal">{{ appointment.appointment_doctor}}</span></td>
+                                <td>
+                                    <span class="font-weight-normal">{{appointment.animal}}</span>
+                                </td>
+                                <td><span class="font-weight-normal">{{appointment.date}}</span></td>
+                                <td><span class="font-weight-normal">{{appointment.time}}</span></td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <h5 class="text-center h6">No Appointment Details yet.</h5>
+                {% endif %}
+                </div>
+
+
+            </main>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

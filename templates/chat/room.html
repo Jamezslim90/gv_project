@@ -1,0 +1,146 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}About{% endblock title %}
+
+ <!-- LOAD HEADER HERE -->
+ {% block header %}
+
+ {% include '../includes/header.html' %}
+
+ {% endblock header %}
+
+{% block content %}
+<main>
+   
+    <section class="section-header pb-5 pb-lg-6 mb-4 mb-lg-5 bg-primary text-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center mb-4 mb-lg-5">
+                    <h1 class="display-4 font-weight-extreme mb-4">
+                 </h1> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-lg pt-5">
+    <div class="container">
+    <div class="row">
+        <div class="col-12 col-xl-8 mb-4 mx-auto">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-light shadow-sm">
+                        <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom container">
+                            <div class="row justify-content-center">
+                            <div class="col-12"><p class="text-muted text-center">Chat with Dr {{doctor.doctor_slug}}</p></div>
+                        <div id="chat">
+                            {% for chat in chats.all %}
+                                {% if chat.user.id == request.user.id %}
+                                    <div class="message me">
+                                     <strong> Me </strong> 
+                                        <span class="date"> {{chat.timestamp|time:"H:i" }}</span><br>
+                                        {{ chat.content }}
+                                    </div>
+
+                            {% else%}                                                                                                         
+                                    <div class="message">
+                                     <strong> {{chat.user.username}} </strong> 
+                                        <span class="date">{{chat.timestamp|time:"H:i" }} </span><br>
+                                        {{ chat.content }}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                           <div id="chat-input">
+                            <input id="chat-message-input" class="form-control border border-light-gray mb-4" type="text" placeholder="Your Message" rows="6" maxlength="1000" required>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <input id="chat-message-submit" value="send" type="submit" class="btn btn-secondary">
+                            </div> 
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+</main>
+{% endblock content %}
+
+
+{% block include_js %}
+  {{doctor_slug|json_script:"doctor-slug" }}
+  {{ request.user.username|json_script:"request-user" }}
+{% endblock %}
+
+{% block domready %}
+  console.log("DOM ready");
+  const doctorSlug = JSON.parse(
+    document.getElementById('doctor-slug').textContent
+  );
+  const requestUser = JSON.parse(
+    document.getElementById('request-user').textContent
+  );
+  const url = 'ws://' + window.location.host +
+              '/ws/chat/room/' + doctorSlug + '/';
+ 
+  const chatSocket = new WebSocket(url);
+
+  chatSocket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    const chat = document.getElementById('chat');
+
+    const dateOptions = {hour: 'numeric', minute: 'numeric', hour12: true};
+    const datetime = new Date(data.datetime).toLocaleString('en', dateOptions);
+    const isMe = data.user === requestUser;
+    const source = isMe ? 'me' : 'other';
+    const name = isMe ? 'Me' : data.user;
+
+    chat.innerHTML += '<div class="message ' + source + '">' +
+                      '<strong>' + name + '</strong> ' +
+                      '<span class="date">' + datetime + '</span><br>' +
+                      data.message + '</div>';
+    chat.scrollTop = chat.scrollHeight;
+  };
+
+  chatSocket.onclose = function(event) {
+    console.error('Chat socket closed unexpectedly');
+  };
+
+  const input = document.getElementById('chat-message-input');
+  const submitButton = document.getElementById('chat-message-submit');
+
+  submitButton.addEventListener('click', function(event) {
+    const message = input.value;
+    if(message) {
+      // send message in JSON format
+      chatSocket.send(JSON.stringify({'message': message}));
+      // clear input
+      input.value = '';
+      input.focus();
+    }
+  });
+
+  input.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      // cancel the default action, if needed
+      event.preventDefault();
+      // trigger click event on button
+      submitButton.click();
+    }
+  });
+
+  input.focus();
+{% endblock %}
+
+
+{%block footer%}
+
+{% include '../includes/footer.html' %}
+{% endblock footer%}
+

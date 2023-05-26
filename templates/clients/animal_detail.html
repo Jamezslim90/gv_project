@@ -1,0 +1,272 @@
+ {% extends '../base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}My Profile{% endblock title %}
+
+
+{% block content %}
+
+<div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+<nav class="navbar navbar-dark navbar-theme-primary col-12 d-md-none">
+    <a class="navbar-brand mr-lg-5" href="{% url 'home' %}">
+        <img class="navbar-brand-dark" src="{% static './assets/img/gv-logo.png' %}" alt="Pixel logo" /> <img class="navbar-brand-light" src="{% static './assets/img/gv-logo2.png' %}" alt="Pixel Logo Dark" />
+    </a>
+    <div class="d-flex align-items-center">
+        <button class="navbar-toggler d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+ <!-- Load message -->
+ {% include '../includes/alerts.html' %}
+<div class="container-fluid bg-soft">
+    <div class="row">
+        <div class="col-12">
+
+             <!-- Load the navbar here -->
+             {% include '../includes/customer_nav.html' %}
+
+             <main class="content">
+              <div class="d-flex justify-content-between flex-wrap flex-md-nowrap         align-items-center py-4">
+                    <div class="d-block mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                                <li class="breadcrumb-item">
+                                    <a href="#"><span class="fas fa-home"></span></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">GetVet</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Animal Details</li>
+                            </ol>
+                        </nav>{% comment %}
+                        <h2 class="h4">Doctor Dashboard</h2>
+                        <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
+                    </div>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="{% url 'add_animal' %}" class="btn btn-sm btn-primary"><span class="fas fa-plus mr-2"></span> <span>Vaccine Tracker </span></a>
+                        <a href="{% url 'marketplace' %}" class="btn btn-sm btn-secondary ml-3"><span class="fas fa-search mr-2"></span> <span>Find Doctors</span></a>
+                        {% comment %} <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'cprofile' %}">Update profile</a></button></div> {% endcomment %}
+                        
+                    </div>
+                </div>
+
+                  {% comment %} Content Card Here!! {% endcomment %}
+                
+                  <div class="row justify-content-md-center">
+                    <div class="col-12 col-sm-6 col-xl-7 mb-4">
+                        <div class="card border-light shadow-sm">
+                            <div class="card-body">
+                                <div class="row d-block d-xl-flex align-items-center">
+                                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                        {% if animal.profile_pic%}
+                                       
+                                            <div class="user-avatar xl-avatar mb-3 mr-3"><img class="rounded" src="{{animal.profile_pic.url}}" alt="change avatar" /></div>
+                                       
+                                        {% else %}
+                                       
+                                        <div class="user-avatar xl-avatar mb-3 mr-3"><img class="rounded" src="{% static './assets/img/animal_pic.png' %}" alt="change avatar" /></div>
+                                        {% endif %}  
+                                        <div class="d-sm-none">
+                                            <h2 class="h5">{{animal.name}}'s Details</h2>
+                                            <div class="float-right">
+                                            <a href="{% url 'edit_animal' animal.id %}" style="color:unset;"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp; <a href="{% url 'delete_animal' animal.id %}" onclick="return confirm('Are you sure you want to delete this service?')"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                            </div>
+                                            <div class="d-flex mb-4">
+                                                <div class="d-flex align-items-center mr-3 lh-130"><span class="shape-xs rounded-circle bg-tertiary mr-2"></span> <span class="font-weight-normal small">{{animal.animal_category}}</span></div>
+                                                <div class="d-flex align-items-center mr-3 lh-130"><span class="shape-xs rounded-circle bg-secondary mr-2"></span> <span class="font-weight-normal small">{{animal.animal}}</span></div>
+                                                <div class="d-flex align-items-center mr-3 lh-130"><span class="shape-xs rounded-circle bg-primary mr-2"></span> <span class="font-weight-normal small">{{animal.breed}}</span></div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-7 px-xl-0">
+                                        <div class="d-none d-sm-block">
+                                            <h2 class="h5">{{animal.name|title }}'s Details</h2>
+                                            <div class="float-right">
+                                            <a href="{% url 'edit_animal' animal.id %}" style="color:unset;"><i class="fa fa-pencil" aria-hidden="true"></i></a> &nbsp; <a href="{% url 'delete_animal' animal.id %}" onclick="return confirm('Are you sure you want to delete this service?')"><i class="fa fa-trash text-danger" aria-hidden="true"></i></a>
+                                            </div>
+                                            <div class="d-flex mb-4">
+                                                <div class="d-flex align-items-center mr-3 lh-130"><span class="shape-xs rounded-circle bg-tertiary mr-2"></span> <span class="font-weight-normal small">{{animal.animal_category}}</span></div>
+                                                <div class="d-flex align-items-center mr-3 lh-130"><span class="shape-xs rounded-circle bg-secondary mr-2"></span> <span class="font-weight-normal small">{{animal.animal}}</span></div>
+                                                <div class="d-flex align-items-center mr-3 lh-130"><span class="shape-xs rounded-circle bg-primary mr-2"></span> <span class="font-weight-normal small">{{animal.breed}}</span></div>
+                                            </div>
+                                        </div>
+
+                                        {% comment %} <small>
+                                            Feb 1 - Apr 1, <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> WorldWide
+                                        </small>
+                                        <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">18.2%</span> Since last month</div> {% endcomment %}
+                                                
+                                {% if animal.dob %}
+                                <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-2">
+                                        <div>
+                                            <h6 class="mb-0 small">
+                                                <span class="icon icon-xs mr-1"></span>Age:
+                                            </h6>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="text-primary font-weight-bold">
+                                            <span class= "ml-3 small">{{animal.age}}</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% endif%}
+
+                                    {% if animal.weight %}
+                                    <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-2">
+                                        <div>
+                                        <h6 class="mb-0 small">
+                                            <span class="icon icon-xs mr-1"></span>Weight:
+                                        </h6>
+                                    </div>
+                                    <div>
+                                        <a href="#" class="text-primary font-weight-bold">
+                                        <span class= "ml-3 small">{{animal.weight}} kg</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif%}
+
+                                {% if animal.last_vaccination_date %}
+                                <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-2">
+                                    <div>
+                                        <h6 class="mb-0 small">
+                                            <span class="icon icon-xs mr-1"></span>Last vacinnation:
+                                        </h6>
+                                    </div>
+                                    <div>
+                                    <a href="#" class="text-primary font-weight-bold">
+                                    <span class= "ml-3 small">{{animal.last_vaccination_date|date:'M'}}</span>
+                                     <span class= "small">{{animal.last_vaccination_date|date:'d'}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            {% if animal.next_vaccination_date %}
+                            <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-2">
+                                <div>
+                                    <h6 class="mb-0 small">
+                                        <span class="icon icon-xs mr-1"></span>Next vaccination:
+                                    </h6>
+                                </div>
+                                <div>
+                                    <a href="#" class="text-primary font-weight-bold">
+                                    <span class= "ml-3 small">{{animal.next_vaccination_date|date:'M'}}</span>
+                                    <span class= "small">{{animal.next_vaccination_date|date:'d'}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-2">
+                                <div>
+                                    <h6 class="mb-0 small">
+                                        <span class="icon icon-xs mr-1"></span> Vaccination count:
+                                    </h6>
+                                </div>
+                                <div>
+                                    <a href="#" class="text-primary font-weight-bold">
+                                    <span class= "ml-3 small">{{completed_vaccination_count}}/{{total_vaccination_count}}</span>
+                                    </a>
+                                </div>
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="col-12 col-sm-6 col-xl-5 mb-4">
+                        <div class="card border-light shadow-sm">
+                            <div class="card-body">
+                                <div class="row d-block d-xl-flex align-items-center">
+                                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                        <div class="icon icon-shape icon-md icon-shape-primary rounded mr-4"><span class="fas fa-clock"></span></div>
+                                        <div class="d-sm-none">
+                                            <h2 class="h5">Vaccination</h2>
+                                            {% comment %} <h3 class="mb-1">5,342</h3> {% endcomment %}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-7 px-xl-0">
+                                        <div class="d-none d-sm-block">
+                                            <h2 class="h5">Vaccination</h2>
+                                            {% comment %} <h3 class="mb-1">5,342</h3> {% endcomment %}
+                                        </div>
+                                
+                                        <div class="small mt-2"> Provide the last vaccination date of your pet/livestock to get notification on the next vaccination date.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xl-12 mb-4">
+                    <div class="row">
+                        {% comment %} <div class="col-12 mb-4">
+                            <div class="card border-light shadow-sm">
+                               <div class="card-body">
+                                   <div class="row d-block d-md-flex align-items-center">
+                                        <div class="col-12 col-md-5">
+                                           <div class="icon icon-shape icon-shape-primary rounded-circle"><span class="fas fa-clock"></span></div>
+                                           <div class="mb-1">
+                                           <h2 class="h6 mb-1">Vaccination Tracker</h2>
+                                           </div>                   
+                                        </div>
+                                       <div class="col-12 col-md-7 mt-3 mt-md-0">
+                                           <div class="col-12">
+                                               <div class="row d-flex align-items-center mb-1">
+                                                   <div class="col-2 text-gray font-weight-bold px-0 small"><span class=" ml-1"></span></div>
+                                                   <p>Enter last vaccination date of your pet/livestock to track the next vaccination date.</p>
+                                               </div>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div> {% endcomment %}
+                        {% for vaccination in animal.vaccinations.all %}
+                            
+                        <div class="col-12 col-sm-6 mb-4 mb-md-0">
+                            <div class="card border-light shadow-sm">
+                                <div class="card-body">
+                                    <h6>{{vaccination.vaccine_name}}</h6>
+                                    <div class="small mb-3">
+                                        {{vaccination.vaccine_name.description}}
+                                    </div>
+        
+                                    <div class="small mb-3 text-secondary">
+                                        Given @ {{vaccination.vaccine_name.age_of_vaccination}} weeks, <span class="icon icon-small"><span class="fas fa-tablet"></span></span> {{vaccination.vaccine_name.dosage}}
+                                    </div>
+        
+                                    {% if vaccination.completed == False %}
+                                    <form method="POST" action="{% url 'vaccine_done' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="" class="small">vaccination date:</label> 
+                                        <input type="date" name= "date" class="form-control" id="" rows="3" placeholder="Enter vaccination date" value=""
+                                        min="2010-01-01" max="2050-12-31">
+                                        <input hidden="true" name="vaccination-id" value="{{vaccination.id}}">
+                                        <input hidden="true" name="animal-id" value="{{animal.id}}">
+                                        <input hidden="true" name="expiration-date" value="{{vaccination.vaccine_name.expiration_period}}">
+                                        
+                                    </div>
+                                    <button class="btn mb-2 mr-2  btn-primary btn-sm" type="submit"><i class="far fa-thumbs-up mr-2"></i>Done</button>
+                                    </form>
+                                    {% else %}
+                                    <div class="small mb-3 text-success">
+                                    <span class="icon icon-small"><span class="far fa-thumbs-up"></span></span> Completed
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>      
+                        {% endfor %}
+                    </div>
+                   </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

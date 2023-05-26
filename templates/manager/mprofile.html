@@ -1,0 +1,187 @@
+
+{% extends '../base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}My Profile{% endblock title %}
+
+
+{% block content %}
+
+<div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+<nav class="navbar navbar-dark navbar-theme-primary col-12 d-md-none">
+    <a class="navbar-brand mr-lg-5" href="{% url 'home' %}">
+        <img class="navbar-brand-dark" src="{% static './assets/img/gv-logo.png' %}" alt="Pixel logo" /> <img class="navbar-brand-light" src="{% static './assets/img/gv-logo2.png' %}" alt="Pixel Logo Dark" />
+    </a>
+    <div class="d-flex align-items-center">
+        <button class="navbar-toggler d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+ <!-- Load message -->
+ {% include '../includes/alerts.html' %}
+<div class="container-fluid bg-soft">
+    <div class="row">
+        <div class="col-12">
+
+             <!-- Load the navbar here -->
+             {% include '../includes/manager_nav.html' %}
+
+             <main class="content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                    <div class="d-block mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                                <li class="breadcrumb-item">
+                                    <a href="#"><span class="fas fa-home"></span></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">GetVet</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Manager Profile</li>
+                            </ol>
+                        </nav>{% comment %}
+                        <h2 class="h4">Doctor Dashboard</h2>
+                        <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
+                    </div>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        {% comment %} <a href="{% url 'animal_list' %}" class="btn btn-sm btn-primary"><span class="fas fa-plus mr-2"></span> <span>Vaccine Tracker</span></a> {% endcomment %}
+                        {% comment %} <a href="{% url 'marketplace' %}" class="btn btn-sm btn-secondary ml-3"><span class="fas fa-search mr-2"></span> <span>Find Doctors</span></a> {% endcomment %}
+                        <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'mprofile' %}">Update profile</a></button></div>
+
+                          <!-- Notification Bell Icon -->
+                        <div class="dropdown ml-3">
+                        <a class="dropdown-toggle " href="#" role="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fas fa-bell" style="font-size: 25px;"></span>
+                            <span class="badge badge-danger" style="border-radius: 100px; position: relative; bottom:15px; left: -5px;" id="notification-badge"> 0</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" id="notifications-dropdown">
+                        {% for i in notifications %}
+                        <li><a class="dropdown-item" href="#">{{i.message}}</a></li>
+                        <hr class="dropdown-divider">
+                        {% endfor %}
+                        </ul>
+                        </div>
+                        <!-- End of Notification Bell Icon -->
+                    </div>
+                </div>
+                
+               
+                {% comment %} Content Card Here!! {% endcomment %}
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12 d-flex align-items-center justify-content-center">
+                            <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                                <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="mb-0 h5">Update your profile</h1></div>
+                                <form action="{% url 'mprofile' %}" class="mt-4" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <!-- Load message -->
+                                   {% include '../includes/alerts.html' %}
+                                   {% if form.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            {{ error }}
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                               
+                                 {% endif %}
+                                 
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-user-alt"></i></span>
+                                            </div>
+                                           {% comment %}  <input type="email" class="form-control" id="input-email" placeholder="Enter email" required /> {% endcomment %}
+                                           {{ profile_form.profile_picture}}
+                                           <label class="text-danger">{{ profile_form.profile_picture.errors }}</label>
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            </div>
+                                           {{ profile_form.phone_number }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-award"></i></span>
+                                            </div>
+                                            {{ profile_form.address }}
+                                          
+                                        </div>
+                                        <small class="text-muted float-right">powered by Google</small>
+                                    </div>
+                                    
+                                  
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="far fa-user"></i></span>
+                                            </div>
+                                           {% comment %}  <input type="email" class="form-control" id="input-email" placeholder="Enter email" required /> {% endcomment %}
+                                           {{ profile_form.city }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                            </div>
+                                            {{ profile_form.state }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                                            </div> 
+                                            {{ profile_form.country}}
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                                            </div>
+                                            {{ profile_form.pin_code }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                                            </div>
+                                            {{ profile_form.latitude }}
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
+                                            </div>
+                                            {{ profile_form.longitude }}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-3"><button type="submit" class="btn btn-block btn-primary">Update</button></div>
+                                </form>
+                               
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </main>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

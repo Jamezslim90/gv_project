@@ -1,0 +1,287 @@
+{% extends '../base.html' %}
+{% load static %}
+{% load humanize %}
+{% block title %}About{% endblock title %}
+
+ <!-- LOAD HEADER HERE -->
+ {% block header %}
+
+ {% include '../includes/header.html' %}
+
+ {% endblock header %}
+
+{% block content %}
+<main>
+    <div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+    <section class="section-header pb-5 pb-lg-6 mb-4 mb-lg-5 bg-primary text-white">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center mb-4 mb-lg-5">
+                    <h1 class="display-4 font-weight-extreme mb-4">Comfirm Order</h1> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-lg pt-5">
+    <div class="container">
+    <div class="row">
+        <div class="col-12 col-xl-7 mb-4 ">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <div class="card border-light p-3 shadow-sm">
+                        <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom mb-3">
+                            <div class="d-block">
+                                <div class="h5 font-weight-normal text-gray">Review Billing Address</div>    
+                            </div>  
+                        </div>  
+                        <div class="billing-address">
+                            <div><b>{{ order.name }}</b></div>
+                            <div>{{ order.address }}</div>
+                            <div>{{ order.city }} - {{ order.pin_code }}</div>
+                            <div>{{ order.state }}, {{ order.country }}</div>
+                            <div><b>Phone: </b>{{ order.phone }}</div>
+                            <div><b>Email: </b>{{ order.email }}</div>
+                            <div><b>Payment: </b>{{ order.payment_method }}</div>
+                            <br>
+                            <div><a href="{% url 'checkout' %}" class="btn btn-outline-danger">Edit</a></div>
+                            <br>
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-12 col-xl-5 mb-4">
+            <div class="col-12 px-0 mb-4">
+                <div class="card border-light shadow-sm">
+                    <div class="card-body" id="paymentDiv">
+                        <div class="d-flex align-items-center justify-content-between border-bottom border-light pb-3">
+                            <div>
+                                <h5 class="mb-0">
+                                    <span class="icon icon-xs mr-3"><span class="fas fa-clipboard-list"></span></span>Order Summary
+                                </h5>
+                            </div>
+                            {% comment %} <div>
+                                <a href="#" class="text-primary font-weight-bold">#755<span class="fas fa-chart-line ml-2"></span></a>
+                            </div> {% endcomment %}
+                        </div>
+
+                        {% comment %} CART {% endcomment %}
+
+                        <div class="row">
+                        
+                            {% for item in cart_items %}
+                            <div class="col-12 mb-4">
+                                <div class="card bg-white " >
+                                    <div class="card-body p-3 p-lg-4">
+                                        <div class="row">
+                                            <div class="col-12 col-md-12 mb-3 mb-lg-0" id="cart-item-{{item.id}}">
+                                                <h6 class="mb-2">{{ item.consultationitem }}</h6>
+                                                <p class="text-gray mb-2">{{item.consultationitem.description}}</p>
+                                                <div class="d-flex">
+                                                    <a href="./career-single.html" class="stretched-link"><i class="fas fa-file-invoice-dollar"></i><span class="h6 text-sm ml-2">&#8358; {{item.consultationitem.fee.fee|intcomma}}/ 30mins</span></a>
+                                                     <span class="ml-4"><i class="fas fa-shopping-cart text-secondary"></i><span class="h6 text-sm ml-2">{{item.session}} Session </span></span> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between border-bottom border-light py-3">
+                            <div>
+                                <h6 class="mb-0">
+                                    <span class="icon icon-xs mr-3"><span class="fas fa-file-invoice-dollar"></span></span>Subtotal
+                                </h6>
+                                
+                            </div>
+                            <div>
+                                <a href="#" class="text-primary font-weight-bold" id="subtotal">
+                                    &#8358; {{ subtotal|intcomma }}</span></a>
+                            </div>
+                        </div>
+
+                        {% for key, value in tax_dict.items %}
+                            {% for i, j in value.items %}
+                        <div class="d-flex align-items-center justify-content-between         border-bottom border-light py-3">
+                            <div>
+                                <h6 class="mb-0">
+                                    <span class="icon icon-xs mr-3"><span class="fas fa-dollar"></span></span>{{ key }} <small>({{ i }}%) </small>
+                                </h6>
+                            </div>
+                            <div>
+                                <a class="text-primary font-weight-bold" id="tax-{{ key }}">
+                                  &#8358; {{ j }}</a>
+                            </div>
+                        </div>
+                            {% endfor %}
+                        {% endfor %}
+                        <div class="d-flex align-items-center justify-content-between pt-3">
+                            <div>
+                                <h6 class="mb-0">
+                                    <span class="icon icon-xs mr-3"><span class="fas fa-folder-open"></span></span>TOTAL
+                                </h6>
+                                {% comment %} <a href="#" class="small card-stats">Travel > Accomodation</a> {% endcomment %}
+                            </div>
+                            <div>
+                                <a href="#" class="text-primary font-weight-bold" id="total">
+                                    &#8358; {{ grand_total|intcomma }}</span></a>
+                            </div>
+                        </div>
+                    
+                        {% if order.payment_method == 'Paystack' %}
+                         <button  type="submit" class="btn btn-primary w-100 p-2 mt-3" onclick="payWithPaystack()" id="paystack-button">Pay with Paystack</button>
+
+                         {% elif order.payment_method == 'Monnify' %}
+                         {% comment %} <button  type="submit" class="btn btn-warning w-100 p-2 mt-3 start-payment-button" onclick="makePayment()" id="flutterwave-button">Pay with flutterwave</button> {% endcomment %}
+                         <button type="button" class="btn btn-primary w-100 p-2 mt-3 " onclick="payWithMonnify()" id="monnify-button">Pay With Monnify</button>
+                         {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+</main>
+
+
+<script>
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        
+    var grand_total = "{{ grand_total }}"
+    var url = "{% url 'payments' %}"
+    var order_number = "{{ order.order_number }}"
+    const csrftoken = getCookie('csrftoken');
+    var order_complete = "{% url 'order_complete' %}";
+    var add_appointment = "{% url 'add_appointment' %}";
+    console.log('csrftoken===>', csrftoken)
+
+    // PAYSTACK FUNCTION
+
+    var paymentDiv = document.getElementById('paymentDiv');
+    paymentDiv.addEventListener('submit', payWithPaystack, false);
+    function payWithPaystack() {
+    var handler = PaystackPop.setup({
+        key: "{{PAYSTACK_PK}}", 
+        email: "{{ order.email }}",
+        amount: grand_total * 100,
+        currency: 'NGN', 
+        callback: function(response) {
+      //this happens after the payment is completed successfully
+      var transaction = response.transaction;
+      //alert('Payment complete! Reference: ' + reference);
+      // Make an AJAX call to your server with the reference to verify the transaction
+      console.log(response)
+      var transaction_id = transaction
+      var status = response.status
+      var payment_method = 'Paystack'
+      sendTransaction(transaction_id, payment_method, status);
+
+      // Replace the above to show a success message within this page, e.g.
+      const element = document.getElementById('paystack-button');
+      element.innerHTML = '';
+      element.innerHTML = '<h6 class="text-center text-white"><i class="fa fa-spinner fa-spin"></i> Please wait...</h6>';
+      // Or go to another URL:  actions.redirect('thank_you.html');
+
+    },
+    onClose: function() {
+      alert('Transaction was not completed, window closed.');
+    },
+  });
+  handler.openIframe();
+}
+
+      // MONNIFY FUNCTION
+
+    var paymentDiv = document.getElementById('paymentDiv');
+    paymentDiv.addEventListener('submit', payWithMonnify, false);
+        function payWithMonnify() {
+            MonnifySDK.initialize({
+                amount: grand_total,
+                currency: "NGN",
+                reference: new String((new Date()).getTime()),
+                customerFullName: "{{order.name}}",
+                customerEmail: "{{order.email}}",
+                apiKey: "{{MONNIFY_PK}}",
+                contractCode: "0680159477",
+                paymentDescription: "{{item.consultationitem}}- {{item.consultationitem.description}}",
+                metadata: {
+                    "name": "{{order.name}}}",
+                },
+                onLoadStart: () => {
+                    console.log("loading has started");
+                },
+                onLoadComplete: () => {
+                    console.log("SDK is UP");
+                },
+
+                onComplete: function(response) {
+                    //Implement what happens when the transaction is completed.
+                    var transaction = response.paymentReference;
+                    console.log(response);
+                    var transaction_id = transaction
+                    var status = response.status
+                    var payment_method = 'Monnify'
+                    sendTransaction(transaction_id, payment_method, status);
+
+                    const element = document.getElementById('monnify-button');
+                    element.innerHTML = '';
+                    element.innerHTML = '<h6 class="text-center text-white" ><i class="fa fa-spinner fa-spin"></i> Please wait...</h6>';
+                },
+                onClose: function(data) {
+                    //Implement what should happen when the modal is closed here
+                    console.log(data);
+                }
+            });
+        }
+
+    // Send the data to payments view to store in the database
+    function sendTransaction(transaction_id, payment_method, status){
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                'order_number': order_number,
+                'transaction_id': transaction_id,
+                'payment_method': payment_method,
+                'status': status,
+                'csrfmiddlewaretoken': csrftoken
+            },
+            success: function(response){
+                console.log('response==>', response)
+               // window.location.href = order_complete+'?order_no='+response.order_number+'&trans_id='+response.transaction_id
+               window.location.href = add_appointment+'?order_no='+response.order_number+'&trans_id='+response.transaction_id
+            }
+        })
+    }
+</script>
+
+{% endblock content %}
+
+
+{%block footer%}
+
+{% include '../includes/footer.html' %}
+{% endblock footer%}
