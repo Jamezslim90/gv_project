@@ -1,5 +1,6 @@
 {% extends '../base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Customer Dashboard{% endblock title %}
 
@@ -42,9 +43,25 @@
                         {% comment %} <p class="mb-0">This is the Doctor Dashboard</p> {% endcomment %}
                     </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <a href="{% url 'consultation_item' %}" class="btn btn-sm btn-primary"><span class="fas fa-plus mr-2"></span> <span>Add Pet / Livestock</span></a>
+                        <a href="{% url 'add_animal' %}" class="btn btn-sm btn-primary"><span class="fas fa-plus mr-2"></span> <span>Vaccine Tracker </span></a>
                         <a href="{% url 'marketplace' %}" class="btn btn-sm btn-secondary ml-3"><span class="fas fa-search mr-2"></span> <span>Find Doctors</span></a>
-                        <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="#">Update profile</a></button></div>
+                        {% comment %} <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'cprofile' %}">Update profile</a></button></div> {% endcomment %}
+
+                        
+                         <!-- Notification Bell Icon -->
+                        <div class="dropdown ml-3">
+                        <a class="dropdown-toggle " href="#" role="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fas fa-bell" style="font-size: 25px;"></span>
+                            <span class="badge badge-danger" style="border-radius: 100px; position: relative; bottom:15px; left: -5px;" id="notification-badge">0</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" id="notifications-dropdown">
+                        {% for i in cusnotifications %}
+                        <li><a class="dropdown-item" href="#">{{i.message}}</a></li>
+                        <hr class="dropdown-divider">
+                        {% endfor %}
+                        </ul>
+                        </div>
+                        <!-- End of Notification Bell Icon -->
                     </div>
                 </div>
                 {% comment %} Content Card Here!! {% endcomment %}
@@ -56,19 +73,45 @@
                                     <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                                         <div class="icon icon-shape icon-md icon-shape-primary rounded mr-4 mr-sm-0"><span class="fas fa-chart-line"></span></div>
                                         <div class="d-sm-none">
-                                            <h2 class="h5">Total Visits</h2>
-                                            <h3 class="mb-1">345,678</h3>
+                                            <h2 class="h5">Total Payments</h2>
+                                            <h3 class="mb-1"> &#8358;{{total_sum_payment|floatformat:0|intcomma}}</h3>
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-7 px-xl-0">
                                         <div class="d-none d-sm-block">
-                                            <h2 class="h5">Total Visits</h2>
-                                            <h3 class="mb-1">345,678</h3>
+                                            <h2 class="h5">Total Payments</h2>
+                                            <h4 class="mb-1"> &#8358;{{total_sum_payment|floatformat:0|intcomma}}</h4>
                                         </div>
-                                        <small>
+                                        {% comment %} <small>
                                             Feb 1 - Apr 1, <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> WorldWide
                                         </small>
-                                        <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">18.2%</span> Since last month</div>
+                                        <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">18.2%</span> Since last month</div> {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                        <div class="card border-light shadow-sm">
+                            <div class="card-body">
+                                <div class="row d-block d-xl-flex align-items-center">
+                                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
+                                        <div class="icon icon-shape icon-md icon-shape-tertiary rounded mr-4"><span class="fas fa-dog"></span></div>
+                                        <div class="d-sm-none">
+                                            <h2 class="h5">Total Animal</h2>
+                                            <h4 class="mb-1">{{ animal_count}}</h4>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-7 px-xl-0">
+                                        <div class="d-none d-sm-block">
+                                            <h2 class="h5">Total Animal</h2>
+                                            <h4 class="mb-1">{{ animal_count}}</h4>
+                                        </div> 
+                                        {% comment %}
+                                        <small>
+                                            Feb 1 - Apr 1, <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> Worldwide
+                                        </small>
+                                        <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">28.2%</span> Since last month</div> {% endcomment %}
                                     </div>
                                 </div>
                             </div>
@@ -81,99 +124,67 @@
                                     <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                                         <div class="icon icon-shape icon-md icon-shape-tertiary rounded mr-4"><span class="fas fa-users"></span></div>
                                         <div class="d-sm-none">
-                                            <h2 class="h5">New Users</h2>
-                                            <h3 class="mb-1">5,342</h3>
+                                            <h2 class="h5">Appointments</h2>
+                                            <h4 class="mb-1">{{appointment_count}}</h4>
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-7 px-xl-0">
                                         <div class="d-none d-sm-block">
-                                            <h2 class="h5">New Users</h2>
-                                            <h3 class="mb-1">5,342</h3>
-                                        </div>
+                                            <h2 class="h5">Appointments</h2>
+                                            <h4 class="mb-1">{{appointment_count}}</h4>
+                                        </div> 
+                                        {% comment %}
                                         <small>
                                             Feb 1 - Apr 1, <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> Worldwide
                                         </small>
-                                        <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">28.2%</span> Since last month</div>
+                                        <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">28.2%</span> Since last month</div> {% endcomment %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                        <div class="card border-light shadow-sm">
-                            <div class="card-body">
-                                <div class="row d-block d-xl-flex align-items-center">
-                                    <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center"><div class="ct-chart-traffic-share ct-golden-section ct-series-a"></div></div>
-                                    <div class="col-12 col-xl-7 px-xl-0">
-                                        <h2 class="h5">Traffic Share</h2>
-                                        <div class="mb-3 small">
-                                            Feb 1 - Apr 1, <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> Worldwide
-                                        </div>
-                                        <h6 class="font-weight-normal text-gray">
-                                            <span class="icon w-20 icon-xs icon-secondary mr-1"><span class="fas fa-desktop"></span></span> Desktop <a href="#" class="h6">70%</a>
-                                        </h6>
-                                        <h6 class="font-weight-normal text-gray">
-                                            <span class="icon w-20 icon-xs icon-primary mr-1"><span class="fas fa-mobile-alt"></span></span> Mobile Web <a href="#" class="h6">30%</a>
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                        <div class="card border-light shadow-sm">
-                            <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
-                                <div class="d-block">
-                                    <div class="h6 font-weight-normal text-gray mb-2">App Ranking</div>
-                                    <h2 class="h3">452</h2>
-                                    <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">18.2%</span></div>
-                                </div>
-                                <div class="d-block ml-auto">
-                                    <div class="d-flex align-items-center text-right mb-2"><span class="shape-xs rounded-circle bg-primary mr-2"></span> <span class="font-weight-normal small">All</span></div>
-                                    <div class="d-flex align-items-center text-right"><span class="shape-xs rounded-circle bg-secondary mr-2"></span> <span class="font-weight-normal small">Widgets</span></div>
-                                </div>
-                            </div>
-                            <div class="card-body p-2"><div class="ct-chart-ranking ct-golden-section ct-series-a"></div></div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6 col-xl-4 mb-4">
-                        <div class="card border-light shadow-sm">
-                            <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
-                                <div class="d-block">
-                                    <div class="h6 font-weight-normal text-gray mb-2">Traffic by Source</div>
-                                    <h2 class="h4">Google</h2>
-                                    <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">10.57%</span></div>
-                                </div>
-                                <div class="d-block ml-auto">
-                                    <div class="d-flex align-items-center text-right mb-2"><span class="shape-xs rounded-circle bg-primary mr-2"></span> <span class="font-weight-normal small">Google</span></div>
-                                    <div class="d-flex align-items-center text-right mb-2"><span class="shape-xs rounded-circle bg-secondary mr-2"></span> <span class="font-weight-normal small">Yahoo</span></div>
-                                    <div class="d-flex align-items-center text-right mb-2"><span class="shape-xs rounded-circle bg-tertiary mr-2"></span> <span class="font-weight-normal small">Yandex</span></div>
-                                </div>
-                            </div>
-                            <div class="card-body p-2"><div class="ct-chart-traffic-source ct-golden-section ct-series-a"></div></div>
-                        </div>
-                    </div>
-                    <div class="col-12 col-lg-6 col-xl-4 mb-4">
-                        <div class="card border-light shadow-sm">
-                            <div class="card-body d-flex flex-row align-items-center flex-0 border-bottom">
-                                <div class="d-block">
-                                    <div class="h6 font-weight-normal text-gray mb-2">Organic vs Paid Search</div>
-                                    <h2 class="h4">Trafic Distibution</h2>
-                                    <div class="small mt-2"><span class="fas fa-angle-up text-success"></span> <span class="text-success font-weight-bold">$10.57%</span></div>
-                                </div>
-                                <div class="d-block ml-auto">
-                                    <div class="d-flex align-items-center text-right mb-2"><span class="shape-xs rounded-circle bg-secondary mr-2"></span> <span class="font-weight-normal small">Organic</span></div>
-                                    <div class="d-flex align-items-center text-right mb-2"><span class="shape-xs rounded-circle bg-tertiary mr-2"></span> <span class="font-weight-normal small">Direct</span></div>
-                                    <div class="d-flex align-items-center text-right mb-2"><span class="shape-xs rounded-circle bg-primary mr-2"></span> <span class="font-weight-normal small">Paid</span></div>
-                                </div>
-                            </div>
-                            <div class="card-body p-2"><div class="ct-chart-distribution ct-golden-section ct-series-a"></div></div>
-                        </div>
-                    </div>
+                   
                 </div>
             </main>
 
         </div>
     </div>
+     {% comment %} Channels Websocket Script {% endcomment %}
 
+    {{ room_name|json_script:"room-name" }}
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+        const notificationSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/notification/'
+            + roomName
+            + '/'
+        );
+
+        notificationSocket.onmessage = function(e) {
+           const data = JSON.parse(e.data);
+            //document.querySelector('#chat-log').value += (data.message + '\n');
+            //const myValue = data.data.value
+            //const split_string = myValue.split(" ")
+            //console.log(split_string)
+            //console.log(typeof myValue)
+            const notifier= data.data.message
+            console.log(notifier)
+            //document.getElementById('price').innerText = myValue;
+            document.getElementById("notifications-dropdown").innerHTML = "<li class='dropdown-item'>" + notifier + "</li><hr class='dropdown-divider'>" + document.getElementById("notifications-dropdown").innerHTML;
+            document.getElementById("notification-badge").innerHTML = parseInt(document.getElementById("notification-badge").innerHTML) + 1;
+        };
+
+        notificationSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+      
+
+       
+    </script>
 {% endblock content %}
+
+     

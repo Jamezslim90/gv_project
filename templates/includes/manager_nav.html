@@ -4,7 +4,11 @@
     <div class="sidebar-sticky pt-4 mx-auto">
         <div class="user-card d-flex align-items-center justify-content-between justify-content-md-center pb-4">
             <div class="d-flex align-items-center">
-                <div class="user-avatar lg-avatar mr-4"><img src="{% static './assets/img/profile-pic.png' %}" class="card-img-top rounded-circle border-white" alt="Bonnie Green" /></div>
+                {% if user_profile.profile_picture %}
+                <div class="user-avatar lg-avatar mr-4"><img src="{{user_profile.profile_picture.url}}" class="card-img-top rounded-circle border-white" alt="Profile Pic" /></div>
+                {%else%}
+                <div class="user-avatar lg-avatar mr-4"><img src="{% static './assets/img/default_profile_pic.png' %}" class="card-img-top rounded-circle border-white" alt="Bonnie Green" /></div>
+                {%endif%}
                 <div class="d-block">
                     {%if user.is_authenticated%}
                     <h2 class="h6">Hi, {{ user.first_name }}</h2>
@@ -26,29 +30,29 @@
             </li>
 
             <li class="nav-item">
-                <a href="../dashboard/settings.html" class="nav-link">
+                <a href="{% url 'mprofile' %}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-cog"></span></span> <span>Profile</span>
                 </a>
             </li>
 
-            <li class="nav-item">
+          
+            {% comment %} <li class="nav-item">
                 <a href="../dashboard/messages.html" class="nav-link d-flex align-items-center justify-content-between">
                     <span>
-                        <span class="sidebar-icon"><span class="fas fa-inbox"></span></span>  Appointments
-                    </span>
-                    <span class="badge badge-md badge-danger badge-pill">4</span>
+                        <span class="sidebar-icon"><span class="fas fa-inbox"></span></span>  Create Broadcast
+                    </span>   
                 </a>
-            </li>
+            </li> {% endcomment %}
             
             
-            
+            {% comment %}             
             <li class="nav-item">
                 <a href="../dashboard/settings.html" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-cog"></span></span> <span>Account settings</span>
                 </a>
             </li>
 
-            <li role="separator" class="dropdown-divider mt-4 mb-3 border-blue"></li>
+            <li role="separator" class="dropdown-divider mt-4 mb-3 border-blue"></li> {% endcomment %}
           
         </ul>
     </div>

@@ -22,13 +22,13 @@
                     
                      <h1 class="display-3 font-weight-extreme mb-4">Dr. {{doctor.user_profile }}</h1>
                      {% if doctor.user_profile.profile_picture %}
-                    <div class="avatar-lg mx-auto"><img class="rounded-circle" src="{{ doctor.user_profile.profile_picture.url }}" alt="avatar" /></div>
+                    <div class="xl-avatar mx-auto mb-3 mb-lg-0"><img class="rounded" src="{{ doctor.user_profile.profile_picture.url }}" alt="avatar" /></div>
                     {% else %}   
-                    <div class="avatar-lg mx-auto mb-3 mb-lg-0"><img class="rounded-circle" src="{% static './assets/img/team/profile-picture-1.jpg' %}" alt="avatar" /></div>
+                    <div class="xl-avatar mx-auto mb-3 mb-lg-0"><img class="rounded" src="{% static './assets/img/team/profile-picture-1.jpg' %}" alt="avatar" /></div>
                     {% endif %}
                     <div class="d-flex flex-column flex-lg-row justify-content-center">
                         <span class="h5 mb-3 mb-lg-0"><i class="fas fa-map-marker-alt"></i><span class="ml-3"> {{doctor.state_of_practice }}</span></span>
-                        <span class="ml-lg-5 mb-3 mb-lg-0 h5"><i class="fas fa-user-tie"></i><span class="ml-3">7 yrs Experience</span></span>
+                        <span class="ml-lg-5 mb-3 mb-lg-0 h5"><i class="fas fa-user-tie"></i><span class="ml-3">{{doctor.experience}}Experince</span></span>
                        <span class="ml-lg-5 mb-3 mb-lg-0 h5"><i class="fas fa-file-invoice-dollar"></i><span class="ml-3">$115-150k / year</span></span> 
                     </div>
                     <div>
@@ -37,12 +37,12 @@
                     {% endfor %}
                     </div>
                 </div>
-                  {% comment %}
+                
                 <div class="col col-12 text-center">
-                    <a href="#consultationItem" class="btn btn-secondary text-white animate-up-2 mr-3"><i class="fas fa-arrow-right mr-2"></i>Book Doctor</a>
-                   <a href="#apply" class="btn btn-white text-primary animate-up-2"><i class="fas fa-clipboard-list mr-2"></i>Apply Now</a> 
+                    <a href="{% url 'chatRoom' doctor.doctor_slug %}" class="btn btn-secondary text-white animate-up-2 mr-3"><i class="fas fa-arrow-right mr-2"></i>Chat with Doctor</a>
+                   {% comment %} <a href="#apply" class="btn btn-white text-primary animate-up-2"><i class="fas fa-clipboard-list mr-2"></i>Apply Now</a>  {% endcomment %}
                 </div>
-                {% endcomment %}
+              
             </div>
         </div>
        

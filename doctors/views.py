@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
 
 from django.shortcuts import render, get_object_or_404, redirect
-from .forms import DoctorForm, OpeningHourForm, BankAccountForm
+from .forms import DoctorForm, OpeningHourForm, BankAccountForm, MeetingForm
 from accounts.forms import UserProfileForm
 from service.forms import ConsultationItemForm
 from django.views.generic import DetailView, CreateView
@@ -10,21 +10,27 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from accounts.models import UserProfile
-from .models import  Doctor, OpeningHour, BankAccount
+from .models import  Doctor, OpeningHour, BankAccount, Meeting
 from django.contrib import messages
 
 from django.contrib.messages.views import SuccessMessageMixin
 from service.models import ConsultationItem, Service
-
+from clients.models import Appointment
+from orders.models import Payment
 from django.contrib.auth.decorators import login_required, user_passes_test
-from accounts.views import check_role_doctor
+from accounts.views import check_role_doctor, check_role_customer
 from django.template.defaultfilters import slugify
+from datetime import datetime,time, date
+import json
+from .utils import createZoomMeeting
+from .tasks import send_zoom_invitation, send_zoom_notification 
+from accounts.utils import get_doctor
+from django.http import HttpResponseForbidden
+# Channels
+from django.shortcuts import render, HttpResponse
+from channels.layers import get_channel_layer
+import json
 
-
-
-def get_doctor(request):
-    doctor = Doctor.objects.get(user=request.user)
-    return doctor
 
 
 
@@ -36,7 +42,7 @@ def dprofile(request):
     
     if request.method == 'POST':
         profile_form = UserProfileForm(request.POST, request.FILES, instance=profile)
-       # doctor_form = DoctorForm(request.POST, instance=doctor)
+       #doctor_form = DoctorForm(request.POST, instance=doctor)
         #doctor_form.induction_date = request.POST.get("induction_date")
         if profile_form.is_valid() : #and doctor_form.is_valid()
             profile_form.save()
@@ -216,7 +222,8 @@ def delete_bank(request, pk=None):
 
 
 
-
+@login_required(login_url='login')
+@user_passes_test(check_role_doctor)
 def opening_hours(request):
     opening_hours = OpeningHour.objects.filter(doctor=get_doctor(request))
     form = OpeningHourForm()
@@ -260,6 +267,129 @@ def remove_opening_hours(request, pk=None):
             return JsonResponse({'status': 'success', 'id': pk})
 
 
+@login_required(login_url='login')
+@user_passes_test(check_role_doctor)
+def meeting_info(request):
+    
+    doctor = get_doctor(request)
+    meetings = Meeting.objects.filter(doctor=doctor)
+    context = {
+        'meetings': meetings,
+    }
+    return render(request, 'doctors/meeting_list.html', context)
+
+
+def add_meeting(request):
+    if request.method == 'POST':
+        form = MeetingForm(request.POST)
+        if form.is_valid():
+            meeting = form.save(commit=False)
+            meeting.doctor = get_doctor(request)
+            doctor_name = get_doctor(request).user.first_name + ' ' + get_doctor(request).user.last_name
+            
+            # Extract data from form
+            meeting.timezone = 'Africa/Bangui'
+            timezone = meeting.timezone
+            email = request.POST.get('zoom_email')
+            form_date= request.POST.get('date')
+            form_time= request.POST.get('time')
+            topic = request.POST.get('topic')
+            duration = request.POST.get('duration')
+            passcode= request.POST.get('passcode')
+            customer_email = request.POST.get('customer_email')
+            
+                        
+            start_time = form_date + 'T' + form_time
+            # Create zoom meeeting
+            response = createZoomMeeting(email,topic, start_time, duration, passcode, timezone)
+            data = response
+            # Convert the JSON response to a Python dictionary
+            print(data)
+            # Access a specific attribute in the response data
+            id = data['id']
+    
+            meeting.zoom_id = id
+            form.save()
+            
+            
+         # SEND ZOOM INVITE EMAIL TO THE CUSTOMER
+            mail_subject = 'Zoom meeting invitation- ' + topic + '.'
+            mail_template = 'doctors/zoom_invitation_email.html'
+
+            context = {
+                'topic': data['topic'],
+                'doctor': doctor_name,
+                'to_email': customer_email,
+                'start_time': data['start_time'],
+                'zoom_meeting_id': data['id'],
+                'duration': data['duration'],
+                'join_url': data['join_url'],
+                'password': data['password'],
+            
+            }
+            send_zoom_invitation.delay(mail_subject, mail_template, context)
+            
+
+            #SEND ZOOM NOTIFICATION EMAIL TO THE DOCTOR
+            mail_subject = 'Zoom meeting notification- ' + topic + '.'
+            mail_template = 'doctors/zoom_notification_email.html'
+            
+            context = {
+                'topic': data['topic'],
+                'doctor': doctor_name,
+                'to_email': email,
+                'start_time': data['start_time'],
+                'zoom_meeting_id': data['id'],
+                'duration': data['duration'],
+                'start_url': data['start_url'],
+                'password': data['password'],
+            
+            }
+            
+            send_zoom_notification.delay(mail_subject, mail_template, context)
+            
+            messages.success(request, 'Meeting created successfully!')
+            return redirect('meeting_info')
+        else:
+            print(form.errors)
+    else:
+        form = MeetingForm()
+        context = {
+        'form': form,
+    }
+    return render(request, 'doctors/add_meeting.html', context)
+
+
+@login_required(login_url='login')
+@user_passes_test(check_role_doctor)
+def doctor_appointment (request):
+    
+    doctor = get_doctor(request)
+    appointments = Appointment.objects.filter(appointment_doctor=doctor)
+    context = {
+         
+        'appointments': appointments,   
+    }
+    return render(request, 'doctors/appointments_list.html', context)
+
+   
+    
+@login_required(login_url='login')
+@user_passes_test(check_role_doctor)     
+def doctor_payment(request):
+    
+    doctor = get_doctor(request)
+    payments = Payment.objects.filter(receiver=doctor)
+    context = {
+        'payments': payments,
+    }
+    return render(request, 'doctors/payments_list.html', context)
+
+
+
+
+
+
 # def order_detail(request, order_number):
 #     try:
 #         order = Order.objects.get(order_number=order_number, is_ordered=True)
@@ -285,3 +415,18 @@ def remove_opening_hours(request, pk=None):
 #         'orders': orders,
 #     }
 #     return render(request, 'vendor/my_orders.html', context)
+
+
+
+
+# from asgiref.sync import async_to_sync
+# def test(request):
+#     channel_layer = get_channel_layer()
+#     async_to_sync(channel_layer.group_send)(
+#         "notification_broadcast",
+#         {
+#             'type': 'send_notification',
+#             'message': json.dumps("Notification")
+#         }
+#     )
+#     return HttpResponse("Done")

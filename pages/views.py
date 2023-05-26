@@ -19,11 +19,11 @@ def home_page(request):
     latest_posts = Post.published.order_by('-publish')[:4]
 
     # This object belongs to the render function {'latest_posts': latest_posts}
+
     """
     
     return render(request,
-                 'pages/home.html'
-                )
+                 'pages/home.html')
 
 
 

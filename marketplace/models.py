@@ -21,7 +21,7 @@ class Tax(models.Model):
     is_active = models.BooleanField(default=True)
 
     class Meta:
-        verbose_name_plural = 'tax'
+        verbose_name_plural = 'Taxes'
 
     def __str__(self):
         return self.tax_type

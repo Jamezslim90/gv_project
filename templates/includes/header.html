@@ -75,8 +75,23 @@
                     <li class="nav-item dropdown"><a href="{% url 'myAccount' %}" class="nav-link">Dashboard</a></li>
                     {% endif %}
                     <li class="nav-item dropdown"><a href="{% url 'post_list'%}" class="nav-link">Blog</a></li>
+                    
                 </ul>
-                
+
+                 <!-- Notification Bell Icon -->
+                        <div class="dropdown ml-3">
+                        <a class="dropdown-toggle " href="#" role="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="fas fa-bell" style="font-size: 25px;"></span>
+                            <span class="badge badge-danger" style="border-radius: 100px; position: relative; bottom:15px; left: -5px;" id="notification-badge">{{count2}}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" id="notifications-dropdown">
+                        {% for i in notifications %}
+                        <li><a class="dropdown-item" href="#">{{i.message}}</a></li>
+                        <hr class="dropdown-divider">
+                        {% endfor %}
+                        </ul>
+                        </div>
+                        <!-- End of Notification Bell Icon -->
             </div>
             <div class="d-none d-lg-block">
                 {% comment %} 

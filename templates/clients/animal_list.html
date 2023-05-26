@@ -1,0 +1,118 @@
+
+{% extends '../base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}My Profile{% endblock title %}
+
+
+{% block content %}
+
+<div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+<nav class="navbar navbar-dark navbar-theme-primary col-12 d-md-none">
+    <a class="navbar-brand mr-lg-5" href="{% url 'home' %}">
+        <img class="navbar-brand-dark" src="{% static './assets/img/gv-logo.png' %}" alt="Pixel logo" /> <img class="navbar-brand-light" src="{% static './assets/img/gv-logo2.png' %}" alt="Pixel Logo Dark" />
+    </a>
+    <div class="d-flex align-items-center">
+        <button class="navbar-toggler d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</nav>
+ <!-- Load message -->
+ {% include '../includes/alerts.html' %}
+<div class="container-fluid bg-soft">
+    <div class="row">
+        <div class="col-12">
+
+             <!-- Load the navbar here -->
+             {% include '../includes/customer_nav.html' %}
+
+             <main class="content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+                    <div class="d-block mb-4 mb-md-0">
+                        <nav aria-label="breadcrumb" class="d-none d-md-inline-block">
+                            <ol class="breadcrumb breadcrumb-dark breadcrumb-transparent">
+                                <li class="breadcrumb-item">
+                                    <a href="#"><span class="fas fa-home"></span></a>
+                                </li>
+                                <li class="breadcrumb-item"><a href="#">GetVet</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Add Animal</li>
+                            </ol>
+                        </nav>{% comment %}
+                        <h2 class="h4">Doctor Dashboard</h2>
+                        <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
+                    </div>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="{% url 'add_animal' %}" class="btn btn-sm btn-primary"><span class="fas fa-plus mr-2"></span> <span>Vaccine Tracker</span></a>
+                        <a href="{% url 'marketplace' %}" class="btn btn-sm btn-secondary ml-3"><span class="fas fa-search mr-2"></span> <span>Find Doctors</span></a>
+                        <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'add_animal' %}">Add Animal</a></button></div>
+                        
+                    </div>
+                </div>
+                
+                {% comment %} Content Card Here!! {% endcomment %}
+                {% if animals %}
+                    <div class="container">
+                        <div class="row">
+                            {% for animal in animals %}
+                            <div class="col-12 mb-4">
+                                <div class="card bg-white border-light shadow-soft">
+                                    <div class="card-body p-2 p-lg-4">
+                                        <div class="row">
+                                            <div class="col-12 col-md-6 mb-4 mb-lg-0">
+                                                <h6 class="mb-2">{{animal.name }}</h6>
+                                                <div class="d-flex">
+                                                    {% if animal.animal_category_id == 2 %}
+                                                    <a href="#" class="stretched-link"><i class="fas fa-paw"></i><span class="h6 text-sm ml-2">{{ animal.animal_category }}</span></a>
+                                                    {% else %}
+                                                    <a href="#" class="stretched-link"><i class="fas fa-horse-head"></i><span class="h6 text-sm ml-2">{{ animal.animal_category }}</span></a>
+                                                    {% endif %}
+
+                                                {% if animal.animal_id == 1 %}
+                                                <span class="ml-4"><i class="fas fa-cat"></i></span><span class="ml-2">{{ animal.animal }}</span>
+                                                {% elif animal.animal_id == 2 %}
+                                                <span class="ml-4"><i class="fas fa-dog"></i></span><span class="ml-2">{{ animal.animal }}</span>
+                                                {% elif animal.animal_id == 4 %}
+                                                <span class="ml-4"><i class="fas fa-horse"></i></span><span class="ml-2">{{ animal.animal }}</span>
+                                                {% elif animal.animal_id == 5 %}
+                                                <span class="ml-4"><i class="fas fa-horse"></i></span><span class="ml-2">{{ animal.animal }}</span>
+                                                {% elif animal.animal_id == 6 %}
+                                                <span class="ml-4"><i class="fas fa-kiwi-bird"></i></span><span class="ml-2">{{ animal.animal }}</span>
+                                                {% elif animal.animal_id == 7 %}
+                                                <span class="ml-4"><i class="fas fa-horse"></i></span><span class="ml-2">{{ animal.animal }}</span>
+                                                {% else%}
+                                                <span class="ml-4"><i class="fas fa-horse"></i></span><span class="ml-2">{{ animal.animal }}</span>
+                                                {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 d-flex align-items-center justify-content-md-end">
+                                                <div class="d- mr-2">
+                                                {% if animal.profile_pic %}
+                                                <div class="avatar-lg"><img class="rounded-circle" src="{{ animal.profile_pic.url }}" alt="avatar" /></div>
+                                                {% else %}   
+                                                <div class="avatar-lg"><img class="rounded-circle" src="{% static './assets/img/animal_pic.png' %}" alt="avatar" /></div>
+                                                {% endif %}
+                                                </div>
+                                                <a href="{% url 'animal_detail' animal.animal_slug %}" class="btn btn-primary btn-sm animate-up-2 m-0"><i class="fas fa-clipboard-list mr-3"></i>View vaccines</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% else %}
+                    <h5 class="text-center h6">No animal found.</h5>
+                    <div class="text-center h6">
+                        <a href="{% url 'add_animal' %}" class="btn btn-sm btn-success mx-auto"><span class="fas fa-plus mr-2"></span> <span>Add Animal</span></a>
+                    </div>
+                    <img src="{% static './assets/img/dogpuppy.png' %}" class="img-fluid" alt="puppy" height='400'>
+                   
+                {% endif %}
+            </main>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

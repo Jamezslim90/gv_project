@@ -294,3 +294,62 @@ $(document).ready(function(){
 
    // document ready close 
 });
+
+
+
+// Dependent Dropdown logic
+
+
+// function getCookie(name) {
+//     let cookieValue = null;
+//     if (document.cookie && document.cookie !== '') {
+//         const cookies = document.cookie.split(';');
+//         for (let i = 0; i < cookies.length; i++) {
+//             const cookie = cookies[i].trim();
+//             // Does this cookie string begin with the name we want?
+//             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                 break;
+//             }
+//         }
+//     }
+//     return cookieValue;
+// }
+// const csrftoken = getCookie('csrftoken');
+
+
+
+
+// let animal_category_field = document.getElementById("id_animal_category")
+// let animal_field = document.getElementById("id_animal")
+
+// animal_category_field.addEventListener("change", pickState)
+// function pickState(e){
+//     animal_category_id = e.target.value
+//     console.log(animal_category_id)
+//     const data = { user_id: animal_category_id}
+//     let url = "{% url 'getanimals' %}"
+
+// fetch(url, {
+// method: 'POST', // or 'PUT'
+// headers: {
+// 'Content-Type': 'application/json',
+// 'X-CSRFToken': csrftoken
+// },
+// body: JSON.stringify(data),
+// })
+// .then(response => response.json())
+// .then(data => {
+// console.log('Success:', data[0]['animal_category']);
+
+// animal_field.innerHTML = '<option value = "" selected="">----</option>'
+// for(let i = 0; i<data.length; i++){ 
+// animal_field.innerHTML += `<option value = "${data[i]["id"]}" selected="">${data[i]["name"]}</option>`
+
+// }
+// })
+// .catch((error) => {
+// console.error('Error:', error);
+// });
+
+// }

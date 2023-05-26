@@ -275,9 +275,9 @@ select {
 [type="button"],
 [type="reset"],
 [type="submit"],
-button {
+/* button {
     -webkit-appearance: button;
-}
+} */
 [type="button"]:not(:disabled),
 [type="reset"]:not(:disabled),
 [type="submit"]:not(:disabled),
@@ -331,8 +331,8 @@ progress {
 }
 [type="search"] {
     outline-offset: -2px;
-    -webkit-appearance: none;
-}
+    /* -webkit-appearance: none;*/
+} 
 [type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
 }
@@ -18358,9 +18358,9 @@ a.text-github:hover {
     display: flex;
 }
 .ct-chart-donut .ct-label,
-.ct-chart-pie .ct-label {
+/* .ct-chart-pie .ct-label {
     dominant-baseline: central;
-}
+} */
 .ct-label.ct-horizontal.ct-start {
     align-items: flex-end;
     justify-content: flex-start;
@@ -23558,7 +23558,7 @@ button.section-github:hover {
     top: 100%;
 }
 .navbar .navbar-nav .dropdown .dropdown-item {
-    font-size: 0.875rem;
+    font-size: 0.775rem;
 }
 @media (max-width: 991.98px) {
     .navbar .navbar-nav .dropdown .dropdown-item {
@@ -26990,8 +26990,8 @@ button.section-github:hover {
         padding-bottom: 10rem;
     }
     .section-lg {
-        padding-top: 8rem;
-        padding-bottom: 8rem;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
     }
     .section-sm {
         padding-top: 4rem;
