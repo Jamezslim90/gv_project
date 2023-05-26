@@ -1,14 +1,9 @@
 from pathlib import Path
 import os
-
 from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
@@ -23,7 +18,10 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     
-    'jazzmin',
+    # 'jazzmin',
+    'daphne',
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sites',
@@ -35,6 +33,11 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     
     # Third Party Apps
+    'smart_selects',
+    'django_celery_results',
+    'django_celery_beat',
+    'django_extensions',
+    'channels',
     
     # 'multiselectfield',
     'taggit',
@@ -53,6 +56,13 @@ INSTALLED_APPS = [
     "service.apps.ServiceConfig",
     "blog.apps.BlogConfig",
     "marketplace.apps.MarketplaceConfig",
+    "orders.apps.OrdersConfig",
+    "clients.apps.ClientsConfig",
+    "vaccinations.apps.VaccinationsConfig",
+    "laboratories.apps.LaboratoriesConfig",
+    "notifications.apps.NotificationsConfig",
+    "chatapp"
+   
 ]
 
 MIDDLEWARE = [
@@ -88,12 +98,16 @@ TEMPLATES = [
                 'accounts.context_processors.get_google_api',
                 'marketplace.context_processors.get_cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
+                'doctors.context_processors.docnotifications',
+                'clients.context_processors.get_notification',
+                'clients.context_processors.cusnotifications'
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'gv_project.wsgi.application'
+ASGI_APPLICATION=  'gv_project.asgi.application'
 
 
 # Database
@@ -109,14 +123,22 @@ WSGI_APPLICATION = 'gv_project.wsgi.application'
 
 
 DATABASES = {
+    
+  # Add Extra Database here...,
+  
+#    'sqdb': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#           'NAME': BASE_DIR / 'db.sqlite3',
+#       },
 
   'default': {
-  'ENGINE': "django.db.backends.postgresql",
-  'NAME': config("NAME"),
-  'USER': config("USER"),
-  'PASSWORD': config("PASSWORD"),
-  'HOST': config("HOST"),
-  'PORT': '7491'
+      
+        'ENGINE': "django.db.backends.postgresql",
+        'NAME': config("NAME"),
+        'USER': config("USER"),
+        'PASSWORD': config("PASSWORD"),
+        'HOST': config("HOST"),
+        'PORT': '7491'
   }
  
  }
@@ -150,6 +172,8 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Africa/Lagos'
 
 USE_I18N = True
+
+USE_L10N = False
 
 USE_TZ = True
 
@@ -187,9 +211,45 @@ MESSAGE_TAGS = {
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 # CRISPY_TEMPLATE_PACK = 'uni_form'
 
-#Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
+# Celery settings
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = "Africa/Lagos"
+CELERY_TASK_TRACK_STARTED = True
+# CELERY_TASK_TIME_LIMIT = 30 * 60
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'my_cache_table',
+    }
+}
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+
+# channels settings
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
+
+
+#Email settings
+
+EMAIL_BACKEND= 'django.core.mail.backends.console.EmailBackend'
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = "587"
 EMAIL_USE_TLS = True
@@ -197,27 +257,23 @@ EMAIL_HOST_USER = config("EHU")
 EMAIL_HOST_PASSWORD = config("EHP")
 DEFAULT_FROM_EMAIL = config("DFE")
 DEFAULT_FROM_EMAIL = 'GetVet Platform  <getvetplatform@gmail.com>'
-
-GOOGLE_API_KEY="AIzaSyCOugkkY9aMPcSlNONQfWQ7mLa1KVH58E4"
-
-JAZZMIN_SETTINGS = {
-
-        "site_title": "GetVet Platform",
-        "site_header": "GetVet",
-        "site_brand": "GetVet Admin",
-        #"site_logo": "assets/img/brand/dark.svg",
-        #"login_logo": "assets/img/brand/dark.svg",
-        #"site_icon": "assets/img/brand/dark.svg",
-         # Welcome text on the login screen
-        "welcome_sign": "Welcome to GetVet ",
-        # Copyright on the footer
-        "copyright": "GetVet Ltd",
-
-        # The model admin to search from the search bar, search bar omitted if excluded
-        "search_model": "auth.User",
+#EMAIL_TIMEOUT = 120
 
 
-}
+DATE_INPUT_FORMATS = [
+    
+    "%Y-%m-%d",  # '2006-10-25'
+]
+
+TIME_INPUT_FORMATS = [
+    "%H:%M:%S",  # '14:30:59'
+   
+]
+
+GOOGLE_API_KEY=config("GOOGLE_AK")
+PAYSTACK_PK= config("Paystack_public_key")
+FLUTTERWAVE_PK=config("Flutterwave_public_key")
+MONNIFY_PK=config("Monnify_public_key")
 
 
 # ckeditor Config settings
@@ -389,3 +445,59 @@ CKEDITOR_5_CONFIGS = {
 COMMENTS_APP = 'django_comments_xtd'
 COMMENTS_XTD_MAX_THREAD_LEVEL = 2
 COMMENTS_XTD_CONFIRM_EMAIL = False
+
+
+#Django-Jet
+
+JET_THEMES = [
+    {
+        'theme': 'default', # theme folder name
+        'color': '#47bac1', # color of the theme's button in user menu
+        'title': 'Default' # theme title
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title': 'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title': 'Light Green'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#a464c4',
+        'title': 'Light Violet'
+    },
+    {
+        'theme': 'light-blue',
+        'color': '#5EADDE',
+        'title': 'Light Blue'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#222',
+        'title': 'Light Gray'
+    }
+]
+
+DATE_FORMAT = "d/m/Y"
+# JAZZMIN_SETTINGS = {
+
+#         "site_title": "GetVet Platform",
+#         "site_header": "GetVet",
+#         "site_brand": "GetVet Admin",
+#         #"site_logo": "assets/img/brand/dark.svg",
+#         #"login_logo": "assets/img/brand/dark.svg",
+#         #"site_icon": "assets/img/brand/dark.svg",
+#          # Welcome text on the login screen
+#         "welcome_sign": "Welcome to GetVet ",
+#         # Copyright on the footer
+#         "copyright": "GetVet Ltd",
+
+#         # The model admin to search from the search bar, search bar omitted if excluded
+#         "search_model": "auth.User",
+
+
+# }

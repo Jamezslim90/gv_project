@@ -19,20 +19,47 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-10 text-center">
-                    <h1 class="mb-3 h4">Search for Doctors</h1>
-                    <p class=" px-lg-5 mb-5">Quicky search for doctors near you. You can also search by doctor's specialty.</p>
-                    <form action="#">
-                        <div class="form-group bg-white shadow-soft rounded-pill mb-4 px-3 py-2">
+                     <h1 class="mb-3 h3">Search for Doctors</h1>
+                    <p class=" px-lg-5 mb-5">Quicky search for doctors near you. You can also search by doctor's specialty or location.</p>
+                    <form action="{% url 'search' %}" method="GET">
+                        <div class="form-group bg-white shadow-soft mb-4 px-3 py-2">
                             <div class="row align-items-center">
-                                <div class="col">
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
                                     <div class="input-group input-group-merge shadow-none">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text bg-transparent border-0"><i class="fas fa-search"></i></span>
                                         </div>
-                                        <input type="text" class="form-control border-0 form-control-flush shadow-none pb-2" placeholder="Search for doctors..." required />
+                                        <input type="text" name="keyword" class="form-control border-0 form-control-flush shadow-none pb-2" placeholder="Search e.g dog..." required />
                                     </div>
                                 </div>
-                                <div class="col-auto"><button type="submit" class="btn btn-block btn-primary rounded-pill">Search</button></div>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                                    <div class="input-group input-group-merge shadow-none">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-transparent border-0"><i class="fas fa-map-marker-alt"></i></span>
+                                        </div>
+                                        <input type="text" name="address" id="id_address" class="form-control border-0 form-control-flush shadow-none pb-2" placeholder="Location..." required />
+                                        {% comment %} <input type="hidden" name="lat" value="" id="id_latitude">
+                                        <input type="hidden" name="lng" value="" id="id_longitude"> {% endcomment %}
+                                    </div>
+                                </div>
+                                {% comment %} <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                                    <div class="input-group input-group-merge shadow-none">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text bg-transparent border-0"><i class="fab fa-chrome"></i></span>
+                                        </div>
+                                        <select name="radius" id="radius" class="form-control border-0 form-control-flush shadow-none pb-2" required>
+                                            <option value="" selected>Radius</option>
+                                            <option value="5">5km</option>
+                                            <option value="10">10km</option>
+                                            <option value="15">15km</option>
+                                            <option value="25">25km</option>
+                                            <option value="50">50km</option>
+                                            <option value="75">75km</option>
+                                            <option value="100">100km</option>
+                                        </select> 
+                                    </div>
+                                </div> {% endcomment %}
+                                <div class="col-auto"><button type="submit" class="btn btn-block btn-primary rounded-pill" value="Search">Search</button></div>
                             </div>
                         </div>
                     </form>
@@ -43,18 +70,24 @@
     
     <section class="section section-lg pb-5 bg-soft">
         <div class="container">
-            <div class="row justify-content-center mb-4 mb-lg-5">
+           {% if doctors_count == True %}
+             <div class="row justify-content-center mb-4 mb-lg-5">
+                <div class="col"><h2 class="h5">{{doctors_count}} result found</h2></div>
+            </div>
+            {%else%}
+             <div class="row justify-content-center mb-4 mb-lg-5">
                 <div class="col"><h2 class="h5">Available Doctors</h2></div>
             </div>
+            {% endif %}
             <div class="row">
                 {% for doctor in doctors %}
                 <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0 col-xs-6">
                     <div class="card bg-white border-light shadow-soft p-3">
                         <div class="card-header p-4">
                             {% if doctor.is_online %}
-                            <span class="badge badge-pill badge-success mt-2">online</span>
+                            <span class="shape-xs small mr-1 bi bi-circle-fill" style="color:#05a677; font-size: 50%;"></span> <span class="font-weight-normal small mr-3">online</span>
                             {% else %}
-                            <span class="badge badge-pill badge-secondary mt-2">offline</span>
+                            <span class="shape-xs mr-1 bi bi-circle-fill" style="color:#ee5050; font-size:50%;"></span> <span class="font-weight-normal small mr-3">offline</span>
                             {% endif %}
                             <h3 class="mb-3 h6">Dr. {{doctor.user_profile }}</h3>
                             <div class="d-flex small mb-2">
@@ -63,13 +96,14 @@
                                 </a>
                                 
                             </div>
-
+                           
                             <div class="d-flex small">
                                 <a href="#" class="text-gray">
-                                    <span class="icon-primary"><i class="fas fa-clock"></i></span><span class="ml-2">5 yrs experience</span>
+                                    <span class="icon-primary"><i class="fas fa-clock"></i></span><span class="ml-2">{{doctor.experience}}</span>
                                 </a>
                                 
                             </div>
+                          
                             <div class="d-flex small">
                             {% for specialty in doctor.specialty.all%}
                             <span class="badge badge-pill badge-primary mt-2">{{specialty}}</span>
@@ -85,9 +119,7 @@
                                 <div class="avatar-lg"><img class="rounded-circle" src="{% static './assets/img/team/profile-picture-1.jpg' %}" alt="avatar" /></div>
                                 {% endif %}
 
-                                <a href="{% url 'doctor_detail' doctor.doctor_slug %}" class="btn btn-xs btn-secondary align-items-center justify-content-center animate-up-2 px-2 py-2 ml-3"> <span class="mr-2"><span class="fas fa-clipboard-list"></span></span>view details</a>
-                               
-                                   
+                                <a href="{% url 'doctor_detail' doctor.doctor_slug %}" class="btn btn-xs btn-secondary align-items-center justify-content-center animate-up-2 px-2 py-2 ml-3"> <span class="mr-2"><span class="fas fa-clipboard-list"></span></span>View Details</a>   
                                 </a>
                             </div>
                         </div>

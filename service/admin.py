@@ -1,5 +1,3 @@
-
-
 from django.contrib import admin
 from .models import Service, Consultation, Fee, ConsultationItem
 

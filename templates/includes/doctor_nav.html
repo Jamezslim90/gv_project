@@ -49,11 +49,11 @@
             </li> {% endcomment %}
             
             <li class="nav-item">
-                <a href="../dashboard/messages.html" class="nav-link d-flex align-items-center justify-content-between">
+                <a href="{% url 'appointment' %}" class="nav-link d-flex align-items-center justify-content-between">
                     <span>
                         <span class="sidebar-icon"><span class="fas fa-inbox"></span></span> Appointments
                     </span>
-                    <span class="badge badge-md badge-danger badge-pill">4</span>
+                    <span class="badge badge-md badge-danger badge-pill">{{count}}</span>
                 </a>
             </li>
            
@@ -68,13 +68,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="../dashboard/transactions.html" class="nav-link">
+                <a href="{% url 'payment' %}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-hand-holding-usd"></span></span> <span>Your Payments</span>
                 </a>
             </li>
             {% if doctor.pk %}
             <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{% url 'dprofile' %}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-cog"></span></span> <span>Account settings</span>
                 </a>
             </li>

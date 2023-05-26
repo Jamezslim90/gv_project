@@ -19,6 +19,21 @@ django-comments-xtd = "*"
 django-ckeditor-5 = "*"
 easy-thumbnails = "*"
 django-social-share = "*"
+django-jet-reboot = "*"
+django-smart-selects = "*"
+python-dateutil = "*"
+simplejson = "*"
+agora-token-builder = "*"
+requests = "*"
+pyjwt = "*"
+celery = "*"
+django-celery-results = "*"
+redis = "*"
+django-celery-beat = "*"
+django-extensions = "*"
+channels-redis = "*"
+channels = {extras = ["daphne"], version = "*"}
+attrs = "*"
 
 [dev-packages]
 

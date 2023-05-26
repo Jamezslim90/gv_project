@@ -44,6 +44,10 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     
+    # This code defines the `User` model with various fields such as `first_name`, `last_name`,
+    # `username`, `email`, `role`, `date_joined`, `last_login`, `created_date`, `modified_date`,
+    # `is_admin`, `is_staff`, `is_active`, `is_superuser`, and `password`.
+    
     DOCTOR = 1
     CUSTOMER = 2
     MANAGER = 3
@@ -75,6 +79,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     
     objects = UserManager()
+    """
+        This is a class that defines methods for user permissions and role identification.
+        :return: The `__str__` method returns the email of the user object. The `has_perm` method returns
+        a boolean value indicating whether the user is an admin or not. The `has_module_perms` method
+        always returns True. The `get_role` method returns a string indicating the role of the user
+        object, which can be "Doctor", "Customer", or "Manager" depending on the value
+    """
 
     def __str__(self):
         return self.email
@@ -86,6 +97,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         return True
     
     def get_role(self):
+        """
+        The function returns the role of a user based on their assigned role number.
+        :return: the role of the user as a string, which can be either 'Doctor', 'Customer', or
+        'Manager', based on the value of the 'role' attribute of the object.
+        """
         if self.role == 1:
             user_role = 'Doctor'
         elif self.role == 2:
@@ -96,6 +112,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class UserProfile(models.Model):
+    
+   # This code defines a `UserProfile` model with various fields such as `user`, `profile_picture`,
+   # `phone_number`, `address`, `country`, `state`, `city`, `pin_code`, `latitude`, `longitude`,
+   # `created_at`, and `modified_at`.
+   
     user = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='users/profile_pictures', blank=True, null=True)
     phone_number = models.CharField(max_length=11, blank=True)
@@ -103,12 +124,13 @@ class UserProfile(models.Model):
     country = models.CharField(max_length=15, blank=True, null=True)
     state = models.CharField(max_length=15, blank=True, null=True)
     city = models.CharField(max_length=15, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)  
+    modified_at = models.DateTimeField(auto_now=True)
     pin_code = models.CharField(max_length=6, blank=True, null=True)
     latitude = models.CharField(max_length=20, blank=True, null=True)
     longitude = models.CharField(max_length=20, blank=True, null=True)
     #location = gismodels.PointField(blank=True, null=True, srid=4326)
-    created_at = models.DateTimeField(auto_now_add=True)  
-    modified_at = models.DateTimeField(auto_now=True)
+   
 
     # def full_address(self):
     #     return f'{self.address_line_1}, {self.address_line_2}'

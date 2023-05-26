@@ -1,5 +1,6 @@
 from django import forms
 from .models import Doctor, AnimalSpecialty, OpeningHour, BankAccount
+from .models import Meeting
 #from accounts.validators import allow_only_images_validator
 
 class DateInput(forms.DateInput):
@@ -106,11 +107,56 @@ class OpeningHourForm(forms.ModelForm):
             'to_hour': forms.Select(attrs={'class': 'form-control'}),
            
         }
-
-
-
-
- # specialty= forms.ModelMultipleChoiceField(queryset=AnimalSpecialty.objects.all(), widget=forms.CheckboxSelectMultiple())
- # specialty = forms.MultipleChoiceField( choices=SPECIALTY_CHOICE, widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-control'}))
-#vcn_number = forms.FileField(widget=forms.FileInput(attrs={'class': 'btn btn-info'}), )
+        
+class MeetingForm(forms.ModelForm):
+    
+     
+    def __init__(self, *args, **kwargs):
+        super(MeetingForm, self). __init__(*args, **kwargs)
+        self.fields["customer_email"].widget.attrs.update(
+            {
+             'type': 'email',
+             'class' : 'form-control',
+            # 'placeholder' : 'client email',
+              'required': 'false'
+            }
+        )
+        self.fields["zoom_email"].widget.attrs.update(
+            {
+             'type': 'email',
+             'class' : 'form-control',
+            # 'placeholder' : 'client email',
+              'required': 'true'
+            }
+        )
+        self.fields["date"].widget.attrs.update(
+            {
+             'type': 'text',
+             'class' : 'form-control',
+             'placeholder' : 'yyyy-mm-dd',
+              'required': 'false'
+            }
+        )
+        self.fields["time"].widget.attrs.update(
+            {
+             'type': 'text',
+             'class' : 'form-control',
+             'placeholder' : 'hh:mm:ss',
+              'required': 'true'
+            }
+        )
+        
+        
+    class Meta:
+        model = Meeting
+        fields = ['topic','zoom_email','customer_email', 'duration', 'date','time', 'passcode']
+        widgets={
+            'date': forms.DateInput(attrs={'class': 'form-control','type': 'text'}, format='%Y-%m-%d'),
+            'time': forms.TimeInput(attrs={'class': 'form-control','type': 'text'}, format='%H:%M:%S'),
+            'topic': forms.TextInput(attrs={'class': 'form-control'}),
+            #'customer_email': forms.EmailField(attrs={'class': 'form-control'}),
+            'duration': forms.NumberInput(attrs={'class': 'form-control'}),
+            'passcode': forms.TextInput(attrs={'class': 'form-control'}),
+            
+     }
     

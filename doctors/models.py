@@ -1,12 +1,10 @@
 #from enum import unique
 from django.db import models
 from accounts.models import User, UserProfile
-from accounts.utils import send_notification
+from accounts.tasks import send_notification
 from datetime import time, date, datetime
 #from multiselectfield import MultiSelectField
-
-
-
+from dateutil.relativedelta import relativedelta
 
 
 class AnimalSpecialty (models.Model):
@@ -31,10 +29,27 @@ class Doctor(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.first_name
+        return self.user.first_name + " " + self.user.last_name
     
     def get_specialties(self):
         return "\n".join([p.specialty for p in self.specialty.all()])
+    
+    @property
+    def experience(self):
+        if(self.induction_date != None):
+            today = date.today()
+            delta = relativedelta(today, self.induction_date)
+            exp_years = delta.years
+            exp_months = delta.months
+            if exp_years == 0 and exp_months == 0:
+                return "Less than a month "
+            elif exp_years == 0:
+                return f"{exp_months} mo{'s' if exp_months > 1 else ''} "
+            else:
+                return f"{exp_years} yr{'s' if exp_years > 1 else ''} & {exp_months} mo{'s' if exp_months > 1 else ''} "
+        else:
+            return "N/A"
+
     
     def is_online(self):
         # Check current day's opening hours.
@@ -71,11 +86,11 @@ class Doctor(models.Model):
                 if self.is_approved == True:
                     # Send notification email
                     mail_subject = "Congratulations! Your licence has been approved."
-                    send_notification(mail_subject, mail_template, context)
+                    send_notification.delay(mail_subject, mail_template, context)
                 else:
                     # Send notification email
                     mail_subject = "We're sorry! You are not eligible for publishing your services on our platform."
-                    send_notification(mail_subject, mail_template, context)
+                    send_notification.delay(mail_subject, mail_template, context)
         return super(Doctor, self).save(*args, **kwargs)
     
     
@@ -141,3 +156,27 @@ class BankAccount(models.Model):
 
     def __str__(self):
         return f"{self.bank_name} - {self.account_number}"
+    
+    
+class Meeting(models.Model):
+    doctor= models.ForeignKey(Doctor, on_delete=models.CASCADE)
+    topic = models.CharField(max_length=200)
+    date = models.DateField()
+    time = models.TimeField()
+    passcode= models.CharField(max_length=10)
+    customer_email= models.EmailField()
+    zoom_email= models.EmailField(help_text="Your zoom email address")
+    duration= models.PositiveSmallIntegerField(default=30, blank=True)
+    timezone= models.CharField(max_length=50, blank=True)
+    zoom_id= models.CharField(max_length=50, blank=True)
+        
+        
+    def __str__(self):
+        return self.topic
+    
+    class Meta:
+        ordering = ('-date',)
+            
+            
+    
+    

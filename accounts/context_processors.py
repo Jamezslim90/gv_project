@@ -1,5 +1,5 @@
 from urllib.parse import uses_relative
-from accounts.models import UserProfile
+from accounts.models import UserProfile, User
 from doctors.models import Doctor
 from django.conf import settings
 
@@ -10,7 +10,12 @@ def get_doctor(request):
         doctor = None
     return dict(doctor=doctor)
 
-
+def get_customer(request):
+    try:
+     customer = User.objects.get(user=request.user)
+    except:
+        customer = None
+    return customer
 
 
 def get_user_profile(request):
