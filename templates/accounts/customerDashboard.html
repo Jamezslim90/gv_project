@@ -26,6 +26,7 @@
               
              <!-- Load the navbar here -->
              {% include '../includes/customer_nav.html' %}
+            
 
             <main class="content">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -47,18 +48,27 @@
                         <a href="{% url 'marketplace' %}" class="btn btn-sm btn-secondary ml-3"><span class="fas fa-search mr-2"></span> <span>Find Doctors</span></a>
                         {% comment %} <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'cprofile' %}">Update profile</a></button></div> {% endcomment %}
 
-                        
+                        <a href="{% url 'cart' %}" class=" ml-3">
+                        <i class="fas fa-shopping-cart sidebar-icon text-danger mt-2" style="font-size: 25px;"></i>
+                        <span class="badge badge-primary" id="cart_counter" style="border-radius: 100px; position: relative; bottom:15px; left: -5px;">{{ cart_count }}</span>
+                        </a>
                          <!-- Notification Bell Icon -->
                         <div class="dropdown ml-3">
                         <a class="dropdown-toggle " href="#" role="button" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="fas fa-bell" style="font-size: 25px;"></span>
-                            <span class="badge badge-danger" style="border-radius: 100px; position: relative; bottom:15px; left: -5px;" id="notification-badge">0</span>
+                            <span class="fas fa-bell mt-2" style="font-size: 25px;"></span>
+                            <span class="badge badge-danger" style="border-radius: 100px; position: relative; bottom:15px; left: -5px;" id="notification-badge"> {{latest_notifications.count}}</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" id="notifications-dropdown">
+                       
                         {% for i in cusnotifications %}
                         <li><a class="dropdown-item" href="#">{{i.message}}</a></li>
                         <hr class="dropdown-divider">
+
+                        {% empty %}
+                        <li><a class="dropdown-item" href="#"></a></li>
+                        <hr class="dropdown-divider">
                         {% endfor %}
+
                         </ul>
                         </div>
                         <!-- End of Notification Bell Icon -->
@@ -74,13 +84,22 @@
                                         <div class="icon icon-shape icon-md icon-shape-primary rounded mr-4 mr-sm-0"><span class="fas fa-chart-line"></span></div>
                                         <div class="d-sm-none">
                                             <h2 class="h5">Total Payments</h2>
+                                            {% if total_sum_payment%}
                                             <h3 class="mb-1"> &#8358;{{total_sum_payment|floatformat:0|intcomma}}</h3>
+                                            {%else%}
+                                             <h3 class="mb-1"> &#8358;0</h3>
+                                            {%endif%}
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-7 px-xl-0">
                                         <div class="d-none d-sm-block">
                                             <h2 class="h5">Total Payments</h2>
+                                            {% if total_sum_payment%}
                                             <h4 class="mb-1"> &#8358;{{total_sum_payment|floatformat:0|intcomma}}</h4>
+
+                                             {%else%}
+                                             <h3 class="mb-1"> &#8358;0</h3>
+                                            {%endif%}
                                         </div>
                                         {% comment %} <small>
                                             Feb 1 - Apr 1, <span class="icon icon-small"><span class="fas fa-globe-europe"></span></span> WorldWide
@@ -99,13 +118,22 @@
                                         <div class="icon icon-shape icon-md icon-shape-tertiary rounded mr-4"><span class="fas fa-dog"></span></div>
                                         <div class="d-sm-none">
                                             <h2 class="h5">Total Animal</h2>
+                                            {% if animal_count%}
                                             <h4 class="mb-1">{{ animal_count}}</h4>
+
+                                            {%else%}
+                                            <h4 class="mb-1">0</h4>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-7 px-xl-0">
                                         <div class="d-none d-sm-block">
                                             <h2 class="h5">Total Animal</h2>
+                                             {% if animal_count%}
                                             <h4 class="mb-1">{{ animal_count}}</h4>
+                                            {%else%}
+                                            <h4 class="mb-1">0</h4>
+                                            {% endif %}
                                         </div> 
                                         {% comment %}
                                         <small>
@@ -125,13 +153,21 @@
                                         <div class="icon icon-shape icon-md icon-shape-tertiary rounded mr-4"><span class="fas fa-users"></span></div>
                                         <div class="d-sm-none">
                                             <h2 class="h5">Appointments</h2>
+                                            {% if appointment_count%}
                                             <h4 class="mb-1">{{appointment_count}}</h4>
+                                            {% else %}
+                                            <h4 class="mb-1">0</h4>
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-7 px-xl-0">
                                         <div class="d-none d-sm-block">
                                             <h2 class="h5">Appointments</h2>
+                                             {% if appointment_count%}
                                             <h4 class="mb-1">{{appointment_count}}</h4>
+                                             {% else %}
+                                            <h4 class="mb-1">0</h4>
+                                            {% endif %}
                                         </div> 
                                         {% comment %}
                                         <small>

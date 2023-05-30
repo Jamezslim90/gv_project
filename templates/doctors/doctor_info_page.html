@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+
 <nav class="navbar navbar-dark navbar-theme-primary col-12 d-md-none">
     <a class="navbar-brand mr-lg-5" href="{% url 'home' %}">
         <img class="navbar-brand-dark" src="{% static './assets/img/gv-logo.png' %}" alt="Pixel logo" /> <img class="navbar-brand-light" src="{% static './assets/img/gv-logo2.png' %}" alt="Pixel Logo Dark" />
@@ -59,13 +59,14 @@
                                 	   
                                     {% if user.is_authenticated %}
                                     {% if user.pk == doctor.user.pk %}
+                                    <a href="#" class="btn btn-sm btn-secondary" onclick="history.back()"><span class="fa fa-angle-left"></span> <span>Back</span></a>
 
                                 <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="mb-0 h5">Edit doctor profile</h1></div>
                                 <form action="" class="mt-4" method="POST" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <!-- Load message -->
-                                   {% include '../includes/alerts.html' %}
-                                   {% if form.errors %}
+                                {% csrf_token %}
+                                <!-- Load message -->
+                                {% include '../includes/alerts.html' %}
+                                {% if form.errors %}
                                 <div class="alert alert-danger" role="alert">
                                     {% for field in form %}
                                         {% for error in field.errors %}
@@ -77,22 +78,18 @@
                                  {% endif %}
                                    
                                     
-                                        {{ form|crispy }}
-                                  
-                                    <div class="mt-3"><button type="submit" class="btn btn-block btn-primary">Update</button></div>
-                                    {% else %}
+                                {{ form|crispy }}
+                                
+                                <div class="mt-3"><button type="submit" class="btn btn-block btn-primary">Update</button></div>
+                                {% else %}
 
-                                    You are not the correct User To Edit This Page...
-                                    {% endif %}
-
-                                   
+                                You are not the correct User To Edit This Page...
+                                {% endif %}  
                                 </form>
                                
                                 {% else %}
 
                                 You're not allowed here! (and you know it...)
-
-
                                 {% endif %}
                             </div>
                         </div>

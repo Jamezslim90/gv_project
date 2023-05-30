@@ -12,7 +12,7 @@ from django.db.models import Q
 # from django.contrib.gis.geos import GEOSGeometry
 # from django.contrib.gis.measure import D # ``D`` is a shortcut for ``Distance``
 # from django.contrib.gis.db.models.functions import Distance
-
+from django.core.paginator import Paginator
 from datetime import date, datetime
 # from orders.forms import OrderForm
 
@@ -20,9 +20,15 @@ from datetime import date, datetime
 def marketplace(request):
     doctors = Doctor.objects.filter(is_approved=True, user__is_active=True)
     doctor_count = doctors.count()
+    paginator = Paginator(doctors, 20)  # Show 25 contacts per page.
+    
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+    
     context = {
         'doctors': doctors,
         'doctor_count': doctor_count,
+        'page_obj': page_obj
     }
     return render(request, 'marketplace/doctor_listings.html', context)
 

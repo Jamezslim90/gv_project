@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.db import IntegrityError
-
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import DoctorForm, OpeningHourForm, BankAccountForm, MeetingForm
 from accounts.forms import UserProfileForm
@@ -71,7 +71,7 @@ class EditDoctorInfoPage(SuccessMessageMixin, generic.UpdateView):
         model = Doctor
         
         template_name = 'doctors/doctor_info_page.html'
-        fields = ['vcn_number', 'state_of_practice','induction_date', 'specialty']
+        fields = ['VCN_number', 'state_of_practice','induction_date', 'specialty']
         success_url = reverse_lazy('doctorDashboard')
         suceess_message = "info updated successful"
 
@@ -366,9 +366,17 @@ def doctor_appointment (request):
     
     doctor = get_doctor(request)
     appointments = Appointment.objects.filter(appointment_doctor=doctor)
+    paginator = Paginator(appointments, 10)  # Show 25 contacts per page.
+  
+    
+    
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+    
     context = {
          
-        'appointments': appointments,   
+        'appointments': appointments, 
+        'page_obj': page_obj  
     }
     return render(request, 'doctors/appointments_list.html', context)
 
@@ -380,13 +388,18 @@ def doctor_payment(request):
     
     doctor = get_doctor(request)
     payments = Payment.objects.filter(receiver=doctor)
+    paginator = Paginator(payments, 10)  # Show 25 contacts per page.
+  
+    
+    
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+    
     context = {
         'payments': payments,
+        'page_obj': page_obj
     }
     return render(request, 'doctors/payments_list.html', context)
-
-
-
 
 
 

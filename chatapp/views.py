@@ -18,7 +18,7 @@ def chatRoom(request, doctor_slug):
     room = ChatRoom.objects.filter(name=doctor_slug).first()
     chats= []
     if room:
-            chats = Chat.objects.filter(room=room).order_by('timestamp')[:10]
+             chats = Chat.objects.filter(room=room) #.order_by('timestamp')[:10]
         
     else: 
             room = ChatRoom.objects.create(name=doctor_slug)

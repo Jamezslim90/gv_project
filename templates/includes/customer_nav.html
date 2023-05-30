@@ -38,24 +38,24 @@
             </li> {% endcomment %}
             <li class="nav-item">
                 <a href="{% url 'appointment_list' %}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-chart-line"></span></span> <span>Appointments</span>
-                    <span class="badge badge-md badge-danger badge-pill">{{count}}</span>
+                    <span class="sidebar-icon"><span class="fas fa-inbox"></span></span> <span>Appointments</span>
+                    {% comment %} <span class="badge badge-md badge-danger badge-pill">{{count}}</span> {% endcomment %}
                 </a>
             </li>
             
             <li class="nav-item">
                 <a href="{% url 'animal_list' %} " class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-user-check"></span></span> <span>Your Animals</span>
+                    <span class="sidebar-icon"><span class="fas fa-dog"></span></span> <span>Your Animals</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{% url 'vaccination_list' %}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-hand-holding-usd"></span></span> <span>Vaccinations</span>
+                    <span class="sidebar-icon"><span class="fas fa-clock"></span></span> <span>Vaccinations</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{% url 'payment_list' %}" class="nav-link">
-                    <span class="sidebar-icon"><span class="fas fa-clipboard-list"></span></span> <span>Your Payments</span>
+                    <span class="sidebar-icon"><span class="fas fa-hand-holding-usd"></span></span> <span>Your Payments</span>
                 </a>
             </li>
             <li class="nav-item">

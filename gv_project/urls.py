@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 from marketplace import views as MarketplaceViews
 
+
 urlpatterns = [
     
     path('jet/', include('jet.urls', 'jet')),
@@ -24,6 +25,8 @@ urlpatterns = [
     #path('doctors/', include('doctors.urls'))
     path('blog/', include('blog.urls')),
     path('marketplace/', include('marketplace.urls')),
+    
+    path('laboratories/', include('laboratories.urls')),
     
      # CART
     path('cart/', MarketplaceViews.cart, name='cart'),

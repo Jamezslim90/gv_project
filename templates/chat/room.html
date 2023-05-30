@@ -50,13 +50,17 @@
                                         {{ chat.content }}
                                     </div>
                                 {% endif %}
+
+                            {% empty %}
+                            <p>No previous chat history</p>
                             {% endfor %}
                         </div>
                            <div id="chat-input">
                             <input id="chat-message-input" class="form-control border border-light-gray mb-4" type="text" placeholder="Your Message" rows="6" maxlength="1000" required>
                             <div class="d-flex justify-content-between align-items-center mt-3">
                             <div>
-                                <input id="chat-message-submit" value="send" type="submit" class="btn btn-secondary">
+                                <input id="chat-message-submit" value="send" type="submit" class="btn btn-primary">
+                                <a href="#" class="btn btn btn-secondary" onclick="history.back()"><span class="fa fa-angle-left"></span> <span>Back</span></a>
                             </div> 
                             </div>
                           </div>

@@ -9,7 +9,7 @@ class Service (models.Model):
     
     
     def __str__(self):
-        return self.name
+        return self.type
 
     class Meta:
         verbose_name_plural = 'Services'

@@ -18,7 +18,7 @@ class Doctor(models.Model):
 
     user = models.OneToOneField(User, related_name='user', on_delete=models.CASCADE)
     user_profile = models.OneToOneField(UserProfile, related_name='userprofile', on_delete=models.CASCADE)
-    vcn_number = models.CharField(max_length=7)
+    VCN_number = models.CharField(max_length=7)
     state_of_practice = models.CharField(max_length=50)
     specialty = models.ManyToManyField(AnimalSpecialty, help_text='You can select multiple specialties')
     # specialty = MultiSelectField(max_length=50, choices=SPECIALTY_CHOICE, blank=True, null=True)

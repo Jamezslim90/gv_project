@@ -45,7 +45,7 @@
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <a href="{% url 'add_animal' %}" class="btn btn-sm btn-primary"><span class="fas fa-plus mr-2"></span> <span>Vaccine Tracker</span></a>
                         <a href="{% url 'marketplace' %}" class="btn btn-sm btn-secondary ml-3"><span class="fas fa-search mr-2"></span> <span>Find Doctors</span></a>
-                        <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'add_animal' %}">Add Animal</a></button></div>
+                        <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a  data-bs-toggle="modal" data-bs-target="#addModal">Add Animal</a></button></div>
                         
                     </div>
                 </div>
@@ -54,13 +54,13 @@
                 {% if animals %}
                     <div class="container">
                         <div class="row">
-                            {% for animal in animals %}
+                            {% for animal in page_obj %}
                             <div class="col-12 mb-4">
                                 <div class="card bg-white border-light shadow-soft">
                                     <div class="card-body p-2 p-lg-4">
                                         <div class="row">
                                             <div class="col-12 col-md-6 mb-4 mb-lg-0">
-                                                <h6 class="mb-2">{{animal.name }}</h6>
+                                                <h6 class="mb-2">{{animal.name|capfirst }}</h6>
                                                 <div class="d-flex">
                                                     {% if animal.animal_category_id == 2 %}
                                                     <a href="#" class="stretched-link"><i class="fas fa-paw"></i><span class="h6 text-sm ml-2">{{ animal.animal_category }}</span></a>
@@ -102,6 +102,22 @@
                             {% endfor %}
                         </div>
                     </div>
+                      <div class="card-footer px-3 d-flex align-items-center justify-content-between">
+                               <nav aria-label="Page navigation example">
+                                    <ul class="pagination mb-0">
+                                         {% if page_obj.has_previous %}
+                                        <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a></li>
+                                         {% endif %}
+                                        {% for number in page_obj.paginator.page_range %}
+                                        <li class="page-item"><a class="page-link" href="?page={{number}}">{{number}}</a></li>
+                                         {% endfor %}
+                                         {% if page_obj.has_next %}
+                                        <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
+                                         {% endif %}
+                                    </ul>
+                                </nav>
+                                <div class="font-weight-bold small">Showing page <b>{{ page_obj.number }}</b> out of <b>{{ page_obj.paginator.num_pages }}</b> pages</div>
+                     </div>
                     {% else %}
                     <h5 class="text-center h6">No animal found.</h5>
                     <div class="text-center h6">

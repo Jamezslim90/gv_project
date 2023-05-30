@@ -12,7 +12,7 @@
 
 {% block content %}
 <main>
-    <div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+   
     <section class="section-header pb-5 pb-lg-6 mb-4 mb-lg-5 bg-primary text-white">
         <div class="container">
             <div class="row justify-content-center">
@@ -74,7 +74,11 @@
                             </div>
                             {% empty%}
                             <div class="text-center p-5">
-                                <h3>Cart is empty</h3>
+                                <h3 class="text-muted text-muted text-muted">No carts are available</h3>
+                                {% comment %} Back to marketplace {% endcomment %}
+                                <a href="{% url 'marketplace' %}" class="btn btn-outline-primary">
+                                <i class="fa fa-arrow-circle-o mr-1"></i>
+                                back to marketplace</a>                     
                             </div>
                             {% endfor %}
                         </div>

@@ -14,7 +14,7 @@
 
 
 <main>
-    <div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+   
     <section class="section-header pb-5 pb-lg-6 mb-4 mb-lg-6 bg-primary text-white">
         <div class="container">
             <div class="row justify-content-center">
@@ -80,7 +80,7 @@
             </div>
             {% endif %}
             <div class="row">
-                {% for doctor in doctors %}
+                {% for doctor in page_obj %}
                 <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0 col-xs-6">
                     <div class="card bg-white border-light shadow-soft p-3">
                         <div class="card-header p-4">
@@ -116,7 +116,7 @@
                                 {% if doctor.user_profile.profile_picture %}
                                 <div class="avatar-lg"><img class="rounded-circle" src="{{ doctor.user_profile.profile_picture.url }}" alt="avatar" /></div>
                                 {% else %}   
-                                <div class="avatar-lg"><img class="rounded-circle" src="{% static './assets/img/team/profile-picture-1.jpg' %}" alt="avatar" /></div>
+                                <div class="avatar-lg"><img class="rounded-circle" src="{% static './assets/img/default_profile_pic.png' %}" alt="avatar" /></div>
                                 {% endif %}
 
                                 <a href="{% url 'doctor_detail' doctor.doctor_slug %}" class="btn btn-xs btn-secondary align-items-center justify-content-center animate-up-2 px-2 py-2 ml-3"> <span class="mr-2"><span class="fas fa-clipboard-list"></span></span>View Details</a>   
@@ -129,6 +129,22 @@
             </div>
         </div>
     </section>
+
+     <div class="d-flex justify-content-center w-100">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a></li>
+                {% endif %}
+                {% for number in page_obj.paginator.page_range %}
+                <li class="page-item"><a class="page-link" href="?page={{number}}">{{number}}</a></li>
+                {% endfor %}
+                 {% if page_obj.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+     </div>
 </main>
 
 

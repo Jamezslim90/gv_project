@@ -1,5 +1,6 @@
 # from django.http import HttpResponse, JsonResponse
 # from django.db import IntegrityError
+from django.core.paginator import Paginator
 from django.core import serializers
 from django.shortcuts import render, get_object_or_404, redirect
 from accounts.forms import UserProfileForm
@@ -23,6 +24,7 @@ import json
 from django_celery_beat.models import PeriodicTask, CrontabSchedule
 from .tasks import send_appointment_email
 from accounts.utils import get_customer
+
 
 @login_required(login_url='login')
 @user_passes_test(check_role_customer)
@@ -71,8 +73,15 @@ def animal_list(request):
     """
     customer = get_customer(request)
     animals = Animal.objects.filter(owner=customer)
+    paginator = Paginator(animals, 10)  # Show 25 contacts per page.
+  
+    
+    
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
     context = {
         'animals': animals,
+        'page_obj': page_obj
     }
     return render(request, 'clients/animal_list.html', context)
 
@@ -333,9 +342,17 @@ def vaccine_done(request):
 def appointment_list(request):
     customer = get_customer(request)
     appointments = Appointment.objects.filter(owner=customer)
+    paginator = Paginator(appointments, 10)  # Show 25 contacts per page.
+  
+    
+    
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+    
     context = {
         
         'appointments': appointments,
+        "page_obj":  page_obj
         
     }
     return render(request, 'clients/appointments_list.html', context)
@@ -392,11 +409,16 @@ def add_appointment(request):
 def payment_list(request):
     customer = get_customer(request)
     payments = Payment.objects.filter(user=customer.user)
+    paginator = Paginator(payments, 10)  # Show 25 contacts per page.
+   
+    
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
     
     context = {
         
         'payments': payments,
-        
+        'page_obj': page_obj
     }
     return render(request, 'clients/payments_list.html', context)
 
@@ -414,7 +436,15 @@ def vaccination_list(request):
         for vaccine in vaccinations:
             animal_vaccine.append(vaccine)
     
+    paginator = Paginator(animal_vaccine, 4)  # Show 25 contacts per page.
+  
+    
+    
+    page_number = request.GET.get("page", 1)
+    page_obj = paginator.get_page(page_number)
+    
     context = {
         'animal_vaccine': animal_vaccine,
+        'page_obj': page_obj
     }
     return render(request, 'clients/vaccinations_list.html', context)
