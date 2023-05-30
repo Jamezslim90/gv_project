@@ -119,7 +119,7 @@ def registerDoctor(request):
         user.save()
         doctor = d_form.save(commit=False)
         doctor.user = user
-        doctor.doctor_slug = slugify(username) #+'-'+str(user.id)
+        doctor.doctor_slug = slugify(username) +str(user.id)
         user_profile = UserProfile.objects.get(user=user)
         doctor.user_profile = user_profile
         doctor.vcn_number = d_form.cleaned_data['vcn_number']

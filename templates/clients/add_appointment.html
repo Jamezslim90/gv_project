@@ -12,7 +12,7 @@
 
 {% block content %}
 <main>
-    <div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
+    
     <section class="section-header pb-5 pb-lg-6 mb-4 mb-lg-5 bg-primary text-white">
         <div class="container">
             <div class="row justify-content-center">
@@ -29,6 +29,8 @@
         <div class="row justify-content-center">
             <div class="col-12 d-flex align-items-center justify-content-center">
                 <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                    <a href="#" class="btn btn-sm btn-secondary" onclick="history.back()"><span class="fa fa-angle-left"></span> <span>Back</span></a>
+                    
                     <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="mb-0 h6">Fill the form to book an appointment</h1></div>
                     <form action="{% url 'add_appointment' %}" class="mt-4" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}

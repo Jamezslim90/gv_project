@@ -1,4 +1,3 @@
-
 {% extends '../base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
@@ -39,7 +38,7 @@
                                 <li class="breadcrumb-item active" aria-current="page">Add Animal</li>
                             </ol>
                         </nav>{% comment %}
-                        <h2 class="h4">Doctor Dashboard</h2>
+                        <h2 class="h4"> Dashboard</h2>
                         <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
                     </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
@@ -50,114 +49,55 @@
                 </div>
                 
                
-                {% comment %} Content Card Here!! {% endcomment %}
-
+               {% comment %} Content Card Here!! {% endcomment %}
                 <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-12 d-flex align-items-center justify-content-center">
-                            <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
-                                <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="mb-0 h5">Add your Animal</h1></div>
-                                <form action="{% url 'add_animal' %}" class="mt-4" method="POST" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <!-- Load message -->
-                                   {% include '../includes/alerts.html' %}
-                                   {% if form.errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {% for field in form %}
-                                        {% for error in field.errors %}
-                                            {{ error }}
-                                        {% endfor %}
-                                    {% endfor %}
-                                </div>
-                               
-                                 {% endif %}
+                <div class="row justify-content-center">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
 
-                                 {{ form.media.js }}
-                                 {{ form|crispy }}
-                                 
-                                    {% comment %} <div class="form-group">
-                                        <label><small>Animal Name</small></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-dog"></i></span>
-                                            </div>
-                                           {{ form.name }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label><small>Animal category</small></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-award"></i></span>
-                                            </div>
-                                            {{ form.animal_category }}
-                                          
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label><small>Animal Type</small></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-user"></i></span>
-                                            </div>
-                                           {{ form.animal }}
-                                        </div>
-                                    </div>
-                                  
-                                    <div class="form-group">
-                                        <label><small>Date of Birth</small></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="far fa-user"></i></span>
-                                            </div>
-                                           {{ form.dob }}
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label><small>Animal weight</small></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                                            </div>
-                                            {{ form.weight }}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label><small>Animal breed</small></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
-                                            </div> 
-                                            {{ form.breed }}
-                                        </div>
-                                       
-                                    </div>
-                                    <div class="form-group">
-                                        <label><small>Animal Picture</small></label>
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-unlock-alt"></i></span>
-                                            </div> 
-                                            {{ form.profile.pic }}
-                                        </div>
-                                       
-                                    </div> {% endcomment %}
-                                    
-                                    
-                                    <div class="mt-3"><button type="submit" class="btn btn-block btn-primary">Submit</button></div>
-                                </form>
-                               
-                                
+                            <a href="#" class="btn btn-sm btn-secondary" onclick="history.back()"><span class="fa fa-angle-left"></span> <span>Back</span></a>
+                            
+                            
+                            <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="mb-0 h5">Add your Animal</h1></div>
+                            <form action="{% url 'add_animal' %}" class="mt-4" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                            {% comment %} Modal {% endcomment %}
+                            <div class="modal-body">
+                                <!-- Load message -->
+                                {% include '../includes/alerts.html' %}
+                                {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {% for field in form %}
+                                    {% for error in field.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                {% endfor %}
                             </div>
+                            
+                                {% endif %}
+
+                                {{ form.media.js }}
+                                {{ form|crispy }}
+                                
+                                
+                                <div class="mt-3"><button type="submit" class="btn btn-block btn-primary">Submit</button></div>
+
+                                </div>
+                            </form>      
                         </div>
                     </div>
                 </div>
-                
-            </main>
+            </div>      
+        </main>
 
         </div>
     </div>
 </div>
 {% endblock content %}
+
+
+
+
+    
+     
+     

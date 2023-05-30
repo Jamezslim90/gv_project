@@ -3,7 +3,7 @@ from doctors.models import Doctor, AnimalSpecialty, OpeningHour, BankAccount, Me
 
 
 class DoctorAdmin(admin.ModelAdmin):
-    list_display = ('user', 'vcn_number', 'is_approved', 'created_at', 'experience', 'state_of_practice', )
+    list_display = ('user', 'VCN_number', 'is_approved', 'created_at', 'experience', 'state_of_practice', )
     list_display_links = ('user',)
     list_editable = ('is_approved',)
 

@@ -42,6 +42,7 @@
                         <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
                     </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="#" class="btn btn-sm btn-secondary mr-2" onclick="history.back()"><span class="fa fa-angle-left"></span> <span>Back</span></a>
                         <a href="{% url 'add_animal' %}" class="btn btn-sm btn-primary"><span class="fas fa-plus mr-2"></span> <span>Vaccine Tracker </span></a>
                         <a href="{% url 'marketplace' %}" class="btn btn-sm btn-secondary ml-3"><span class="fas fa-search mr-2"></span> <span>Find Doctors</span></a>
                         {% comment %} <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'cprofile' %}">Update profile</a></button></div> {% endcomment %}
@@ -58,8 +59,8 @@
                                 <div class="row d-block d-xl-flex align-items-center">
                                     <div class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                                         {% if animal.profile_pic%}
-                                       
-                                            <div class="user-avatar xl-avatar mb-3 mr-3"><img class="rounded" src="{{animal.profile_pic.url}}" alt="change avatar" /></div>
+                                            {% load thumbnail %}
+                                            <div class="user-avatar xl-avatar mb-3 mr-3"><img class="rounded" src="{% thumbnail animal.profile_pic 200x200 crop %}" alt="change avatar" /></div>
                                        
                                         {% else %}
                                        

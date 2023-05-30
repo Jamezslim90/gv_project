@@ -9,19 +9,19 @@ class DateInput(forms.DateInput):
 class DoctorForm(forms.ModelForm):
     
    
-    vcn_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+    VCN_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     state_of_practice = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     specialty = forms.SelectMultiple(choices=AnimalSpecialty.objects.all())
     induction_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control',"type": "date", 'readonly': 'readonly'}), required=False)
    
     def __init__(self, *args, **kwargs):
         super(DoctorForm, self). __init__(*args, **kwargs)
-        self.fields["specialty"].required = False
-        self.fields["vcn_number"].widget.attrs.update(
+        self.fields["specialty"].required = True
+        self.fields["VCN_number"].widget.attrs.update(
             {
              'type': 'text',
              'class' : 'form-control',
-             'placeholder' : 'vcn number' 
+             'placeholder' : 'VCN number' 
             }
         )
         self.fields["state_of_practice"].widget.attrs.update(
@@ -36,7 +36,7 @@ class DoctorForm(forms.ModelForm):
             {
              'type': 'multiple',
              'class' : 'form-control',
-            'placeholder' : 'specialty e.g cat',
+             'placeholder' : 'specialty e.g cat',
               'required': 'false'
             }
         )
@@ -44,7 +44,7 @@ class DoctorForm(forms.ModelForm):
             {
              'type': 'date',
              'class' : 'form-control',
-            'placeholder' : ' date of induction'
+            'placeholder' : 'date of induction'
              
             }
         )
@@ -52,11 +52,11 @@ class DoctorForm(forms.ModelForm):
     class Meta:
         
         model = Doctor
-        fields = ['vcn_number', 'state_of_practice','specialty', 'induction_date']
+        fields = ['VCN_number', 'state_of_practice','specialty', 'induction_date']
         widgets = {
 
 			
-            'vcn_number': forms.TimeInput(attrs={'class': 'form-control'}),
+            'VCN_number': forms.TimeInput(attrs={'class': 'form-control'}),
             'state_of_practice': forms.TimeInput(attrs={'class': 'form-control'}),
             'specialty': forms.SelectMultiple(attrs={'class': 'form-control'}),
 			'induction_date': forms.DateInput(attrs={'class': 'form-control', "type": "date"}),	
@@ -74,14 +74,14 @@ class BankAccountForm(forms.ModelForm):
             {
              'type': 'text',
              'class' : 'form-control',
-             'placeholder' : '1239860905' 
+            
             }
         )
         self.fields["account_number"].widget.attrs.update(
             {
              'type': 'text',
              'class' : 'form-control',
-             'placeholder' : '' 
+             'placeholder' : '10 digit number' 
             }
         )
         self.fields["account_name"].widget.attrs.update(
