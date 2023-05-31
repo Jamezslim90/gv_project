@@ -2,6 +2,7 @@ from pathlib import Path
 import os
 from decouple import config
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -11,7 +12,7 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1", "gv-project.herokuapp.com"]
 
 
 # Application definition
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'easy_thumbnails',
     'django_ckeditor_5',
     'django_social_share',
+    #'storages',
     
     #Local Apps
     "pages.apps.PagesConfig",
@@ -95,7 +97,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'accounts.context_processors.get_doctor',
                 'accounts.context_processors.get_user_profile',
-                'accounts.context_processors.get_google_api',
+                # 'accounts.context_processors.get_google_api',
                 'marketplace.context_processors.get_cart_counter',
                 'marketplace.context_processors.get_cart_amounts',
                 'doctors.context_processors.docnotifications',
@@ -120,7 +122,10 @@ ASGI_APPLICATION=  'gv_project.asgi.application'
 #     }
 # }
 
-
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# #DATABASES['default'] = dj_database_url.config(default='postgres://...'}
+# DATABASES['default'].update(db_from_env)
 
 DATABASES = {
     
@@ -213,8 +218,9 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
-# Celery settings
 
+# Celery settings
+#CELERY_BROKER_URL = os.environ['REDIS_URL']
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_BACKEND = 'django-db'
@@ -236,6 +242,15 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 # channels settings
 
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+#         },
+#     },
+# }
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -248,8 +263,8 @@ CHANNEL_LAYERS = {
 
 #Email settings
 
-EMAIL_BACKEND= 'django.core.mail.backends.console.EmailBackend'
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_BACKEND= 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = "587"
 EMAIL_USE_TLS = True
@@ -270,15 +285,31 @@ TIME_INPUT_FORMATS = [
    
 ]
 
-GOOGLE_API_KEY=config("GOOGLE_AK")
+#GOOGLE_API_KEY=config("GOOGLE_AK")
+#FLUTTERWAVE_PK=config("Flutterwave_public_key")
+
 PAYSTACK_PK= config("Paystack_public_key")
-FLUTTERWAVE_PK=config("Flutterwave_public_key")
-MONNIFY_PK=config("Monnify_public_key")
+MONNIFY_PK= config("Monnify_public_key")
+
+#AWS Credentials    
+
+# AWS_ACCESS_KEY_ID = config('AKID')
+# AWS_SECRET_ACCESS_KEY = config('SAK')
+# AWS_STORAGE_BUCKET_NAME = ('SBN')
+# AWS_S3_SIGNATURE_NAME = 's3v4',
+# AWS_S3_REGION_NAME = config('S3RN')
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL =  None
+# AWS_S3_VERITY = True
+# STORAGES = {"staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}}
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STORAGES = {"default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"}}
 
 
 # ckeditor Config settings
 
 customColorPalette = [
+    
     {"color": "hsl(4, 90%, 58%)", "label": "Red"},
     {"color": "hsl(340, 82%, 52%)", "label": "Pink"},
     {"color": "hsl(291, 64%, 42%)", "label": "Purple"},
@@ -288,6 +319,7 @@ customColorPalette = [
 ]
 
 CKEDITOR_5_CONFIGS = {
+    
     "default": {
         "toolbar": [
             "heading",

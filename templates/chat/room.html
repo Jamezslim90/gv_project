@@ -90,7 +90,8 @@
   const requestUser = JSON.parse(
     document.getElementById('request-user').textContent
   );
-  const url = 'ws://' + window.location.host +
+  const ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+  const url =  ws_scheme + '://' + window.location.host +
               '/ws/chat/room/' + doctorSlug + '/';
  
   const chatSocket = new WebSocket(url);

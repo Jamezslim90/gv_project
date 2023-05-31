@@ -23,7 +23,6 @@ django-jet-reboot = "*"
 django-smart-selects = "*"
 python-dateutil = "*"
 simplejson = "*"
-agora-token-builder = "*"
 requests = "*"
 pyjwt = "*"
 celery = "*"
@@ -34,6 +33,9 @@ django-extensions = "*"
 channels-redis = "*"
 channels = {extras = ["daphne"], version = "*"}
 attrs = "*"
+dj-database-url = "*"
+boto3 = "*"
+django-storages = "*"
 
 [dev-packages]
 
