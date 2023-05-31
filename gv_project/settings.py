@@ -122,10 +122,6 @@ ASGI_APPLICATION=  'gv_project.asgi.application'
 #     }
 # }
 
-# import dj_database_url
-# db_from_env = dj_database_url.config(conn_max_age=600)
-# #DATABASES['default'] = dj_database_url.config(default='postgres://...'}
-# DATABASES['default'].update(db_from_env)
 
 DATABASES = {
     
@@ -148,7 +144,13 @@ DATABASES = {
  
  }
 
+
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600)
+#DATABASES['default'] = dj_database_url.config(default='postgres://...'}
+DATABASES['default'].update(db_from_env)
 AUTH_USER_MODEL = 'accounts.User'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -220,7 +222,7 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
 
 # Celery settings
-#CELERY_BROKER_URL = os.environ['REDIS_URL']
+CELERY_BROKER_URL = os.environ['REDIS_URL']
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_BACKEND = 'django-db'
