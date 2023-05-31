@@ -78,6 +78,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
     
+    class Meta(AbstractBaseUser.Meta):
+        swappable = 'AUTH_USER_MODEL'
+
+    
     objects = UserManager()
     """
         This is a class that defines methods for user permissions and role identification.
