@@ -9,10 +9,10 @@ class DateInput(forms.DateInput):
 
 class DoctorForm(forms.ModelForm):
     
-   
+    
     VCN_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     state_of_practice = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    specialty = forms.SelectMultiple(choices=sync_to_async(AnimalSpecialty.objects.all()))
+    specialty = forms.SelectMultiple(queryset=sync_to_async(AnimalSpecialty.objects.all()))
     induction_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control',"type": "date", 'readonly': 'readonly'}), required=False)
    
     def __init__(self, *args, **kwargs):
