@@ -1,6 +1,7 @@
 from django import forms
 from .models import Doctor, AnimalSpecialty, OpeningHour, BankAccount
 from .models import Meeting
+from asgiref.sync import sync_to_async
 #from accounts.validators import allow_only_images_validator
 
 class DateInput(forms.DateInput):
@@ -11,7 +12,7 @@ class DoctorForm(forms.ModelForm):
    
     VCN_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
     state_of_practice = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    specialty = forms.SelectMultiple(choices=AnimalSpecialty.objects.all())
+    specialty = forms.SelectMultiple(choices=sync_to_async(AnimalSpecialty.objects.all()))
     induction_date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control',"type": "date", 'readonly': 'readonly'}), required=False)
    
     def __init__(self, *args, **kwargs):
