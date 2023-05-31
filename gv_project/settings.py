@@ -124,13 +124,6 @@ ASGI_APPLICATION=  'gv_project.asgi.application'
 
 
 DATABASES = {
-    
-  # Add Extra Database here...,
-  
-#    'sqdb': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#           'NAME': BASE_DIR / 'db.sqlite3',
-#       },
 
   'default': {
       
@@ -145,11 +138,11 @@ DATABASES = {
  }
 
 
-import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=600)
-#DATABASES['default'] = dj_database_url.config(default='postgres://...'}
-DATABASES['default'].update(db_from_env)
-AUTH_USER_MODEL = 'accounts.User'
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# #DATABASES['default'] = dj_database_url.config(default='postgres://...'}
+# DATABASES['default'].update(db_from_env)
+# AUTH_USER_MODEL = 'accounts.User'
 
 
 # Password validation
