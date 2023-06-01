@@ -196,14 +196,14 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
 
-STORAGES = {
+# STORAGES = {
     
-    # Enable WhiteNoise's GZip and Brotli compression of static assets:
-    # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-    },
-}
+#     # Enable WhiteNoise's GZip and Brotli compression of static assets:
+#     # https://whitenoise.readthedocs.io/en/latest/django.html#add-compression-and-caching-support
+#     "staticfiles": {
+#         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+#     },
+# }
 WHITENOISE_KEEP_ONLY_HASHED_FILES = False
 WHITENOISE_MANIFEST_STRICT = False
 
@@ -211,7 +211,7 @@ WHITENOISE_MANIFEST_STRICT = False
 MEDIA_URL = '/media/' # new
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # new
 
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
