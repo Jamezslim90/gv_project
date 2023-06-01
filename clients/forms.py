@@ -1,6 +1,6 @@
 from django import forms
 from .models import Animal, Appointment, Category, AnimalType, Symptom
-
+from asgiref.sync import sync_to_async
 class AnimalForm(forms.ModelForm):
     animal_category = forms.ModelChoiceField(queryset=Category.objects.all())
     animal = forms.ModelChoiceField(queryset=AnimalType.objects.all())
@@ -65,11 +65,12 @@ class AnimalForm(forms.ModelForm):
         
 
 
-class AppointmentForm(forms.ModelForm):
+class AppointmentForm(forms.ModelForm):   
+        
     animal_category = forms.ModelChoiceField(queryset=Category.objects.all())
     animal = forms.ModelChoiceField(queryset=AnimalType.objects.all())
-    symptoms = forms.SelectMultiple(choices=Symptom.objects.all())
-    
+    symptoms = forms.SelectMultiple(choices=[])
+   
     
     class Meta:
         model = Appointment
@@ -84,6 +85,7 @@ class AppointmentForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['symptoms'].choices = sync_to_async(Symptom.objects.all())()
         # self.fields["profile_pic"].widget.attrs.update(
         #     {
         #      'type': 'file',
