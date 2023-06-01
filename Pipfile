@@ -35,7 +35,6 @@ channels = {extras = ["daphne"], version = "*"}
 attrs = "*"
 dj-database-url = "*"
 boto3 = "*"
-django-storages = "*"
 
 [dev-packages]
 
