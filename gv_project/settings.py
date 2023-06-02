@@ -205,7 +205,7 @@ STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
 #     },
 # }
 
-CSRF_COOKIE_SECURE = False
+
 WHITENOISE_KEEP_ONLY_HASHED_FILES = False
 WHITENOISE_MANIFEST_STRICT = False
 
@@ -258,7 +258,7 @@ CACHES = {
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://gv-platform.herokuapp.com']
+CSRF_TRUSTED_ORIGINS = ['https://*gv-platform.herokuapp.com' "https://127.0.0.1"]
 
 # channels settings
 
