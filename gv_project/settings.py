@@ -14,6 +14,7 @@ IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 # SECURITY WARNING: don't run with debug turned on in production!
 if not IS_HEROKU_APP:
     DEBUG = True
+    
 if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["127.0.0.1", "gv-platform.herokuapp.com"]
    
@@ -258,7 +259,10 @@ CACHES = {
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
-CSRF_TRUSTED_ORIGINS = ['https://gv-platform.herokuapp.com' "https://127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = ['http://.*','http://gv-platform.herokuapp.com' 'http://127.0.0.1', 'http://example.com']
+
+
+
 
 # channels settings
 
