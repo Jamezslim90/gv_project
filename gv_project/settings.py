@@ -246,14 +246,17 @@ CELERY_TASK_TRACK_STARTED = True
 # CELERY_TASK_TIME_LIMIT = 30 * 60
 
 CACHES = {
+    
     'default': {
         'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
         'LOCATION': 'my_cache_table',
     }
-}
+}   
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
+
+CSRF_TRUSTED_ORIGINS = ['https://gv-platform.herokuapp.com']
 
 # channels settings
 
