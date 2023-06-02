@@ -204,6 +204,8 @@ STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
 #         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
 #     },
 # }
+
+CSRF_COOKIE_SECURE = False
 WHITENOISE_KEEP_ONLY_HASHED_FILES = False
 WHITENOISE_MANIFEST_STRICT = False
 
