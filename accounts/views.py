@@ -27,6 +27,7 @@ from .utils import get_customer
 from .forms import UserForm, UserProfileForm
 from notifications.models import DoctorNotification, CustomerNotification
 from django.utils.dateparse import parse_datetime
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -52,7 +53,7 @@ def check_role_manager(user):
     else:
         raise PermissionDenied
         
-    
+@csrf_exempt     
 def registerUser(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
@@ -95,7 +96,7 @@ def registerUser(request):
     
     return render(request, 'accounts/registerUser.html', context)
 
-
+@csrf_exempt 
 def registerDoctor(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
@@ -169,7 +170,7 @@ def activate(request, uidb64, token):
         messages.error(request, 'Invalid activation link')
         return redirect('myAccount')
     
-    
+@csrf_exempt    
 def LoginView(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
