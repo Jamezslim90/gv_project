@@ -30,7 +30,7 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import render, HttpResponse
 from channels.layers import get_channel_layer
 import json
-
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -87,7 +87,7 @@ def consultation_item(request):
     }
     return render(request, 'doctors/consultation_item.html', context)
 
-
+@csrf_exempt
 @login_required(login_url='login')
 @user_passes_test(check_role_doctor)
 def add_item(request):
@@ -162,7 +162,7 @@ def bank_info(request):
     }
     return render(request, 'doctors/bank_list.html', context)
 
-
+@csrf_exempt
 @login_required(login_url='login')
 @user_passes_test(check_role_doctor)
 def add_bank(request):
