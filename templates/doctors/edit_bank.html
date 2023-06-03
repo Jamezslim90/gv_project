@@ -7,7 +7,6 @@
 
 {% block content %}
 
-<div class="preloader bg-soft flex-column justify-content-center align-items-center"><img class="loader-element" src="{% static './assets/img/gv-logo2.png' %}" height="50" alt="Getvet logo" /></div>
 <nav class="navbar navbar-dark navbar-theme-primary col-12 d-md-none">
     <a class="navbar-brand mr-lg-5" href="{% url 'home' %}">
         <img class="navbar-brand-dark" src="{% static './assets/img/gv-logo.png' %}" alt="Pixel logo" /> <img class="navbar-brand-light" src="{% static './assets/img/gv-logo2.png' %}" alt="Pixel Logo Dark" />
@@ -43,7 +42,7 @@
                         <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
                     </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <a href="#" class="btn btn-sm btn-primary mr-2"><span class="fas fa-plus"></span> <span>New Meeting</span></a>
+                        <a href="{% url 'add_meeting' %}" class="btn btn-sm btn-primary mr-2"><span class="fas fa-plus"></span> <span>New Meeting</span></a>
                         <a href="{% url 'consultation_item' %}" class="btn btn-sm btn-primary"><span class="fas fa-user-md"></span> <span>My Services</span></a>
                         <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'dprofile' %}">My profile</a></button> <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'edit_doctor_info_page' doctor.pk %}">Doctor info</a></button></div>
                     </div>

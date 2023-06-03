@@ -44,7 +44,7 @@
                         <p class="mb-0">Your web analytics dashboard template.</p> {% endcomment %}
                     </div>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <a href="#" class="btn btn-sm btn-primary mr-2"><span class="fas fa-plus"></span> <span>Create Meeting</span></a>
+                        <a href="{% url 'add_meeting' %}" class="btn btn-sm btn-primary mr-2"><span class="fas fa-plus"></span> <span>Create Meeting</span></a>
                         <a href="{% url 'consultation_item' %}" class="btn btn-sm btn-primary"><span class="fas fa-user-md"></span> <span>My Services</span></a>
                         <div class="btn-group ml-3"><button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'dprofile' %}">My profile</a></button> <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{% url 'edit_doctor_info_page' doctor.pk %}">Doctor info</a></button></div>
                     </div>
@@ -56,7 +56,7 @@
 
                 
 
-                <div class="col-10 mx-auto card card-body border-light shadow-sm table-wrapper table-responsive pt-0"> 
+                <div class="col-12 mx-auto card card-body border-light shadow-sm table-wrapper table-responsive pt-0"> 
                    <div>
                     <a href="{% url 'add_bank' %}" class="btn btn-success btn-sm float-right m-1"><i class="fa fa-plus" aria-hidden="true"></i>Add Bank Details</a>
                    </div>
