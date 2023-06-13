@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'django_social_share',
     #'storages',
-    
+      
     #Local Apps
     "pages.apps.PagesConfig",
     "accounts.apps.AccountsConfig",
