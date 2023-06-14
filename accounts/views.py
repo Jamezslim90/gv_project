@@ -101,6 +101,7 @@ def registerDoctor(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
         return redirect('myAccount')
+    
     elif request.method == "POST":
        print("precheck")
        form = UserForm(request.POST)
@@ -134,7 +135,7 @@ def registerDoctor(request):
          # Send verification email
         mail_subject = 'Please activate your account'
         email_template = 'accounts/emails/account_verification_email.html'
-        send_verification_email.delay(request, user, mail_subject, email_template)
+        # send_verification_email.delay(request, user, mail_subject, email_template)
 
         messages.success(request, "Successfully, we've sent a verification email!")
         return redirect('registerDoctor')
@@ -145,6 +146,7 @@ def registerDoctor(request):
     else:
         form = UserForm() 
         d_form = DoctorForm()
+    
     context = {
         'form': form,
         'd_form': d_form
