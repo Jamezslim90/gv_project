@@ -19,7 +19,7 @@ if IS_HEROKU_APP:
     ALLOWED_HOSTS = ["127.0.0.1", "gv-platform.herokuapp.com"]
    
 else:
-    ALLOWED_HOSTS = ["*"]
+    ALLOWED_HOSTS = ["*", "gvproject.up.railway.app"]
 
 
 
