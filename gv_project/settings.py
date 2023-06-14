@@ -257,7 +257,7 @@ CACHES = {
 }   
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-CSRF_TRUSTED_ORIGINS = ['https://.*','https://gv-platform.herokuapp.com','https://127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://.*','https://gv-platform.herokuapp.com','https://127.0.0.1', 'https://gvproject.up.railway.app']
 
 
 
