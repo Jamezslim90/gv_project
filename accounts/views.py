@@ -18,7 +18,6 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, HttpResponse
 from channels.layers import get_channel_layer
 import json
-from django.core.serializers.json import DjangoJSONEncoder
 from clients.models import Animal, Appointment
 from vaccinations.models import Vaccination
 from orders.models import Order, Payment
@@ -61,7 +60,7 @@ def registerUser(request):
         return redirect('dashboard')
     
     elif request.method == "POST":
-       form = UserForm(request.POST) # ASGIRequest json object
+       form = UserForm(request.POST)
        if form.is_valid(): 
         # Create the user using the form
         # password = form.cleaned_data['password']
@@ -71,20 +70,12 @@ def registerUser(request):
         # user.save()
 
         # Create the user using create_user method
-        
-        form_data = {
-            
-        'first_name' :form.cleaned_data['first_name'],
-        'last_name' :form.cleaned_data['last_name'],
-        'username' : form.cleaned_data['username'],
-        'email' : form.cleaned_data['email'],
-        'password' : form.cleaned_data['password']
-        
-        }
-        serialized_form_data = json.dumps(form_data, cls=DjangoJSONEncoder)
-        
-        user = User.objects.create_user(first_name= serialized_form_data.first_name, last_name= serialized_form_data.last_name, username= serialized_form_data.username, email= serialized_form_data.email, password= serialized_form_data.password)
-        
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        username = form.cleaned_data['username']
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
         user.role = User.CUSTOMER
         user.save()
         
@@ -113,28 +104,24 @@ def registerDoctor(request):
     
     elif request.method == "POST":
        print("precheck")
-       form =UserForm(request.POST)  # ASGIRequest json object
-       d_form = DoctorForm(request.POST)  # ASGIRequest json object
+       form = UserForm(request.POST)
+       d_form = DoctorForm(request.POST)
        if d_form.is_valid() and form.is_valid():
+        print("checkform") 
             
-        form_data = {
-            'first_name': form.cleaned_data['first_name'],
-            'last_name':  form.cleaned_data['last_name'],
-            'username' :  form.cleaned_data['username'],
-            'email' :     form.cleaned_data['email'],
-            'password' :  form.cleaned_data['password'],
-        }
-
-        serialized_form_data = json.dumps(form_data, cls=DjangoJSONEncoder)
-        
-        user = User.objects.create_user(first_name= serialized_form_data.first_name, last_name= serialized_form_data.last_name, username=serialized_form_data.username, email=serialized_form_data.email, password=serialized_form_data.password)
-        
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        username = form.cleaned_data['username']
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        print(first_name)
+        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
         user.role = User.DOCTOR
         print(user)
         user.save()
         doctor = d_form.save(commit=False)
         doctor.user = user
-        doctor.doctor_slug = slugify(serialized_form_data.username) +str(user.id)
+        doctor.doctor_slug = slugify(username) +str(user.id)
         user_profile = UserProfile.objects.get(user=user)
         doctor.user_profile = user_profile
         doctor.vcn_number = d_form.cleaned_data['vcn_number']
@@ -148,7 +135,7 @@ def registerDoctor(request):
          # Send verification email
         mail_subject = 'Please activate your account'
         email_template = 'accounts/emails/account_verification_email.html'
-        # send_verification_email.delay(request, user, mail_subject, email_template)
+        send_verification_email.delay(request, user, mail_subject, email_template)
 
         messages.success(request, "Successfully, we've sent a verification email!")
         return redirect('registerDoctor')
