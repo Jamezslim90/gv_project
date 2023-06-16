@@ -61,7 +61,7 @@ def registerUser(request):
         return redirect('dashboard')
     
     elif request.method == "POST":
-       form = json.dump(UserForm(dict(request.POST)), cls=DjangoJSONEncoder) # ASGIRequest json object
+       form = json.dumps(UserForm(dict(request.POST)), cls=DjangoJSONEncoder) # ASGIRequest json object
        if form.is_valid(): 
         # Create the user using the form
         # password = form.cleaned_data['password']
