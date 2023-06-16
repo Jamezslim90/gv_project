@@ -60,7 +60,7 @@ def registerUser(request):
         return redirect('dashboard')
     
     elif request.method == "POST":
-       form = UserForm(request.POST)
+       form = json.dump(UserForm(dict(request.POST))) # ASGIRequest json object
        if form.is_valid(): 
         # Create the user using the form
         # password = form.cleaned_data['password']
@@ -104,8 +104,8 @@ def registerDoctor(request):
     
     elif request.method == "POST":
        print("precheck")
-       form = UserForm(request.POST)
-       d_form = DoctorForm(request.POST)
+       form =json.dump(UserForm(dict(request.POST)))  # ASGIRequest json object
+       d_form = json.dump(DoctorForm(dict(request.POST)))  # ASGIRequest json object
        if d_form.is_valid() and form.is_valid():
         print("checkform") 
             
