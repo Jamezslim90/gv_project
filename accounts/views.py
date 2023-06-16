@@ -18,6 +18,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, HttpResponse
 from channels.layers import get_channel_layer
 import json
+from django.core.serializers.json import DjangoJSONEncoder
 from clients.models import Animal, Appointment
 from vaccinations.models import Vaccination
 from orders.models import Order, Payment
@@ -60,7 +61,7 @@ def registerUser(request):
         return redirect('dashboard')
     
     elif request.method == "POST":
-       form = json.dump(UserForm(dict(request.POST))) # ASGIRequest json object
+       form = json.dump(UserForm(dict(request.POST)), cls=DjangoJSONEncoder) # ASGIRequest json object
        if form.is_valid(): 
         # Create the user using the form
         # password = form.cleaned_data['password']
@@ -104,8 +105,8 @@ def registerDoctor(request):
     
     elif request.method == "POST":
        print("precheck")
-       form =json.dump(UserForm(dict(request.POST)))  # ASGIRequest json object
-       d_form = json.dump(DoctorForm(dict(request.POST)))  # ASGIRequest json object
+       form =json.dumps(UserForm(dict(request.POST)), cls=DjangoJSONEncoder)  # ASGIRequest json object
+       d_form = json.dumps(DoctorForm(dict(request.POST)), cls=DjangoJSONEncoder)  # ASGIRequest json object
        if d_form.is_valid() and form.is_valid():
         print("checkform") 
             
