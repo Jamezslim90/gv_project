@@ -61,6 +61,9 @@ def registerUser(request):
     
     elif request.method == "POST":
        form = UserForm(request.POST)
+       print(form)
+       json.dumps(form.__dict__)
+       print(json.dumps(form.__dict__))
        if form.is_valid(): 
         # Create the user using the form
         # password = form.cleaned_data['password']
