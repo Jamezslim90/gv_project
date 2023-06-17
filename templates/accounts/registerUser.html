@@ -22,11 +22,13 @@
                                 <div class="alert alert-danger" role="alert">
                                     {% for field in form %}
                                         {% for error in field.errors %}
-                                            {{ error }}
+                                          <li class="alert alert-danger" role="alert">
+                                           {{ error }}
+                                          </li>
                                         {% endfor %}
                                     {% endfor %}
                                 </div>
-                                <li class="alert alert-danger" role="alert">{{form.non_field_errors}}</li>
+                                {% comment %} <li class="alert alert-danger" role="alert">{{form.non_field_errors}}</li> {% endcomment %}
                             {% endif %}
                             
                             <div class="form-group">
