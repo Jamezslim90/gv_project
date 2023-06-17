@@ -82,12 +82,12 @@ def registerUser(request):
         user.role = User.CUSTOMER
         user.save()
         
-        # Send verification email
-        mail_subject = 'Please activate your account'
-        email_template = 'accounts/emails/account_verification_email.html'
-        send_verification_email.delay(request, user, mail_subject, email_template)
-        messages.success(request, "Successfully, we've sent a verification email!")
-        return redirect('registerUser')
+        # # Send verification email
+        # mail_subject = 'Please activate your account'
+        # email_template = 'accounts/emails/account_verification_email.html'
+        # send_verification_email.delay(request, user, mail_subject, email_template)
+        # messages.success(request, "Successfully, we've sent a verification email!")
+        # return redirect('registerUser')
         
        else:
            print(form.errors)
