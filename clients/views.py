@@ -22,8 +22,8 @@ from django.http import HttpResponseRedirect,JsonResponse
 from datetime import datetime, timedelta
 import json
 from django_celery_beat.models import PeriodicTask, CrontabSchedule
-from .tasks import send_appointment_email
-from accounts.utils import get_customer
+from accounts.utils import get_customer, send_appointment_email
+
 # from django.views.decorators.csrf import csrf_exempt
 
 
@@ -313,8 +313,7 @@ def vaccine_done(request):
         one_off=True,
         
         )
-        
-         
+     
         #Third task
         task3= PeriodicTask.objects.create(
         interval=schedule3,                                      # we created this above.
@@ -368,7 +367,7 @@ def add_appointment(request):
          form = AppointmentForm(request.POST)
          if form.is_valid(): 
             appointment= form.save(commit=False)
-            appointment.owner = get_customer(request).user
+            appointment.owner = get_customer(request).user.userprofile
             appointment.email = get_customer(request).user.email
             appointment.phone = get_customer(request).phone_number
             appointment.appointment_type = ordered_item.item
@@ -378,7 +377,7 @@ def add_appointment(request):
             # TODO
             mail_subject = 'New Appointment'
             mail_template = 'doctors/appointment_email.html'
-            email = ordered_item.item.owner.email
+            email = ordered_item.item.owner.user.email
             doctor = ordered_item.item.owner
             user = get_customer(request).user
             
@@ -389,7 +388,7 @@ def add_appointment(request):
                  'doctor': doctor,
                  'user': user,
             }
-            send_appointment_email.delay(mail_subject, mail_template, context)
+            send_appointment_email(mail_subject, mail_template, context)
             
             form.save()
             messages.success(request, 'Appointment successful!')

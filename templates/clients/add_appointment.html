@@ -31,7 +31,7 @@
                 <div class="signin-inner mt-3 mt-lg-0 bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                     <a href="#" class="btn btn-sm btn-secondary" onclick="history.back()"><span class="fa fa-angle-left"></span> <span>Back</span></a>
                     
-                    <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="mb-0 h6">Fill the form to book an appointment</h1></div>
+                    <div class="text-center text-md-center mb-4 mt-md-0"><h1 class="mb-0 h5 mt-2">Fill the form to book an appointment</h1></div>
                     <form action="{% url 'add_appointment' %}" class="mt-4" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <!-- Load message -->

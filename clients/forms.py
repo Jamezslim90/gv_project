@@ -1,6 +1,7 @@
 from django import forms
 from .models import Animal, Appointment, Category, AnimalType, Symptom
 from asgiref.sync import sync_to_async
+
 class AnimalForm(forms.ModelForm):
     animal_category = forms.ModelChoiceField(queryset=Category.objects.all())
     animal = forms.ModelChoiceField(queryset=AnimalType.objects.all())
@@ -76,7 +77,7 @@ class AppointmentForm(forms.ModelForm):
         model = Appointment
         fields = [ 'animal_category', 'animal', 'symptoms', 'date', 'time', 'optional_message']
         widgets={
-            'time': forms.TimeInput(attrs={'type': 'time'}),
+            'time': forms.TimeInput(attrs={'class': 'form-control'}),
             'animal_category': forms.Select(attrs={'class': 'form-control'}),
             'animal': forms.Select(attrs={'class': 'form-control'}),
             'symptoms': forms.SelectMultiple(attrs={'class': 'form-control'}),
@@ -85,56 +86,24 @@ class AppointmentForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['symptoms'].choices = sync_to_async(Symptom.objects.all())()
-        # self.fields["profile_pic"].widget.attrs.update(
-        #     {
-        #      'type': 'file',
-        #      'class' : 'form-control',
-             
-        #     }
-        # )
-        # self.fields["name"].widget.attrs.update(
-        #     {
-        #         'type': 'text',
-        #         'class' : 'form-control',
-        #         'placeholder' : ''
-        #     }
-        # )
-        # self.fields["animal_category"].widget.attrs.update(
-        #     {
-        #      'type': 'select',
-        #      'class' : 'form-control',
-        #      'placeholder' : '' 
-        #     }
-        # )
-        # self.fields["animal"].widget.attrs.update(
-        #     {
-        #      'type': 'select',
-        #      'class' : 'form-control',
-        #      'placeholder' : '' 
-        #     }
-        # )
-        self.fields["dob"].widget.attrs.update(
+        #self.fields['symptoms'].choices = sync_to_async(Symptom.objects.all())()
+        self.fields['time'].widget.attrs.update(
             {
-             'type': 'date',
-             'class' : 'form-control',
-             'placeholder' : 'yyyy-mm-dd' 
+             'placeholder' : '00:00:00' 
             }
         )
-        # self.fields["breed"].widget.attrs.update(
-        #     {
-        #      'type': 'text',
-        #      'class' : 'form-control',
-        #      'placeholder' : '' 
-        #     }
-        # )
-        # self.fields["weight"].widget.attrs.update(
-        #      {
-        #       'type': 'text',
-        #       'class' : 'form-control',
-        #       'placeholder' : '' 
-        #      }
-        #  )
-                                                                           
-        
-        
+        self.fields['date'].widget.attrs.update(
+            {
+             'placeholder' : '2000-01-01' 
+            }
+        )
+        @sync_to_async
+        def get_all_symptoms():
+            return Symptom.objects.all()
+
+        async def get_symptom(request):
+            for symptom in await get_all_symptoms():
+                self.fields['symptoms'].choices = symptom
+                
+       
+      
