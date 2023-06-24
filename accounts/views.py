@@ -11,8 +11,8 @@ from .models import User, UserProfile
 from doctors.models import Doctor, Meeting
 from django.template.defaultfilters import slugify
 from doctors.forms import DoctorForm
-from .utils import detectUser
-from .tasks import send_verification_email
+from .utils import detectUser, send_verification_email
+#from .tasks import send_verification_email
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, HttpResponse
@@ -27,7 +27,7 @@ from .utils import get_customer
 from .forms import UserForm, UserProfileForm
 from notifications.models import DoctorNotification, CustomerNotification
 from django.utils.dateparse import parse_datetime
-from django.views.decorators.csrf import csrf_exempt
+#from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -53,7 +53,7 @@ def check_role_manager(user):
     else:
         raise PermissionDenied
         
-@csrf_exempt     
+   
 def registerUser(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
@@ -61,9 +61,6 @@ def registerUser(request):
     
     elif request.method == "POST":
        form = UserForm(request.POST)
-       print(form)
-       json.dumps(form.__dict__)
-       print(json.dumps(form.__dict__))
        if form.is_valid(): 
         # Create the user using the form
         # password = form.cleaned_data['password']
@@ -82,13 +79,17 @@ def registerUser(request):
         user.role = User.CUSTOMER
         user.save()
         
-        # # Send verification email
-        # mail_subject = 'Please activate your account'
-        # email_template = 'accounts/emails/account_verification_email.html'
-        # send_verification_email.delay(request, user, mail_subject, email_template)
-        # messages.success(request, "Successfully, we've sent a verification email!")
-        # return redirect('registerUser')
+       
         
+        
+        # # Send verification email
+        mail_subject = 'Please activate your account'
+        email_template = 'accounts/emails/account_verification_email.html'
+        # json.dumps(user.__dict__)
+        # send_verification_email.delay(request, user, mail_subject, email_template)
+        send_verification_email(request, user, mail_subject, email_template)
+        messages.success(request, "Successfully, we've sent a verification email!")
+        return redirect('registerUser') 
        else:
            print(form.errors)
     else:
@@ -99,7 +100,7 @@ def registerUser(request):
     
     return render(request, 'accounts/registerUser.html', context)
 
-@csrf_exempt 
+
 def registerDoctor(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')
@@ -127,7 +128,7 @@ def registerDoctor(request):
         doctor.doctor_slug = slugify(username) +str(user.id)
         user_profile = UserProfile.objects.get(user=user)
         doctor.user_profile = user_profile
-        doctor.vcn_number = d_form.cleaned_data['vcn_number']
+        doctor.VCN_number = d_form.cleaned_data['VCN_number']
         doctor.state_of_practice = d_form.cleaned_data['state_of_practice']
         #doctor.induction_date = d_form.cleaned_data['induction_date']
         #specialty= d_form.cleaned_data['specialty']
@@ -135,11 +136,13 @@ def registerDoctor(request):
         print(doctor)
         doctor.save()
         
-         # Send verification email
+        #  Send verification email  
         mail_subject = 'Please activate your account'
         email_template = 'accounts/emails/account_verification_email.html'
-        send_verification_email.delay(request, user, mail_subject, email_template)
-
+        # json.dumps(user.__dict__)
+        # send_verification_email.delay(request, user, mail_subject, email_template)
+        
+        send_verification_email(request, user, mail_subject, email_template)
         messages.success(request, "Successfully, we've sent a verification email!")
         return redirect('registerDoctor')
         
@@ -175,7 +178,7 @@ def activate(request, uidb64, token):
         messages.error(request, 'Invalid activation link')
         return redirect('myAccount')
     
-@csrf_exempt    
+       
 def LoginView(request):
     if request.user.is_authenticated:
         messages.warning(request, 'You are already logged in!')

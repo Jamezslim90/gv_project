@@ -23,6 +23,9 @@ def send_verification_email(request, user, mail_subject, email_template):
     mail = EmailMessage(mail_subject, message, from_email, to=[to_email])
     mail.content_subtype = "html"
     mail.send()
+ 
+ 
+ 
     
 @shared_task   
 def send_notification(mail_subject, mail_template, context):

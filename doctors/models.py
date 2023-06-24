@@ -20,7 +20,7 @@ class Doctor(models.Model):
     user_profile = models.OneToOneField(UserProfile, related_name='userprofile', on_delete=models.CASCADE)
     VCN_number = models.CharField(max_length=7)
     state_of_practice = models.CharField(max_length=50)
-    specialty = models.ManyToManyField(AnimalSpecialty, help_text='You can select multiple specialties')
+    specialty = models.ManyToManyField(AnimalSpecialty, help_text='You can select multiple specialties', blank=True)
     # specialty = MultiSelectField(max_length=50, choices=SPECIALTY_CHOICE, blank=True, null=True)
     induction_date = models.DateField(blank=True, null=True)
     doctor_slug = models.SlugField(max_length=100, unique=True)

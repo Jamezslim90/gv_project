@@ -9,6 +9,7 @@ from .models import Order, OrderedItem, Payment
 import simplejson as json
 from .utils import generate_order_number, order_total_by_doctor
 from accounts.tasks import send_notification
+#from accounts.utils import send_notification
 from django.contrib.auth.decorators import login_required
 # import razorpay
 # from gv_project.settings import RZP_KEY_ID, RZP_KEY_SECRET

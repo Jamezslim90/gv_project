@@ -5,7 +5,7 @@ from accounts.models import User
 
 
 class ChatRoom(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=1000)
  
     def __str__ (self):
         return self.name

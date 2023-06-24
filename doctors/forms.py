@@ -22,7 +22,7 @@ class DoctorForm(forms.ModelForm):
    
     def __init__(self, *args, **kwargs):
         super(DoctorForm, self). __init__(*args, **kwargs)
-        self.fields["specialty"].required = True
+        
         self.fields["VCN_number"].widget.attrs.update(
             {
              'type': 'text',
