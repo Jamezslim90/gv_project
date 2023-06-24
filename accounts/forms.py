@@ -12,7 +12,7 @@ class UserForm(forms.ModelForm):
     last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     
     password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','autocomplete': 'off','data-toggle': 'password' }))
-    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'autocomplete': 'off','data-toggle': 'password' }))
     
    
     def __init__(self, *args, **kwargs):
