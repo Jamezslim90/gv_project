@@ -78,6 +78,15 @@
                     <li class="nav-item dropdown"><a href="{% url 'myAccount' %}" class="nav-link">Dashboard</a></li>
                     {% endif %}
                     <li class="nav-item dropdown"><a href="{% url 'post_list'%}" class="nav-link">Blog</a></li>
+
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown"><a href=" {% url 'logout' %}" class="nav-link  navbar-link1">Logout</a></li>
+                   
+                    {%else%}
+                    <li class="nav-item dropdown"><a href="{% url 'registerUser' %}" class="nav-link  navbar-link1">Register</a></li>
+                    <li class="nav-item dropdown"><a href="{% url 'login' %}" class="nav-link  navbar-link1">Login</a></li>
+                    {%endif%}
+                   
                     
                 </ul>
 
@@ -96,7 +105,7 @@
                         </div>
                         <!-- End of Notification Bell Icon -->
             </div>
-            <div class="d-none d-lg-block">
+            <div class=" d-none d-lg-block">
                 {% comment %} 
                  <div class="form-group hide-on-mobile hide-on-tablet ">
                         <div class="input-group mt-1">
@@ -121,11 +130,11 @@
                 <a href="{% url 'login' %}"  class="btn btn-outline-white btn-docs animate-up-2"><i class="bi bi-box-arrow-in-right mr-2"></i>Login</a>
                 {% endif %}
             </div>
-            <div class="d-flex d-lg-none align-items-center ml-auto">
+            {% comment %} <div class="d-flex d-lg-none align-items-center ml-auto">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_global" aria-controls="navbar_global" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-            </div>
+            </div> {% endcomment %}
         </div>
     </nav>
 </header>

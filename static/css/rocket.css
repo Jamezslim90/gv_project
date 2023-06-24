@@ -36506,3 +36506,11 @@ article h6 {
       display: none;
     }
   }
+
+
+  /* Media query for screens larger than 992px (desktop and larger) */
+        @media (min-width: 992px) {
+            .navbar-link1 {
+                display: none; /* Hide the navigation links on desktop and larger screens */
+            }
+        }

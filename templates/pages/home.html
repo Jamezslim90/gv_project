@@ -21,9 +21,11 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-10 text-center">
-                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#pricing-modal">
+                            <a href="{% url 'registerUser' %}">
+                            <button type="button" class="btn btn-secondary">
                                 <span class="mr-2"><i class="fas fa-hand-pointer"></i></span>  <span class="d-none d-md-inline">Get  started</span>
                             </button>
+                            </a>
                             {% comment %} 
                             <a class="btn btn-white text-primary animate-up-2 ml-3" href="./dashboard/dashboard.html">Find Doctors</a>
                             {% endcomment %}
@@ -79,7 +81,7 @@
                             <div class="icon icon-shape icon-shape-primary rounded-circle"><span class="fas fa-headset"></span></div>
                             <h5 class="mt-4 mb-3">24/7 Chat & Video call</h5>
                             <p class="px-0 px-sm-4 px-lg-0">Get immediate access to a veterinarian via chat or video call, any time of day or night.</p>
-                            <a href="{% url 'about' %}" class="btn btn-link text-primary">
+                            <a href="{% url 'registerUser' %}" class="btn btn-link text-primary">
                                 Learn more <span class="icon icon-xs ml-2"><span class="fas fa-arrow-right"></span></span>
                             </a>
                         </div>
@@ -87,7 +89,7 @@
                             <div class="icon icon-shape icon-shape-primary rounded-circle"><span class="bi bi-house-check-fill"></span></div>
                             <h5 class="mt-4 mb-3">Home Consultations</h5>
                             <p class="px-0 px-sm-4 px-lg-0">Schedule a visit from one of our veterinarians at the comfort of your own home.</p>
-                            <a href="{% url 'about' %}" class="btn btn-link text-primary">
+                            <a href="{% url 'registerUser' %}" class="btn btn-link text-primary">
                                 Learn more <span class="icon icon-xs ml-2"><span class="fas fa-arrow-right"></span></span>
                             </a>
                         </div>
@@ -95,7 +97,7 @@
                             <div class="icon icon-shape icon-shape-primary rounded-circle"><span class="bi bi-hospital"></span></div>
                             <h5 class="mt-4 mb-3">Diagnostic Lab Directory</h5>
                             <p class="px-0 px-sm-4 px-lg-0">Find the nearest diagnostic lab for your pet's need including variety of options for different types of tests.</p>
-                            <a href="{% url 'about' %}" class="btn btn-link text-primary">
+                            <a href="{% url 'registerUser' %}" class="btn btn-link text-primary">
                                 Learn more <span class="icon icon-xs ml-2"><span class="fas fa-arrow-right"></span></span>
                             </a>
                         </div>
@@ -103,7 +105,7 @@
                             <div class="icon icon-shape icon-shape-primary rounded-circle"><span class="bi bi-capsule-pill"></span></div>
                             <h5 class="mt-4 mb-3">Vaccination Tracker</h5>
                             <p class="px-0 px-sm-4 px-lg-0">Keep track of your pet's vaccinations and ensure they stay up-to-date.</p>
-                            <a href="{% url 'about' %}" class="btn btn-link text-primary">
+                            <a href="{% url 'registerUser' %}" class="btn btn-link text-primary">
                                 Learn more <span class="icon icon-xs ml-2"><span class="fas fa-arrow-right"></span></span>
                             </a>
                         </div>
@@ -125,7 +127,7 @@
                                         As a pet owner or customer, you now have access to an all-in-one platform for managing the health and well-being of your pets. Our platform provides a range of features and tools that make it easy and convenient for you to care for your pets. Such as Appointment booking and vaccination tracking. 
                                     </p>
                                     
-                                    <a href="{% url 'about' %}" class="btn btn-primary mt-3 animate-up-2">
+                                    <a href="{% url 'registerUser' %}" class="btn btn-primary mt-3 animate-up-2">
                                         Learn more<span class="icon icon-xs ml-2"><i class="fas fa-arrow-right"></i></span>
                                     </a>
                                 </div>
@@ -140,7 +142,7 @@
                                         As a veterinary doctor, you can now attend to your clients from the comfort of your own home through our platform. Our platform allows you to attend to chat, video ,and home calls giving you the opportunity to provide your expert advice to your clients from anywhere in the world.
                                     </p>
                                     
-                                    <a href="{% url 'about' %}" class="btn btn-primary mt-3 animate-up-2">
+                                    <a href="{% url 'registerDoctor' %}" class="btn btn-primary mt-3 animate-up-2">
                                         Learn more<span class="icon icon-xs ml-2"><i class="fas fa-arrow-right"></i></span>
                                     </a>
                                 </div>
@@ -304,7 +306,7 @@
                 <div class="pattern bottom"></div>
             </section>
             
-            <div class="section section-sm line-bottom-light">
+            {% comment %} <div class="section section-sm line-bottom-light">
                 <div class="container">
                     <div class="row">
                         <div class="col-12 text-gray text-center">
@@ -314,7 +316,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> {% endcomment %}
             <section class="section">
                 <div class="container">
                     <div class="row justify-content-center mb-5 mb-lg-7">
@@ -408,9 +410,11 @@
                             {% endcomment %}
                         </div>
                         <div class="col-12 text-center">
-                            <button type="button" class="btn btn-secondary animate-up-2" data-toggle="modal" data-target=".pricing-modal">
+                        <a href="{% url 'registerUser' %}">
+                            <button type="button" class="btn btn-secondary animate-up-2">
                                 <span class="mr-2"><i class="fas fa-hand-pointer"></i></span>Get started now
                             </button>
+                        </a>
                         </div>
                     </div>
                 </div>
