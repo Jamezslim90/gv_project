@@ -11,10 +11,10 @@ class UserForm(forms.ModelForm):
     first_name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'class': 'form-control'}))
     last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control','autocomplete': 'off','data-toggle': 'password' }))
     confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     
-    
+   
     def __init__(self, *args, **kwargs):
         super(UserForm, self). __init__(*args, **kwargs)
         self.fields["first_name"].widget.attrs.update(
