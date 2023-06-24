@@ -8,8 +8,8 @@ from .forms import OrderForm
 from .models import Order, OrderedItem, Payment
 import simplejson as json
 from .utils import generate_order_number, order_total_by_doctor
-from accounts.tasks import send_notification
-#from accounts.utils import send_notification
+#from accounts.tasks import send_notification
+from accounts.utils import send_notification
 from django.contrib.auth.decorators import login_required
 # import razorpay
 # from gv_project.settings import RZP_KEY_ID, RZP_KEY_SECRET
@@ -183,8 +183,8 @@ def payments(request):
             'customer_subtotal': customer_subtotal,
             'tax_data': tax_data,
         }
-        send_notification.delay(mail_subject, mail_template, context)
-        
+        #send_notification.delay(mail_subject, mail_template, context)
+        send_notification(mail_subject, mail_template, context)
 
         # #SEND ORDER RECEIVED EMAIL TO THE DOCTOR
         mail_subject = 'You have received a new order.'
@@ -206,7 +206,8 @@ def payments(request):
                     'tax_data': order_total_by_doctor(order, i.consultationitem.owner.id)['tax_dict'],
                     'doctor_grand_total': order_total_by_doctor(order, i.consultationitem.owner.id)['grand_total'],
                 }
-                send_notification.delay(mail_subject, mail_template, context)
+                #send_notification.delay(mail_subject, mail_template, context)
+                send_notification(mail_subject, mail_template, context)
 
         # CLEAR THE CART IF THE PAYMENT IS SUCCESS
         cart_items.delete() 
