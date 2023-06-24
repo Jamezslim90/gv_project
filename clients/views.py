@@ -358,7 +358,7 @@ def appointment_list(request):
     }
     return render(request, 'clients/appointments_list.html', context)
 
-@csrf_exempt
+
 @login_required(login_url='login')
 @user_passes_test(check_role_customer)
 def add_appointment(request):
