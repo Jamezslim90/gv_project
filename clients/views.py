@@ -24,7 +24,7 @@ import json
 from django_celery_beat.models import PeriodicTask, CrontabSchedule
 from .tasks import send_appointment_email
 from accounts.utils import get_customer
-from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import csrf_exempt
 
 
 @login_required(login_url='login')
@@ -111,7 +111,7 @@ def animal_detail(request, animal_slug):
     return render(request, 'clients/animal_detail.html', context)
 
 
-@csrf_exempt
+
 @login_required(login_url='login')
 @user_passes_test(check_role_customer)
 def add_animal(request):
