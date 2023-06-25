@@ -11,8 +11,8 @@ from .models import User, UserProfile
 from doctors.models import Doctor, Meeting
 from django.template.defaultfilters import slugify
 from doctors.forms import DoctorForm
-from .utils import detectUser, send_verification_email
-#from .tasks import send_verification_email
+from .utils import detectUser  #send_verification_email
+from .tasks import send_verification_email
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, HttpResponse
@@ -343,7 +343,7 @@ def forgot_password(request):
             # send reset password email
             mail_subject = 'Reset Your Password'
             email_template = 'accounts/emails/reset_password_email.html'
-            send_verification_email.delay(request, user, mail_subject, email_template)
+            send_verification_email(request, user, mail_subject, email_template)
 
             messages.success(request, 'Password reset link has been sent to your email address.')
             return redirect('login')
