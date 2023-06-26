@@ -5,7 +5,7 @@
         <div class="user-card d-flex align-items-center justify-content-between justify-content-md-center pb-4">
             <div class="d-flex align-items-center">
                 {% if user_profile.profile_picture %}
-                <div class="user-avatar lg-avatar mr-4"><img src="{{user_profile.profile_picture.url}}" class="card-img-top rounded-circle border-white" alt="Profile Pic" /></div>
+                <div class="user-avatar lg-avatar mr-4"><img src="{{user_profile.profile_picture_thumbnail.url}}" class="card-img-top rounded-circle border-white" alt="Profile Pic" /></div>
                 {%else%}
                 <div class="user-avatar lg-avatar mr-4"><img src="{% static './assets/img/default_profile_pic.png' %}" class="card-img-top rounded-circle border-white" alt="Bonnie Green" /></div>
                 {%endif%}
@@ -43,22 +43,22 @@
                 </a>
             </li>
             
-            <li class="nav-item">
+            <li class="nav-item {% if section == 'animals' %} active {%endif%}">
                 <a href="{% url 'animal_list' %} " class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-dog"></span></span> <span>Your Animals</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if section == 'vaccinations' %} active {%endif%}">
                 <a href="{% url 'vaccination_list' %}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-clock"></span></span> <span>Vaccinations</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if section == 'payments' %} active {%endif%}">
                 <a href="{% url 'payment_list' %}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-hand-holding-usd"></span></span> <span>Your Payments</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if section == 'settings' %} active {%endif%}">
                 <a href="{% url 'cprofile' %}" class="nav-link">
                     <span class="sidebar-icon"><span class="fas fa-cog"></span></span> <span>Account settings</span>
                 </a>

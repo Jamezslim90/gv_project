@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.db.models.fields.related import ForeignKey, OneToOneField
+from imagekit.models import ImageSpecField
+from pilkit.processors import ResizeToFill
 
 # from django.contrib.gis.db import models as gismodels
 # from django.contrib.gis.geos import Point
@@ -123,6 +125,8 @@ class UserProfile(models.Model):
    
     user = OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='users/profile_pictures', blank=True, null=True)
+    profile_picture_thumbnail = ImageSpecField(source='profile_picture', processors=[ResizeToFill(100, 100)], format='JPEG', options={'quality':60})
+    
     phone_number = models.CharField(max_length=11, blank=True)
     address = models.CharField(max_length=250, blank=True, null=True)
     country = models.CharField(max_length=15, blank=True, null=True)

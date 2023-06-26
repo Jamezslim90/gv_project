@@ -63,6 +63,7 @@ def dprofile(request):
         'profile_form': profile_form,
         #'doctor_form': doctor_form,
         'profile': profile,
+        'section': 'settings'
         #'doctor': doctor,
     }
 
@@ -161,6 +162,7 @@ def bank_info(request):
     banks = BankAccount.objects.filter(doctor=doctor)
     context = {
         'banks': banks,
+        'section': 'banks',
     }
     return render(request, 'doctors/bank_list.html', context)
 
@@ -184,6 +186,7 @@ def add_bank(request):
         #form.fields['category'].queryset = Service.objects.filter(owner=get_doctor(request))
     context = {
         'form': form,
+       
     }
     return render(request, 'doctors/add_bank.html', context)
 
@@ -232,6 +235,7 @@ def opening_hours(request):
     context = {
         'form': form,
         'opening_hours': opening_hours,
+        'section': 'availability'
     }
     return render(request, 'doctors/opening_hours.html', context)
 
@@ -378,7 +382,8 @@ def doctor_appointment (request):
     context = {
          
         'appointments': appointments, 
-        'page_obj': page_obj  
+        'page_obj': page_obj, 
+        'section': 'appointments'
     }
     return render(request, 'doctors/appointments_list.html', context)
 
@@ -399,7 +404,8 @@ def doctor_payment(request):
     
     context = {
         'payments': payments,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'section': 'payments'
     }
     return render(request, 'doctors/payments_list.html', context)
 

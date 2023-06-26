@@ -22,8 +22,8 @@
                     
                      <h1 class="display-3 font-weight-extreme mb-4">Dr. {{doctor.user_profile }}</h1>
                      {% if doctor.user_profile.profile_picture %}
-                    {% load thumbnail %}
-                    <div class="xl-avatar mx-auto mb-3 mb-lg-3"><img class="rounded" src="{% thumbnail doctor.user_profile.profile_picture 200x200 crop %}" alt="avatar" /></div>
+                   
+                    <div class="xl-avatar mx-auto mb-3 mb-lg-3"><img class="rounded" src="{{doctor.user_profile.profile_picture_thumbnail.url }}" alt="avatar" /></div>
                     {% else %}   
                  
                     <div class="xl-avatar mx-auto mb-3 mb-lg-3"><img class="rounded" src="{% static './assets/img/default_profile_pic.png' %}" alt="avatar" /></div>

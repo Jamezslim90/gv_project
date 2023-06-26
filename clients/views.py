@@ -58,6 +58,7 @@ def cprofile(request):
     context = {
         'profile_form': profile_form,
         'profile': profile,
+        'section': 'settings'
      
     }
 
@@ -82,7 +83,8 @@ def animal_list(request):
     page_obj = paginator.get_page(page_number)
     context = {
         'animals': animals,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'section': 'animals'
     }
     return render(request, 'clients/animal_list.html', context)
 
@@ -419,7 +421,8 @@ def payment_list(request):
     context = {
         
         'payments': payments,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'section': 'payments',
     }
     return render(request, 'clients/payments_list.html', context)
 
@@ -446,6 +449,7 @@ def vaccination_list(request):
     
     context = {
         'animal_vaccine': animal_vaccine,
-        'page_obj': page_obj
+        'page_obj': page_obj,
+        'section': 'vaccinations'
     }
     return render(request, 'clients/vaccinations_list.html', context)
