@@ -251,7 +251,8 @@ def custDashboard(request):
         'total_sum_payment': total_sum_payment,
         'appointment_count': appointment_count,
         'room_name': "cusbroadcast",
-        'latest_notifications':  latest_notifications
+        'latest_notifications':  latest_notifications,
+        'section': 'dashboard'   #used for showing active links
         
     }
     return render(request, 'accounts/customerDashboard.html' , context
