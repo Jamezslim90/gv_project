@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'whitenoise.runserver_nostatic',
+    #'whitenoise.runserver_nostatic',
     'cloudinary_storage',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
@@ -82,7 +82,7 @@ MIDDLEWARE = [
     
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -195,10 +195,12 @@ SITE_ID = 1
 
 STATIC_URL = 'static/'
 
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
 STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # STORAGES = {
     
@@ -210,18 +212,11 @@ STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
 # }
 
 
-WHITENOISE_KEEP_ONLY_HASHED_FILES = False
-WHITENOISE_MANIFEST_STRICT = False
-
+#WHITENOISE_KEEP_ONLY_HASHED_FILES = False
+#WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/' # new
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # new
-STATICFILES_STORAGE = (
-    "django_forgiving_collecstatic.storages.ForgivingManifestStaticFilesStorage"
-)
-
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Default primary key field type
@@ -244,8 +239,8 @@ SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
 
 # Celery settings
-CELERY_BROKER_URL = os.environ['REDIS_URL']
-#CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+#CELERY_BROKER_URL = os.environ['REDIS_URL']
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
@@ -270,23 +265,23 @@ CSRF_TRUSTED_ORIGINS = ['https://.*','https://gv-platform.herokuapp.com','https:
 
 # channels settings
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
-        },
-    },
-}
-
 # CHANNEL_LAYERS = {
 #     "default": {
 #         "BACKEND": "channels_redis.core.RedisChannelLayer",
 #         "CONFIG": {
-#             "hosts": [("127.0.0.1", 6379)],
+#             "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')],
 #         },
 #     },
 # }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 
 #Email settings

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "65067f13d9fdde1c785908521f2a32d19b4538db3313e84307dcdc69c5fc10f7"
+            "sha256": "3f82c320f9861a635c261b150c7496fea679a2de3704b947201496324ead47d7"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -441,13 +441,6 @@
             ],
             "index": "pypi",
             "version": "==3.2.3"
-        },
-        "django-forgiving-collectstatic": {
-            "hashes": [
-                "sha256:1d3205d1f264f4c9f38347b948e0a947b093a713c2933949dfa92c3baef63997"
-            ],
-            "index": "pypi",
-            "version": "==1.0.0"
         },
         "django-imagekit": {
             "hashes": [
@@ -1032,14 +1025,6 @@
                 "sha256:a5220780a404dbe3353789870978e472cfe477761f06ee55077256e509b156d0"
             ],
             "version": "==0.2.6"
-        },
-        "whitenoise": {
-            "hashes": [
-                "sha256:15fe60546ac975b58e357ccaeb165a4ca2d0ab697e48450b8f0307ca368195a8",
-                "sha256:16468e9ad2189f09f4a8c635a9031cc9bb2cdbc8e5e53365407acf99f7ade9ec"
-            ],
-            "index": "pypi",
-            "version": "==6.5.0"
         },
         "zope.interface": {
             "hashes": [

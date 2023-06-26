@@ -8,7 +8,6 @@ django = "==3.2"
 python-decouple = "*"
 psycopg2 = "*"
 gunicorn = "*"
-whitenoise = "*"
 pillow = "*"
 django-jazzmin = "*"
 django-multiselectfield = "*"
@@ -37,7 +36,6 @@ dj-database-url = "*"
 django-imagekit = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
-django-forgiving-collectstatic = "*"
 
 [dev-packages]
 
