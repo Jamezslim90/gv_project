@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'whitenoise.runserver_nostatic',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_extensions',
     'channels',
+    'cloudinary',
     
     # 'multiselectfield',
     'taggit',
@@ -214,7 +216,6 @@ WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/' # new
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # new
-
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -311,33 +312,43 @@ TIME_INPUT_FORMATS = [
 #GOOGLE_API_KEY=config("GOOGLE_AK")
 #FLUTTERWAVE_PK=config("Flutterwave_public_key")
 
+
 PAYSTACK_PK= config("Paystack_public_key")
 MONNIFY_PK= config("Monnify_public_key")
 
 #AWS Credentials    
 
-AWS_ACCESS_KEY_ID = config('AKID')
-AWS_SECRET_ACCESS_KEY = config('SAK')
-AWS_STORAGE_BUCKET_NAME = ('SBN')
-AWS_S3_SIGNATURE_NAME = 's3v4',
-AWS_S3_REGION_NAME = config('S3RN')
-AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL =  'public-read'
-AWS_LOCATION = 'static'
-AWS_MEDIA_LOCATION = 'media'
+# AWS_ACCESS_KEY_ID = config('AKID')
+# AWS_SECRET_ACCESS_KEY = config('SAK')
+# AWS_STORAGE_BUCKET_NAME = ('SBN')
+# AWS_S3_SIGNATURE_NAME = 's3v4',
+# AWS_S3_REGION_NAME = config('S3RN')
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL =  'public-read'
+# AWS_LOCATION = 'static'
+# AWS_MEDIA_LOCATION = 'media'
 
-#AWS_S3_CUSTOM_DOMAIN = 'https://dztglolvroaqv.cloudfront.net'
-AWS_S3_CUSTOM_DOMAIN = "https://d1iqb74dkfltx9.cloudfront.net"
+# #AWS_S3_CUSTOM_DOMAIN = 'https://dztglolvroaqv.cloudfront.net' #gvproject
+# AWS_S3_CUSTOM_DOMAIN = "https://d1iqb74dkfltx9.cloudfront.net"
 
-STATIC_URL = 'https://%s.s3.amazonaws.com/%s/' % (AWS_STORAGE_BUCKET_NAME, AWS_LOCATION)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-AWS_S3_VERITY = True
-#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STORAGES = {"default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"}}
-# STORAGES = {"staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}}
+# STATIC_URL = 'https://%s.s3.amazonaws.com/%s/' % (AWS_STORAGE_BUCKET_NAME, AWS_LOCATION)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# AWS_S3_VERITY = True
+# #DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STORAGES = {"default": {"BACKEND": "storages.backends.s3boto3.S3Boto3Storage"}}
+# # STORAGES = {"staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}}
 
 
+# Cloudinary Config Setting
+#Account jamezslim90@gmail.com
+CLOUDINARY_STORAGE = {
+    
+    'CLOUD_NAME': 'dz1ms5vxu',
+    'API_KEY': '478289689677965',
+    'API_SECRET': 'cmNVNBip6BfuNCW9TMz8Fq3dk-4',
+}
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # ckeditor Config settings
 
