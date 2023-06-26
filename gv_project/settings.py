@@ -326,7 +326,8 @@ AWS_DEFAULT_ACL =  'public-read'
 AWS_LOCATION = 'static'
 AWS_MEDIA_LOCATION = 'media'
 
-AWS_S3_CUSTOM_DOMAIN = 'https://dztglolvroaqv.cloudfront.net'
+#AWS_S3_CUSTOM_DOMAIN = 'https://dztglolvroaqv.cloudfront.net'
+AWS_S3_CUSTOM_DOMAIN = "https://d1iqb74dkfltx9.cloudfront.net"
 
 STATIC_URL = 'https://%s.s3.amazonaws.com/%s/' % (AWS_STORAGE_BUCKET_NAME, AWS_LOCATION)
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
