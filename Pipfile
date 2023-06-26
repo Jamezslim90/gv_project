@@ -37,6 +37,7 @@ dj-database-url = "*"
 django-imagekit = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
+django-forgiving-collectstatic = "*"
 
 [dev-packages]
 

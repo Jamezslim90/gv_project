@@ -216,7 +216,11 @@ WHITENOISE_MANIFEST_STRICT = False
 
 MEDIA_URL = '/media/' # new
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # new
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATICFILES_STORAGE = (
+    "django_forgiving_collecstatic.storages.ForgivingManifestStaticFilesStorage"
+)
+
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
