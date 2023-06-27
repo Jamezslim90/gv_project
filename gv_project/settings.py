@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'django_social_share',
     'imagekit',
-    #'storages',
       
     #Local Apps
     "pages.apps.PagesConfig",
@@ -122,16 +121,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'gv_project.wsgi.application'
 ASGI_APPLICATION=  'gv_project.asgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 DATABASES = {
@@ -324,14 +313,14 @@ MONNIFY_PK= config("Monnify_public_key")
 
 #Cloudinary Config Setting
 #Account jamezslim90@gmail.com
-CLOUDINARY_STORAGE = {
+#CLOUDINARY_STORAGE = {
     
-    'CLOUD_NAME': 'dz1ms5vxu',
-    'API_KEY': '478289689677965',
-    'API_SECRET': 'cmNVNBip6BfuNCW9TMz8Fq3dk-4',
-}
+#     'CLOUD_NAME': 'dz1ms5vxu',
+#     'API_KEY': '478289689677965',
+#     'API_SECRET': 'cmNVNBip6BfuNCW9TMz8Fq3dk-4',
+# }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # ckeditor Config settings
 
