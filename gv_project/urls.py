@@ -7,8 +7,8 @@ from marketplace import views as MarketplaceViews
 
 urlpatterns = [
     
-    path('jet/', include('jet.urls', 'jet')),
-    path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+    # path('jet/', include('jet.urls', 'jet')),
+    # path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
     
     path('admin/', admin.site.urls),
     
