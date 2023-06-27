@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "807d2e1d210aa3650c542df652fe6f3ca244b1ae8c8cdae91dfd9ef52e3a59b2"
+            "sha256": "10996305e13a683c87b170d352aff97448af35602d4c653be1dcbc7d0c08d7b6"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -410,6 +410,14 @@
             ],
             "index": "pypi",
             "version": "==0.3.0"
+        },
+        "django-collectstatic-bower": {
+            "hashes": [
+                "sha256:32daf1a886d248fbc25805a96b33223e9bc36ebd9f50d159525c4223a6d62ec2",
+                "sha256:ab5946f226f63e024cfd6f714fb043dae07a8998099b97a12f588b43d4b9cd8d"
+            ],
+            "index": "pypi",
+            "version": "==0.1.2"
         },
         "django-comments-xtd": {
             "hashes": [

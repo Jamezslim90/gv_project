@@ -37,6 +37,7 @@ django-imagekit = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
 whitenoise = "*"
+django-collectstatic-bower = "*"
 
 [dev-packages]
 

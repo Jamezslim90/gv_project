@@ -203,6 +203,12 @@ STATIC_ROOT =  os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 #STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+STATICFILE_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "django_collectstatic_bower.staticfiles.finders.BowerComponentFinder",
+]
+
 # STORAGES = {
     
 #     # Enable WhiteNoise's GZip and Brotli compression of static assets:
