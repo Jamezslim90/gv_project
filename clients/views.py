@@ -354,8 +354,7 @@ def appointment_list(request):
     context = {
         
         'appointments': appointments,
-        "page_obj":  page_obj,
-        'section': 'appointments'
+        "page_obj":  page_obj
         
     }
     return render(request, 'clients/appointments_list.html', context)
