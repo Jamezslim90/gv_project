@@ -36,6 +36,7 @@ dj-database-url = "*"
 django-imagekit = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
+whitenoise = "*"
 
 [dev-packages]
 
