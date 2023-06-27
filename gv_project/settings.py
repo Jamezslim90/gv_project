@@ -341,14 +341,14 @@ MONNIFY_PK= config("Monnify_public_key")
 
 # Cloudinary Config Setting
 #Account jamezslim90@gmail.com
-CLOUDINARY_STORAGE = {
+# CLOUDINARY_STORAGE = {
     
-    'CLOUD_NAME': 'dz1ms5vxu',
-    'API_KEY': '478289689677965',
-    'API_SECRET': 'cmNVNBip6BfuNCW9TMz8Fq3dk-4',
-}
+#     'CLOUD_NAME': 'dz1ms5vxu',
+#     'API_KEY': '478289689677965',
+#     'API_SECRET': 'cmNVNBip6BfuNCW9TMz8Fq3dk-4',
+# }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # ckeditor Config settings
 
